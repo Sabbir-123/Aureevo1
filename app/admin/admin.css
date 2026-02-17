@@ -1,0 +1,765 @@
+/* ============================================
+   AUREEVO ADMIN PANEL STYLES
+   ============================================ */
+
+/* --- Admin CSS Variables --- */
+.adminRoot {
+    --admin-bg: #0e0e10;
+    --admin-surface: #18181b;
+    --admin-surface-hover: #1f1f23;
+    --admin-border: #27272a;
+    --admin-text: #fafafa;
+    --admin-text-muted: #a1a1aa;
+    --admin-accent: #c9a96e;
+    --admin-accent-hover: #d4b87a;
+    --admin-success: #22c55e;
+    --admin-warning: #f59e0b;
+    --admin-danger: #ef4444;
+    --admin-info: #3b82f6;
+    --admin-radius: 8px;
+    --admin-sidebar-width: 260px;
+}
+
+/* --- Reset for Admin --- */
+.adminRoot {
+    background: var(--admin-bg);
+    color: var(--admin-text);
+    min-height: 100vh;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* --- Admin Layout --- */
+.adminLayout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.adminMain {
+    flex: 1;
+    margin-left: var(--admin-sidebar-width);
+    padding: 24px 32px;
+    min-height: 100vh;
+}
+
+/* --- Admin TopBar --- */
+.adminTopBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.adminTopBar h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.adminTopBar .adminSubtitle {
+    color: var(--admin-text-muted);
+    font-size: 0.875rem;
+    margin-top: 2px;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--admin-sidebar-width);
+    height: 100vh;
+    background: var(--admin-surface);
+    border-right: 1px solid var(--admin-border);
+    display: flex;
+    flex-direction: column;
+    z-index: 50;
+    overflow-y: auto;
+}
+
+.sidebarLogo {
+    padding: 24px 20px;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.sidebarLogo h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--admin-accent);
+}
+
+.sidebarLogo span {
+    font-size: 0.7rem;
+    color: var(--admin-text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.sidebarNav {
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.sidebarLink {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: var(--admin-radius);
+    color: var(--admin-text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.sidebarLink:hover {
+    background: var(--admin-surface-hover);
+    color: var(--admin-text);
+}
+
+.sidebarLink.active {
+    background: rgba(201, 169, 110, 0.1);
+    color: var(--admin-accent);
+}
+
+.sidebarLink svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.sidebarFooter {
+    padding: 16px 12px;
+    border-top: 1px solid var(--admin-border);
+}
+
+/* --- Cards --- */
+.statCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.statCard {
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius);
+    padding: 20px;
+}
+
+.statCard .statLabel {
+    font-size: 0.8rem;
+    color: var(--admin-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+
+.statCard .statValue {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.statCard .statValue.accent {
+    color: var(--admin-accent);
+}
+
+.statCard .statValue.success {
+    color: var(--admin-success);
+}
+
+.statCard .statValue.warning {
+    color: var(--admin-warning);
+}
+
+.statCard .statValue.danger {
+    color: var(--admin-danger);
+}
+
+/* --- Section --- */
+.adminSection {
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.adminSection h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* --- Table --- */
+.adminTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.adminTable th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.75rem;
+    color: var(--admin-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--admin-border);
+    font-weight: 600;
+}
+
+.adminTable td {
+    padding: 12px;
+    border-bottom: 1px solid var(--admin-border);
+    font-size: 0.875rem;
+    vertical-align: middle;
+}
+
+.adminTable tr:hover td {
+    background: var(--admin-surface-hover);
+}
+
+.adminTable img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #222;
+}
+
+/* --- Buttons --- */
+.btnPrimary {
+    background: var(--admin-accent);
+    color: #0a0a0a;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--admin-radius);
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.btnPrimary:hover {
+    background: var(--admin-accent-hover);
+}
+
+.btnPrimary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btnSecondary {
+    background: transparent;
+    color: var(--admin-text-muted);
+    border: 1px solid var(--admin-border);
+    padding: 8px 16px;
+    border-radius: var(--admin-radius);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+}
+
+.btnSecondary:hover {
+    border-color: var(--admin-text-muted);
+    color: var(--admin-text);
+}
+
+.btnDanger {
+    background: transparent;
+    color: var(--admin-danger);
+    border: 1px solid var(--admin-danger);
+    padding: 8px 16px;
+    border-radius: var(--admin-radius);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btnDanger:hover {
+    background: var(--admin-danger);
+    color: white;
+}
+
+.btnIcon {
+    background: transparent;
+    border: 1px solid var(--admin-border);
+    color: var(--admin-text-muted);
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--admin-radius);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btnIcon:hover {
+    border-color: var(--admin-accent);
+    color: var(--admin-accent);
+}
+
+.btnIcon.danger:hover {
+    border-color: var(--admin-danger);
+    color: var(--admin-danger);
+}
+
+/* --- Form --- */
+.formGroup {
+    margin-bottom: 20px;
+}
+
+.formGroup label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--admin-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.formInput {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--admin-bg);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius);
+    color: var(--admin-text);
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+}
+
+.formInput:focus {
+    outline: none;
+    border-color: var(--admin-accent);
+}
+
+.formInput::placeholder {
+    color: var(--admin-text-muted);
+    opacity: 0.5;
+}
+
+textarea.formInput {
+    min-height: 100px;
+    resize: vertical;
+}
+
+select.formInput {
+    appearance: none;
+    cursor: pointer;
+}
+
+.formRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.formActions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--admin-border);
+}
+
+/* --- Badges --- */
+.badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.badge.pending {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--admin-warning);
+}
+
+.badge.confirmed {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--admin-info);
+}
+
+.badge.delivered {
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--admin-success);
+}
+
+.badge.cancelled {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--admin-danger);
+}
+
+.badge.active {
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--admin-success);
+}
+
+.badge.hidden {
+    background: rgba(161, 161, 170, 0.15);
+    color: var(--admin-text-muted);
+}
+
+/* --- Search & Filter Bar --- */
+.filterBar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.searchInput {
+    flex: 1;
+    min-width: 200px;
+    padding: 9px 14px 9px 36px;
+    background: var(--admin-bg);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius);
+    color: var(--admin-text);
+    font-size: 0.875rem;
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: var(--admin-accent);
+}
+
+.searchWrapper {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+}
+
+.searchWrapper svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--admin-text-muted);
+    width: 16px;
+    height: 16px;
+}
+
+.filterPills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.filterPill {
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    border: 1px solid var(--admin-border);
+    background: transparent;
+    color: var(--admin-text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filterPill:hover {
+    border-color: var(--admin-text-muted);
+}
+
+.filterPill.active {
+    background: var(--admin-accent);
+    color: #0a0a0a;
+    border-color: var(--admin-accent);
+    font-weight: 600;
+}
+
+/* --- Status Select --- */
+.statusSelect {
+    padding: 5px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--admin-border);
+    background: var(--admin-bg);
+    color: var(--admin-text);
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+/* --- Toggle --- */
+.toggle {
+    width: 40px;
+    height: 22px;
+    border-radius: 11px;
+    background: var(--admin-border);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s;
+}
+
+.toggle.on {
+    background: var(--admin-success);
+}
+
+.toggle::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: white;
+    transition: transform 0.2s;
+}
+
+.toggle.on::after {
+    transform: translateX(18px);
+}
+
+/* --- Empty State --- */
+.emptyState {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--admin-text-muted);
+}
+
+.emptyState svg {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+    opacity: 0.3;
+}
+
+.emptyState h3 {
+    margin-bottom: 8px;
+    color: var(--admin-text);
+}
+
+/* --- Login Page --- */
+.loginPage {
+    min-height: 100vh;
+    background: var(--admin-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.loginCard {
+    background: var(--admin-surface);
+    border: 1px solid var(--admin-border);
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.loginCard h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--admin-accent);
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+.loginCard .loginSubtitle {
+    color: var(--admin-text-muted);
+    text-align: center;
+    font-size: 0.85rem;
+    margin-bottom: 32px;
+}
+
+.loginError {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--admin-danger);
+    padding: 10px 14px;
+    border-radius: var(--admin-radius);
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.loginBtn {
+    width: 100%;
+    padding: 12px;
+    background: var(--admin-accent);
+    color: #0a0a0a;
+    border: none;
+    border-radius: var(--admin-radius);
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+    margin-top: 8px;
+}
+
+.loginBtn:hover {
+    background: var(--admin-accent-hover);
+}
+
+.loginBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* --- Image Upload --- */
+.imageUpload {
+    border: 2px dashed var(--admin-border);
+    border-radius: var(--admin-radius);
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.imageUpload:hover {
+    border-color: var(--admin-accent);
+}
+
+.imagePreview {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+.imagePreview .imgThumb {
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+    object-fit: cover;
+    border: 1px solid var(--admin-border);
+    position: relative;
+}
+
+.imagePreview .imgRemove {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--admin-danger);
+    color: white;
+    border: none;
+    font-size: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Stock Grid --- */
+.stockGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.stockItem {
+    text-align: center;
+}
+
+.stockItem label {
+    font-size: 0.75rem !important;
+    margin-bottom: 4px !important;
+}
+
+.stockItem input {
+    width: 100%;
+    text-align: center;
+}
+
+/* --- Color Chips --- */
+.colorChips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.colorChip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--admin-border);
+    font-size: 0.8rem;
+}
+
+.colorChip .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* --- Loading --- */
+.loadingSpinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+    color: var(--admin-text-muted);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .adminMain {
+        margin-left: 0;
+        padding: 16px;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .statCards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .formRow {
+        grid-template-columns: 1fr;
+    }
+
+    .filterBar {
+        flex-direction: column;
+    }
+
+    .adminTable {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .loginCard {
+        padding: 24px;
+    }
+}

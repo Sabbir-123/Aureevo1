@@ -1,0 +1,40 @@
+.wrapper {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--color-grey-800);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    color: var(--color-grey-300);
+    transition: all var(--transition-fast);
+}
+
+.btn:hover:not(:disabled) {
+    background: var(--color-grey-900);
+    color: var(--color-white);
+}
+
+.btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.value {
+    min-width: 40px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-white);
+    border-left: 1px solid var(--color-grey-800);
+    border-right: 1px solid var(--color-grey-800);
+    padding: 0 var(--space-sm);
+    line-height: 36px;
+}
