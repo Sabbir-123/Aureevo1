@@ -29,45 +29,6 @@ Aureevo is a luxury e-commerce platform dedicated to high-end men's fashion. Bui
 - **Backend & Database**: [Supabase](https://supabase.com/) (PostgreSQL, Auth, Storage)
 - **Icons**: [Lucide React](https://lucide.dev/)
 
-## ⚙️ Setup & Installation
-
-1.  **Clone the repository**
-    ```bash
-    git clone https://github.com/Sabbir-123/Aureevo1.git
-    cd Aureevo1
-    ```
-
-2.  **Install dependencies**
-    ```bash
-    npm install
-    ```
-
-3.  **Environment Variables**
-    Create a `.env.local` file in the root directory and add your Supabase credentials:
-    ```env
-    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-    SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-    ADMIN_JWT_SECRET=your_jwt_secret
-    ```
-
-4.  **Run the development server**
-    ```bash
-    npm run dev
-    ```
-
-5.  **Open the app**
-    Visit [http://localhost:3000](http://localhost:3000) in your browser.
-
-## 📂 Project Structure
-
-- `/app`: App Router pages and layouts.
-- `/components`: Reusable UI components.
-- `/context`: Global context providers (e.g., ThemeContext).
-- `/lib`: Utility functions and API clients.
-- `/store`: Zustand state stores.
-- `/public`: Static assets.
-
 ## 📄 License
 
 This project is licensed under the MIT License.
