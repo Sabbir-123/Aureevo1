@@ -1,37 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aureevo — Premium Men's Fashion
 
-## Getting Started
+Aureevo is a luxury e-commerce platform dedicated to high-end men's fashion. Built with modern web technologies, it offers a seamless shopping experience with a focus on aesthetic excellence, performance, and user engagement.
 
-First, run the development server:
+![Aureevo Banner](public/logo.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Customer Experience
+- **Cinematic UI**: Immersive dark-mode first design with gold accents and smooth Framer Motion animations.
+- **Dual Hero Section**: Dynamic landing page featuring separate collections for Clothing and Accessories.
+- **Quick Add to Cart**: Interactive modal for selecting size, color, and quantity without leaving the page.
+- **Theme Support**: Fully integrated Dark/Light mode toggle, respecting user preference.
+- **Seamless Checkout**: Streamlined cart and checkout process.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Admin Features
+- **Dashboard**: Real-time overview of orders, revenue, and product stats.
+- **Product Management**: Full CRUD capabilities for products, including image uploads (powered by Supabase Storage) and inventory management.
+- **Order Management**: Track and update order statuses.
+- **Secure Authentication**: Custom admin authentication system secure HTTP-only cookies.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Tech Stack
 
-## Learn More
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+- **Language**: JavaScript
+- **Styling**: CSS Modules (with CSS Variables for theming)
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Backend & Database**: [Supabase](https://supabase.com/) (PostgreSQL, Auth, Storage)
+- **Icons**: [Lucide React](https://lucide.dev/)
 
-To learn more about Next.js, take a look at the following resources:
+## ⚙️ Setup & Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/Sabbir-123/Aureevo1.git
+    cd Aureevo1
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
 
-## Deploy on Vercel
+3.  **Environment Variables**
+    Create a `.env.local` file in the root directory and add your Supabase credentials:
+    ```env
+    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+    SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+    ADMIN_JWT_SECRET=your_jwt_secret
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4.  **Run the development server**
+    ```bash
+    npm run dev
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# Aureevo1
+5.  **Open the app**
+    Visit [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 📂 Project Structure
+
+- `/app`: App Router pages and layouts.
+- `/components`: Reusable UI components.
+- `/context`: Global context providers (e.g., ThemeContext).
+- `/lib`: Utility functions and API clients.
+- `/store`: Zustand state stores.
+- `/public`: Static assets.
+
+## 📄 License
+
+This project is licensed under the MIT License.
