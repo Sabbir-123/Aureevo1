@@ -1,9 +1,7 @@
-'use client';
-
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ShoppingBag, Menu, X, Sun, Moon } from 'lucide-react';
+import { ShoppingBag, Menu, X, Sun, Moon, User } from 'lucide-react';
 import useCartStore from '@/store/cartStore';
 import { useTheme } from '@/context/ThemeContext';
 import styles from './Header.module.css';
@@ -42,37 +40,46 @@ export default function Header() {
                 }`}
         >
             <div className={`container ${styles.headerInner}`}>
+                {/* Left: Navigation (Desktop) / Menu Trigger (Mobile) */}
+                <div className={styles.leftSection}>
+                    <button
+                        className={styles.menuBtn}
+                        onClick={() => setMobileMenuOpen(true)}
+                        aria-label="Open menu"
+                    >
+                        <Menu size={22} strokeWidth={1.5} />
+                    </button>
+
+                    <nav className={`${styles.nav} ${mobileMenuOpen ? styles.navOpen : ''}`}>
+                        <button
+                            className={styles.closeBtn}
+                            onClick={() => setMobileMenuOpen(false)}
+                            aria-label="Close menu"
+                        >
+                            <X size={24} />
+                        </button>
+                        <Link href="/" className={`${styles.navLink} ${pathname === '/' ? styles.active : ''}`}>
+                            Home
+                        </Link>
+                        <Link href="/#shop" className={styles.navLink}>
+                            Shop
+                        </Link>
+                        {/* Mobile Only Links */}
+                        <Link href="/cart" className={`${styles.navLink} ${styles.navLinkMobileCart}`}>
+                            Cart {isHydrated && totalItems > 0 && `(${totalItems})`}
+                        </Link>
+                    </nav>
+                </div>
+
+                {/* Center: Logo */}
                 <Link href="/" className={styles.logo}>
                     AUREEVO
                 </Link>
 
-                <nav className={`${styles.nav} ${mobileMenuOpen ? styles.navOpen : ''}`}>
-                    <button
-                        className={styles.closeBtn}
-                        onClick={() => setMobileMenuOpen(false)}
-                        aria-label="Close menu"
-                    >
-                        <X size={24} />
-                    </button>
-                    <Link href="/" className={`${styles.navLink} ${pathname === '/' ? styles.active : ''}`}>
-                        Home
-                    </Link>
-                    <Link href="/#shop" className={styles.navLink}>
-                        Shop
-                    </Link>
-                    <Link href="/cart" className={`${styles.navLink} ${styles.navLinkMobileCart}`}>
-                        Cart {isHydrated && totalItems > 0 && `(${totalItems})`}
-                    </Link>
-                </nav>
-
+                {/* Right: Icons */}
                 <div className={styles.actions}>
-                    <button
-                        className={styles.themeBtn}
-                        onClick={toggleTheme}
-                        aria-label="Toggle theme"
-                        style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-                    >
-                        {theme === 'dark' ? <Sun size={20} strokeWidth={1.5} /> : <Moon size={20} strokeWidth={1.5} />}
+                    <button className={styles.iconBtn} aria-label="Account">
+                        <User size={20} strokeWidth={1.5} />
                     </button>
 
                     <Link href="/cart" className={styles.cartBtn} aria-label="Shopping cart">
@@ -82,12 +89,13 @@ export default function Header() {
                         )}
                     </Link>
 
+                    {/* Theme Toggle - kept discreetly */}
                     <button
-                        className={styles.menuBtn}
-                        onClick={() => setMobileMenuOpen(true)}
-                        aria-label="Open menu"
+                        className={styles.themeBtn}
+                        onClick={toggleTheme}
+                        aria-label="Toggle theme"
                     >
-                        <Menu size={22} strokeWidth={1.5} />
+                        {theme === 'dark' ? <Sun size={20} strokeWidth={1.5} /> : <Moon size={20} strokeWidth={1.5} />}
                     </button>
                 </div>
             </div>

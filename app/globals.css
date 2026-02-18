@@ -69,6 +69,9 @@
   /* Semantic Colors */
   --hero-gradient-1: #0d0d0d;
   --hero-gradient-2: #141414;
+
+  /* Body Background */
+  --bg-body: var(--color-black);
 }
 
 [data-theme='light'] {
@@ -98,6 +101,9 @@
 
   --hero-gradient-1: #f5f5f5;
   --hero-gradient-2: #ebebeb;
+
+  /* Premium Light Gradient: White -> Soft Gold Tint -> Soft Grey */
+  --bg-body: linear-gradient(180deg, #ffffff 0%, rgba(201, 169, 110, 0.05) 30%, #f4f4f5 100%);
 }
 
 /* ========== RESET & BASE ========== */
@@ -120,7 +126,7 @@ body {
   font-weight: 400;
   line-height: 1.6;
   color: var(--color-white);
-  background-color: var(--color-black);
+  background: var(--bg-body);
   overflow-x: hidden;
   min-height: 100vh;
 }

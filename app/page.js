@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowDown, Sparkles } from 'lucide-react';
 import ProductCard from '@/components/ProductCard';
+import Hero from '@/components/Hero';
 import { getProducts } from '@/lib/api';
 import { trackPageView } from '@/lib/pixelEvents';
 import styles from './page.module.css';
@@ -46,60 +47,7 @@ export default function HomePage() {
   return (
     <div className={styles.page}>
       {/* ===== HERO SECTION ===== */}
-      <section className={styles.hero}>
-        <div className={styles.heroOverlay} />
-        <div className={styles.heroPattern} />
-
-        <motion.div
-          className={styles.heroContent}
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <motion.div
-            className={styles.heroBadge}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <Sparkles size={14} />
-            <span>New Collection 2026</span>
-          </motion.div>
-
-          <h1 className={styles.heroTitle}>
-            Redefine Your <span className={styles.heroAccent}>Style</span>
-          </h1>
-
-          <p className={styles.heroSubtitle}>
-            Premium hoodies and t-shirts crafted for those who demand excellence.<br />
-            Luxury fabrics. Timeless design. Uncompromising quality.
-          </p>
-
-          <motion.div
-            className={styles.heroCta}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-          >
-            <button className="btn btn-gold btn-lg" onClick={scrollToShop}>
-              Shop Now
-            </button>
-            <button className="btn btn-outline btn-lg" onClick={scrollToShop}>
-              Explore Collection
-            </button>
-          </motion.div>
-        </motion.div>
-
-        <motion.button
-          className={styles.scrollDown}
-          onClick={scrollToShop}
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-          aria-label="Scroll to shop"
-        >
-          <ArrowDown size={20} />
-        </motion.button>
-      </section>
+      <Hero />
 
       {/* ===== SHOP SECTION ===== */}
       <section id="shop" className={styles.shop}>

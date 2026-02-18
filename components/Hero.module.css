@@ -1,0 +1,317 @@
+/* HERO SECTION STYLES */
+
+.hero {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-body);
+    overflow: hidden;
+    color: var(--color-white);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.heroBg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 50%, var(--color-black-soft) 0%, var(--color-black) 100%);
+    opacity: 0.8;
+    z-index: 0;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    min-height: 100vh;
+    padding: var(--header-height) var(--container-padding) 0;
+    position: relative;
+    z-index: 10;
+}
+
+/* LEFT SIDE - CONTENT */
+.contentWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 4rem;
+    position: relative;
+}
+
+.contentInner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.topLabel {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-grey-400);
+    font-weight: 500;
+}
+
+.labelLine {
+    width: 30px;
+    height: 1px;
+    background-color: var(--color-gold);
+}
+
+/* FLOATING ANIMATION */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.floating {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* GLOW EFFECT BEHIND IMAGE */
+.glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, var(--glow-color, rgba(201, 169, 110, 0.2)) 0%, transparent 70%);
+    filter: blur(40px);
+    z-index: -1;
+    pointer-events: none;
+    transition: background 1s ease;
+}
+
+/* IMAGE STYLES */
+.imageContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    /* Removed border-radius and overflow hidden to allow glow */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.heroImage {
+    width: auto;
+    height: 85%;
+    /* Max height ~85% of container */
+    max-height: 80vh;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
+}
+
+.imageOverlay {
+    display: none;
+    /* Removed overlay for clean product look */
+}
+
+/* TYPOGRAPHY UPDATES */
+.headline {
+    font-family: var(--font-heading);
+    font-size: clamp(3.5rem, 6vw, 6.5rem);
+    /* Larger scale */
+    line-height: 1;
+    font-weight: 400;
+    color: var(--color-white);
+    letter-spacing: -0.02em;
+}
+
+.accent {
+    background: linear-gradient(90deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-style: italic;
+    padding-right: 0.2em;
+}
+
+/* BUTTON VARIANTS */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2.5rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.btnPrimaryGold {
+    background: var(--color-gold);
+    color: var(--color-black);
+    border: none;
+    box-shadow: 0 4px 20px rgba(201, 169, 110, 0.3);
+}
+
+.btnPrimaryGold:hover {
+    background: var(--color-gold-light);
+    transform: scale(1.05);
+}
+
+.btnPrimaryWhite {
+    background: var(--color-white);
+    color: var(--color-black);
+    border: none;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+}
+
+.btnPrimaryWhite:hover {
+    background: var(--color-grey-100);
+    transform: scale(1.05);
+}
+
+/* SCROLL INDICATOR */
+.scrollIndicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 20;
+}
+
+.scrollText {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--color-grey-500);
+    text-transform: uppercase;
+}
+
+.scrollLine {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--color-gold), transparent);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .headline {
+        font-size: 3.5rem;
+    }
+
+    .container {
+        padding-top: var(--header-height);
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .contentWrapper {
+        padding-right: 0;
+        align-items: flex-start;
+        /* Changed from center to allow left align */
+        justify-content: flex-end;
+        padding-bottom: 2rem;
+    }
+
+    .imageWrapper {
+        height: 100%;
+    }
+
+    .imageInner {
+        height: 100%;
+        max-height: 50vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 100svh;
+        align-items: flex-start;
+    }
+
+    .container {
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 100px;
+    }
+
+    .contentWrapper {
+        width: 100%;
+        padding: 0;
+        z-index: 2;
+        /* Ensure text is above image on mobile */
+    }
+
+    .headline {
+        font-size: 3rem;
+    }
+
+    .description {
+        font-size: 0.95rem;
+        max-width: 100%;
+        padding-right: 1rem;
+    }
+
+    .controls {
+        margin-top: 2rem;
+        max-width: 100%;
+    }
+
+    .imageWrapper {
+        order: 2;
+        /* Image below text logically, but we might want it behind */
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        opacity: 0.6;
+        /* Dim image on mobile so text pops */
+        mask-image: linear-gradient(to bottom, transparent 0%, black 40%);
+        /* Fade image in from top */
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 40%);
+    }
+
+    .glow {
+        opacity: 0.5;
+    }
+
+    .heroImage {
+        width: 150%;
+        /* Zoom in on mobile */
+        height: auto;
+        position: absolute;
+        bottom: -10%;
+        right: -30%;
+        max-height: none;
+        object-fit: cover;
+    }
+
+    .scrollIndicator {
+        bottom: 20px;
+    }
+
+    .ctaGroup {
+        flex-direction: row;
+        /* Keep buttons side by-side if possible, or stack if too narrow */
+        flex-wrap: wrap;
+    }
+}
