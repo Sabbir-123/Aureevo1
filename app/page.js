@@ -80,12 +80,29 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* Products Grid */}
           {loading ? (
-            <div className={styles.loading}>
-              <div className={styles.spinner} />
-              <p>Loading collection...</p>
-            </div>
+            <motion.div
+              className={styles.loading}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <motion.div
+                className={styles.loaderBrand}
+                animate={{
+                  opacity: [0.4, 1, 0.4],
+                  scale: [0.98, 1, 0.98],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                AUREEVO
+              </motion.div>
+              <p className={styles.loaderText}>Curating the collection...</p>
+            </motion.div>
           ) : (
             <motion.div className={styles.grid} layout>
               <AnimatePresence mode="popLayout">
