@@ -39,7 +39,7 @@ export default function AdminLoginPage() {
     };
 
     return (
-        <div className="adminRoot">
+        <div className="adminRoot" suppressHydrationWarning>
             <div className="loginPage">
                 <div className="loginCard">
                     <h1>AUREEVO</h1>
@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
 
                     {error && <div className="loginError">{error}</div>}
 
-                    <form onSubmit={handleLogin}>
+                    <form onSubmit={handleLogin} suppressHydrationWarning>
                         <div className="formGroup">
                             <label>Email Address</label>
                             <input
