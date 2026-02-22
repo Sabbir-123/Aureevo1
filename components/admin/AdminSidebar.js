@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Package, ShoppingCart, Settings, LogOut, ArrowLeft, BarChart3, Users as UsersIcon } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingCart, Settings, LogOut, ArrowLeft, BarChart3, Users as UsersIcon, X } from 'lucide-react';
 
-export default function AdminSidebar({ onLogout, user }) {
+export default function AdminSidebar({ onLogout, user, isOpen, onClose }) {
     const pathname = usePathname();
 
     const allLinks = [
@@ -29,10 +29,15 @@ export default function AdminSidebar({ onLogout, user }) {
     });
 
     return (
-        <aside className="sidebar">
-            <div className="sidebarLogo">
-                <h2>AUREEVO</h2>
-                <span>Admin Panel</span>
+        <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
+            <div className="sidebarLogo" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                    <h2>AUREEVO</h2>
+                    <span>Admin Panel</span>
+                </div>
+                <button className="mobileMenuCloseBtn" onClick={onClose}>
+                    <X size={24} />
+                </button>
             </div>
 
             <nav className="sidebarNav">
@@ -48,6 +53,7 @@ export default function AdminSidebar({ onLogout, user }) {
                             key={link.href}
                             href={link.href}
                             className={`sidebarLink ${isActive ? 'active' : ''}`}
+                            onClick={onClose}
                         >
                             <Icon />
                             {link.label}
@@ -57,7 +63,7 @@ export default function AdminSidebar({ onLogout, user }) {
             </nav>
 
             <div className="sidebarFooter">
-                <Link href="/" className="sidebarLink" target="_blank">
+                <Link href="/" className="sidebarLink" target="_blank" onClick={onClose}>
                     <ArrowLeft />
                     View Store
                 </Link>
