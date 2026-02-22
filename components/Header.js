@@ -80,7 +80,7 @@ export default function Header() {
 
                 {/* Right: Icons */}
                 <div className={styles.actions}>
-                    <Link href={user ? '/profile' : '/login'} className={`${styles.iconBtn} ${styles.hideOnMobile}`} aria-label="Account">
+                    <Link href={user ? '/profile' : '/login'} className={styles.iconBtn} aria-label="Account">
                         <User size={20} strokeWidth={1.5} />
                     </Link>
 
