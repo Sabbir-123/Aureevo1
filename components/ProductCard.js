@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { ShoppingBag } from 'lucide-react';
 import { getProductImageUrl } from '@/lib/api';
 import useCartStore from '@/store/cartStore';
@@ -30,7 +31,13 @@ export default function ProductCard({ product, index = 0 }) {
         >
             <Link href={`/product/${product.id}`} className={styles.imageWrap}>
                 <div className={styles.imageContainer}>
-                    <img src={imageUrl} alt={product.name} className={styles.image} loading="lazy" />
+                    <Image
+                        src={imageUrl}
+                        alt={product.name}
+                        fill
+                        sizes="(max-width: 480px) 100vw, (max-width: 900px) 50vw, 33vw"
+                        className={styles.image}
+                    />
                     <div className={styles.imageOverlay}>
                         <span className={styles.viewDetails}>View Details</span>
                     </div>

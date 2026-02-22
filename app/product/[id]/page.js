@@ -8,6 +8,7 @@ import { ShoppingBag, ArrowLeft, Check, Package, Truck } from 'lucide-react';
 import { getProduct, getProductImageUrl } from '@/lib/api';
 import { trackViewContent, trackAddToCart } from '@/lib/pixelEvents';
 import useCartStore from '@/store/cartStore';
+import toast from 'react-hot-toast';
 import ColorSwatch from '@/components/ColorSwatch';
 import SizePicker from '@/components/SizePicker';
 import QuantitySelector from '@/components/QuantitySelector';
@@ -45,6 +46,7 @@ export default function ProductPage() {
         addItem(product, selectedSize, selectedColor, quantity);
         trackAddToCart(product, quantity);
         setAdded(true);
+        toast.success(`Added ${quantity} ${product.name} to cart`);
         setTimeout(() => setAdded(false), 2000);
     };
 

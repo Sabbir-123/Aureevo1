@@ -4,16 +4,7 @@ import { validateAdmin, createAdminUser } from '@/lib/admin-api';
 
 export async function POST(request) {
     try {
-        const { email, password, action } = await request.json();
-
-        // Setup: create default admin if action is 'setup'
-        if (action === 'setup') {
-            const result = await createAdminUser(email, password);
-            if (result.error) {
-                return NextResponse.json({ error: result.error.message }, { status: 500 });
-            }
-            return NextResponse.json({ success: true, message: 'Admin user created' });
-        }
+        const { email, password } = await request.json();
 
         // Login
         if (!email || !password) {

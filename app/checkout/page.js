@@ -17,6 +17,7 @@ export default function CheckoutPage() {
 
     const [formData, setFormData] = useState({
         fullName: '',
+        email: '',
         phone: '',
         address: '',
     });
@@ -53,6 +54,11 @@ export default function CheckoutPage() {
     const validate = () => {
         const newErrors = {};
         if (!formData.fullName.trim()) newErrors.fullName = 'Name is required';
+        if (!formData.email.trim()) {
+            newErrors.email = 'Email is required';
+        } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+            newErrors.email = 'Invalid email address';
+        }
         if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
         if (!formData.address.trim()) newErrors.address = 'Address is required';
         setErrors(newErrors);
@@ -67,6 +73,7 @@ export default function CheckoutPage() {
 
         const orderData = {
             name: formData.fullName,
+            email: formData.email,
             phone: formData.phone,
             address: formData.address,
             items: items.map((item) => ({
@@ -213,6 +220,24 @@ export default function CheckoutPage() {
                             />
                             {errors.fullName && (
                                 <span className={styles.error}>{errors.fullName}</span>
+                            )}
+                        </div>
+
+                        <div className={styles.field}>
+                            <label className="input-label" htmlFor="email">
+                                Email Address
+                            </label>
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                className={`input-field ${errors.email ? styles.inputError : ''}`}
+                                placeholder="Enter your email address"
+                                value={formData.email}
+                                onChange={handleChange}
+                            />
+                            {errors.email && (
+                                <span className={styles.error}>{errors.email}</span>
                             )}
                         </div>
 

@@ -103,20 +103,18 @@
 /* IMAGE STYLES */
 .imageContainer {
     width: 100%;
-    height: 100%;
+    height: 85vh;
+    /* Fixed height for the container, adjust based on your header if needed */
+    max-height: 800px;
     position: relative;
-    /* Removed border-radius and overflow hidden to allow glow */
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .heroImage {
-    width: auto;
-    height: 85%;
-    /* Max height ~85% of container */
-    max-height: 80vh;
     object-fit: contain;
+    /* ensures the whole image is visible within the container */
     filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
 }
 
@@ -295,14 +293,8 @@
     }
 
     .heroImage {
-        width: 150%;
-        /* Zoom in on mobile */
-        height: auto;
-        position: absolute;
-        bottom: -10%;
-        right: -30%;
-        max-height: none;
-        object-fit: cover;
+        object-fit: contain;
+        /* Maintain ratio, don't stretch */
     }
 
     .scrollIndicator {

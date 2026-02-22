@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Package, ShoppingCart, Settings, LogOut, ArrowLeft } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingCart, Settings, LogOut, ArrowLeft, BarChart3 } from 'lucide-react';
 
 export default function AdminSidebar({ onLogout }) {
     const pathname = usePathname();
 
     const links = [
         { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
+        { href: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
         { href: '/admin/products', label: 'Products', icon: Package },
         { href: '/admin/orders', label: 'Orders', icon: ShoppingCart },
         { href: '/admin/settings', label: 'Settings', icon: Settings },

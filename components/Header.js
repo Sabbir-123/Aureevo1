@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ShoppingBag, Menu, X, Sun, Moon, User } from 'lucide-react';
 import useCartStore from '@/store/cartStore';
+import useAuthStore from '@/store/authStore';
 import { useTheme } from '@/context/ThemeContext';
 import styles from './Header.module.css';
 
@@ -14,6 +15,7 @@ export default function Header() {
     const items = useCartStore((s) => s.items);
     const hydrate = useCartStore((s) => s.hydrate);
     const isHydrated = useCartStore((s) => s.isHydrated);
+    const user = useAuthStore((s) => s.user);
 
     const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
     const isHome = pathname === '/';
@@ -40,16 +42,8 @@ export default function Header() {
                 }`}
         >
             <div className={`container ${styles.headerInner}`}>
-                {/* Left: Navigation (Desktop) / Menu Trigger (Mobile) */}
+                {/* Left: Navigation */}
                 <div className={styles.leftSection}>
-                    <button
-                        className={styles.menuBtn}
-                        onClick={() => setMobileMenuOpen(true)}
-                        aria-label="Open menu"
-                    >
-                        <Menu size={22} strokeWidth={1.5} />
-                    </button>
-
                     <nav className={`${styles.nav} ${mobileMenuOpen ? styles.navOpen : ''}`}>
                         <button
                             className={styles.closeBtn}
@@ -78,9 +72,9 @@ export default function Header() {
 
                 {/* Right: Icons */}
                 <div className={styles.actions}>
-                    <button className={styles.iconBtn} aria-label="Account">
+                    <Link href={user ? '/profile' : '/login'} className={styles.iconBtn} aria-label="Account">
                         <User size={20} strokeWidth={1.5} />
-                    </button>
+                    </Link>
 
                     <Link href="/cart" className={styles.cartBtn} aria-label="Shopping cart">
                         <ShoppingBag size={20} strokeWidth={1.5} />
@@ -96,6 +90,14 @@ export default function Header() {
                         aria-label="Toggle theme"
                     >
                         {theme === 'dark' ? <Sun size={20} strokeWidth={1.5} /> : <Moon size={20} strokeWidth={1.5} />}
+                    </button>
+
+                    <button
+                        className={styles.menuBtn}
+                        onClick={() => setMobileMenuOpen(true)}
+                        aria-label="Open menu"
+                    >
+                        <Menu size={22} strokeWidth={1.5} />
                     </button>
                 </div>
             </div>

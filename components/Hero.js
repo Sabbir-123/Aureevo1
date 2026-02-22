@@ -11,29 +11,29 @@ import styles from './Hero.module.css';
 const SLIDES = [
     {
         id: 1,
-        topLabel: 'NEW COLLECTION 2026',
-        headline: 'Sartorial',
-        headlineAccent: 'Excellence',
-        description: 'The 2026 Ready-to-Wear Collection. Meticulously crafted for those who define their own style.',
-        primaryBtn: 'VIEW LOOKBOOK',
-        primaryBtnStyle: 'gold', // Gold filled
-        secondaryBtn: 'WATCH FILM',
-        image: '/hero_suit_mannequin_1771350178303.png',
-        glowColor: 'rgba(201, 169, 110, 0.25)', // Gold radial glow
-        type: 'suit'
-    },
-    {
-        id: 2,
         topLabel: 'ESSENTIAL LUXURY',
         headline: 'The Perfect',
         headlineAccent: 'T-Shirt',
-        description: 'Elevated basics. Crafted from the finest cotton for an unmatched feel and fit.',
+        description: 'Elevated basics. Crafted from the finest Egyptian cotton for an unmatched feel and fit.',
         primaryBtn: 'SHOP TEES',
-        primaryBtnStyle: 'white', // White filled
+        primaryBtnStyle: 'white',
         secondaryBtn: 'WATCH FILM',
-        image: '/hero_tshirt_model_1771349160711.png', // Using the model shot as requested
-        glowColor: 'rgba(100, 100, 100, 0.2)', // Neutral/Blue radial glow
+        image: '/hero_tshirt_model_1771349160711.png',
+        glowColor: 'rgba(100, 100, 100, 0.2)',
         type: 'tshirt'
+    },
+    {
+        id: 2,
+        topLabel: 'NEW COLLECTION 2026',
+        headline: 'Modern',
+        headlineAccent: 'Polo',
+        description: 'Redefining the classic polo. Signature cuts tailored for the modern gentleman.',
+        primaryBtn: 'SHOP POLOS',
+        primaryBtnStyle: 'gold',
+        secondaryBtn: 'VIEW EDITORIAL',
+        image: '/hero_polo.png',
+        glowColor: 'rgba(201, 169, 110, 0.25)',
+        type: 'polo'
     }
 ];
 
@@ -174,9 +174,12 @@ export default function Hero() {
                             <div className={styles.glow} style={{ '--glow-color': slide.glowColor }} />
 
                             <div className={styles.imageContainer}>
-                                <img
+                                <Image
                                     src={slide.image}
                                     alt={slide.headline}
+                                    fill
+                                    priority={slide.id === 1}
+                                    sizes="(max-width: 900px) 100vw, 50vw"
                                     className={`${styles.heroImage} ${styles.floating}`}
                                 />
                             </div>

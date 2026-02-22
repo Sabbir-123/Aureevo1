@@ -12,14 +12,20 @@ export async function POST(request) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        // Verify token signature (simplified for now, ideally reused from login logic)
-        // In a real app, you should verify the signature properly.
-        // For this fix, we trust the cookie presence as basic auth, 
-        // assuming the cookie is HttpOnly and secure.
-
         const [payloadStr, signature] = token.split('.');
         if (!payloadStr || !signature) {
-            return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+            return NextResponse.json({ error: 'Invalid token structure' }, { status: 401 });
+        }
+
+        const secret = process.env.ADMIN_JWT_SECRET || 'fallback-secret';
+        const crypto = await import('crypto');
+        const expectedSig = crypto
+            .createHmac('sha256', secret)
+            .update(payloadStr)
+            .digest('hex');
+
+        if (signature !== expectedSig) {
+            return NextResponse.json({ error: 'Invalid token signature' }, { status: 401 });
         }
 
         // 2. Parse File

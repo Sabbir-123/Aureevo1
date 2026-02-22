@@ -1,6 +1,8 @@
 import './globals.css';
 import ClientLayout from '@/components/ClientLayout';
 import { ThemeProvider } from '@/context/ThemeContext';
+import { GoogleAnalytics } from '@next/third-parties/google';
+import FacebookPixel from '@/components/FacebookPixel';
 
 export const metadata = {
   title: 'AUREEVO — Premium Men\'s Fashion',
@@ -17,6 +19,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
+        <GoogleAnalytics gaId="G-G8F059K36N" />
+        <FacebookPixel />
         <ThemeProvider>
           <ClientLayout>{children}</ClientLayout>
         </ThemeProvider>

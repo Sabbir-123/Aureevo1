@@ -24,9 +24,12 @@ export default function Footer() {
 
                 <div className={styles.links}>
                     <h4 className={styles.linksTitle}>Help</h4>
-                    <span className={styles.link}>Shipping Info</span>
-                    <span className={styles.link}>Returns</span>
-                    <span className={styles.link}>Contact Us</span>
+                    <ul className={styles.linksList}>
+                        <li><Link href="/contact" className={styles.link}>Contact Us</Link></li>
+                        <li><Link href="/shipping" className={styles.link}>Shipping Information</Link></li>
+                        <li><Link href="/returns" className={styles.link}>Returns & Exchanges</Link></li>
+                        <li><Link href="/faq" className={styles.link}>FAQ</Link></li>
+                    </ul>
                 </div>
 
                 <div className={styles.social}>
