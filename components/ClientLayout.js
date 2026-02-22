@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { usePathname } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -8,6 +8,11 @@ import AddToCartModal from '@/components/AddToCartModal';
 import { Toaster } from 'react-hot-toast';
 import useAuthStore from '@/store/authStore';
 import useSiteAnalytics from '@/hooks/useSiteAnalytics';
+
+function AnalyticsWrapper() {
+    useSiteAnalytics();
+    return null;
+}
 
 export default function ClientLayout({ children }) {
     const pathname = usePathname();
@@ -19,14 +24,15 @@ export default function ClientLayout({ children }) {
         initializeAuth();
     }, [initializeAuth]);
 
-    useSiteAnalytics();
-
     if (isAdmin) {
         return <>{children}</>;
     }
 
     return (
         <>
+            <Suspense fallback={null}>
+                <AnalyticsWrapper />
+            </Suspense>
             <Header />
             <main style={{ minHeight: '100vh' }}>{children}</main>
             <Footer />
