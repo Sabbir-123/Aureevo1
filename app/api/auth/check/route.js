@@ -35,7 +35,12 @@ export async function GET() {
 
         return NextResponse.json({
             authenticated: true,
-            admin: { email: data.email, name: data.name },
+            admin: {
+                email: data.email,
+                name: data.name,
+                role: data.role,
+                permissions: data.permissions
+            },
         });
     } catch {
         return NextResponse.json({ authenticated: false }, { status: 401 });

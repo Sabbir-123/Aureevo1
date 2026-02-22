@@ -22,6 +22,8 @@ export async function POST(request) {
                 id: admin.id,
                 email: admin.email,
                 name: admin.name,
+                role: admin.role,
+                permissions: admin.permissions,
                 exp: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
             })
         ).toString('base64');

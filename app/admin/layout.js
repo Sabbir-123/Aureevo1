@@ -10,6 +10,7 @@ export default function AdminLayout({ children }) {
     const pathname = usePathname();
     const [authenticated, setAuthenticated] = useState(false);
     const [checking, setChecking] = useState(true);
+    const [user, setUser] = useState(null);
 
     // Skip auth check for login page
     const isLoginPage = pathname === '/admin/login';
@@ -27,7 +28,9 @@ export default function AdminLayout({ children }) {
                     router.replace('/admin/login');
                     return;
                 }
+                const data = await res.json();
                 setAuthenticated(true);
+                setUser(data.admin);
             } catch {
                 router.replace('/admin/login');
             } finally {
@@ -61,7 +64,7 @@ export default function AdminLayout({ children }) {
     return (
         <div className="adminRoot">
             <div className="adminLayout">
-                <AdminSidebar onLogout={handleLogout} />
+                <AdminSidebar onLogout={handleLogout} user={user} />
                 <main className="adminMain">{children}</main>
             </div>
         </div>
