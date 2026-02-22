@@ -5,11 +5,11 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import FacebookPixel from '@/components/FacebookPixel';
 
 export const metadata = {
-  title: 'AUREEVO — Premium Men\'s Fashion',
+  title: "Aureevo Premium Men's Fashion",
   description: 'Elevated essentials for the modern man. Shop luxury hoodies and t-shirts crafted with premium materials.',
   keywords: 'men fashion, luxury hoodies, premium t-shirts, streetwear, AUREEVO',
   openGraph: {
-    title: 'AUREEVO — Premium Men\'s Fashion',
+    title: "Aureevo Premium Men's Fashion",
     description: 'Elevated essentials for the modern man.',
     type: 'website',
   },
