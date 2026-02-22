@@ -1,65 +1,50 @@
-import { Metadata } from 'next';
-import styles from '../login/auth.module.css';
+import styles from '../info.module.css';
 
 export const metadata = {
-    title: 'Returns & Exchanges | AUREEVO',
-    description: 'AUREEVO return policy, exchange procedures, and refund information.',
+    title: 'Returns & Exchanges | Aureevo Premium Men\'s Fashion',
+    description: 'Aureevo Return and Exchange policy for Bangladesh.',
 };
 
 export default function ReturnsPage() {
     return (
-        <div className={styles.page}>
-            <div className={styles.card} style={{ maxWidth: '800px', width: '100%', padding: 'var(--space-3xl)' }}>
+        <main className={styles.page}>
+            <div className={styles.container}>
                 <div className={styles.header}>
                     <h1 className={styles.title}>Returns & Exchanges</h1>
-                    <p className={styles.subtitle}>Our commitment to your satisfaction.</p>
+                    <p className={styles.subtitle}>Our Promise of Perfection</p>
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', color: 'var(--color-grey-300)', lineHeight: '1.8' }}>
-                    <section>
-                        <h2 style={{ fontSize: '1.2rem', color: 'var(--color-white)', marginBottom: '1rem', borderBottom: '1px solid var(--color-grey-800)', paddingBottom: '0.5rem' }}>Return Policy</h2>
-                        <p>
-                            We accept returns up to <strong>30 days after delivery</strong>. To be eligible for a return, your item must be unused, unwashed, and in the same condition that you received it. It must also be in the original packaging with all designer tags still attached.
+                <div className={styles.content}>
+                    <section className={styles.section}>
+                        <h2 className={styles.heading}>Exchange Policy</h2>
+                        <p className={styles.text}>
+                            At Aureevo, we hold our craftsmanship to the highest standards. We gladly accept exchanges within <strong>3 days</strong> of the delivery date, provided the items remain in their original, unwashed, and unworn condition with all premium tags intact.
+                        </p>
+                        <p className={styles.text}>
+                            Exchanges are applicable only for sizing issues or if an incorrect/defective item was delivered by our team.
                         </p>
                     </section>
 
-                    <section>
-                        <h2 style={{ fontSize: '1.2rem', color: 'var(--color-white)', marginBottom: '1rem', borderBottom: '1px solid var(--color-grey-800)', paddingBottom: '0.5rem' }}>How to Initiate a Return</h2>
-                        <ol style={{ listStyleType: 'decimal', paddingLeft: '2rem', marginTop: '1rem' }}>
-                            <li style={{ marginBottom: '0.5rem' }}>Email our concierge team at <strong>returns@aureevo.com</strong> with your order number.</li>
-                            <li style={{ marginBottom: '0.5rem' }}>We will provide you with a pre-paid printable shipping label (for domestic orders).</li>
-                            <li style={{ marginBottom: '0.5rem' }}>Pack the items securely in their original packaging.</li>
-                            <li>Drop off the package at your nearest designated courier location.</li>
-                        </ol>
+                    <section className={styles.section}>
+                        <h2 className={styles.heading}>How to Request an Exchange</h2>
+                        <ul className={styles.list}>
+                            <li className={styles.listItem}>Contact our Client Services team via our Facebook, Instagram page (@aureevobd), or call us directly at <strong>+880 1633-028000</strong> within 3 days of receiving your package.</li>
+                            <li className={styles.listItem}>Provide your Order ID and an image of the received product showing the tags.</li>
+                            <li className={styles.listItem}>Once verified, our courier partner will collect the original item and deliver the newly requested size/piece to your doorstep.</li>
+                        </ul>
                     </section>
 
-                    <section>
-                        <h2 style={{ fontSize: '1.2rem', color: 'var(--color-white)', marginBottom: '1rem', borderBottom: '1px solid var(--color-grey-800)', paddingBottom: '0.5rem' }}>Refunds</h2>
-                        <p>
-                            Once your return is received and inspected, we will send you an email to notify you that we have received your returned item. If approved, your refund will be processed, and a credit will automatically be applied to your credit card or original method of payment within 5-7 business days.
-                        </p>
-                    </section>
-
-                    <section>
-                        <h2 style={{ fontSize: '1.2rem', color: 'var(--color-white)', marginBottom: '1rem', borderBottom: '1px solid var(--color-grey-800)', paddingBottom: '0.5rem' }}>Exchanges</h2>
-                        <p>
-                            If you need to exchange an item for a different size or color, please follow the return process for a refund and place a new order for the desired item. We only replace items directly if they are defective or damaged upon arrival.
-                        </p>
-                    </section>
-
-                    <section>
-                        <h2 style={{ fontSize: '1.2rem', color: 'var(--color-white)', marginBottom: '1rem', borderBottom: '1px solid var(--color-grey-800)', paddingBottom: '0.5rem' }}>Non-returnable Items</h2>
-                        <p>
-                            Certain types of items cannot be returned:
-                        </p>
-                        <ul style={{ listStyleType: 'disc', paddingLeft: '2rem', marginTop: '0.5rem' }}>
-                            <li>Gift cards.</li>
-                            <li>Custom-tailored or personalized garments.</li>
-                            <li>Intimate items (for hygiene reasons) unless the seal is completely intact.</li>
+                    <section className={styles.section}>
+                        <h2 className={styles.heading}>Terms & Conditions</h2>
+                        <ul className={styles.list}>
+                            <li className={styles.listItem}>To be eligible for an exchange, items must not smell of perfume, smoke, or show any signs of body wear.</li>
+                            <li className={styles.listItem}>If the exchange is due to a customer's sizing error, the customer will bear the delivery charge for the exchanged item.</li>
+                            <li className={styles.listItem}>If Aureevo sent an incorrect or defective item, we will cover the full return and replacement shipping costs.</li>
+                            <li className={styles.listItem}>We currently do not offer cash refunds. All approved requests will be compensated via direct exchange or store credit.</li>
                         </ul>
                     </section>
                 </div>
             </div>
-        </div>
+        </main>
     );
 }
