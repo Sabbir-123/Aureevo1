@@ -243,14 +243,19 @@
 
 @media (max-width: 768px) {
     .hero {
-        min-height: 100svh;
+        min-height: 85vh;
+        /* Reduced from 100svh to close gap */
         align-items: flex-start;
+        padding-bottom: 4rem;
+        /* Give space for indicator */
     }
 
     .container {
         flex-direction: column;
         justify-content: center;
         padding-top: 100px;
+        min-height: unset;
+        /* Remove full height constraint */
     }
 
     .contentWrapper {
@@ -271,8 +276,11 @@
     }
 
     .controls {
-        margin-top: 2rem;
+        margin-top: 1.5rem;
+        /* Tighter margin */
         max-width: 100%;
+        position: relative;
+        z-index: 10;
     }
 
     .imageWrapper {
@@ -298,7 +306,8 @@
     }
 
     .scrollIndicator {
-        bottom: 20px;
+        bottom: 10px;
+        /* Tighter scroll placement */
     }
 
     .ctaGroup {
