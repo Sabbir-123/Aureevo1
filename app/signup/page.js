@@ -10,7 +10,6 @@ import styles from '../login/auth.module.css';
 
 export default function SignupPage() {
     const router = useRouter();
-    const [authMode, setAuthMode] = useState('email');
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -22,10 +21,6 @@ export default function SignupPage() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const [phone, setPhone] = useState('');
-    const [otp, setOtp] = useState('');
-    const [otpSent, setOtpSent] = useState(false);
 
     const handleGoogleSignup = async () => {
         try {
@@ -74,41 +69,6 @@ export default function SignupPage() {
         }
     };
 
-    const handlePhoneSignup = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError(null);
-        try {
-            if (!otpSent) {
-                const { error } = await supabase.auth.signInWithOtp({
-                    phone,
-                    options: {
-                        data: {
-                            full_name: name,
-                        }
-                    }
-                });
-                if (error) throw error;
-                setOtpSent(true);
-                toast.success('OTP sent to your phone');
-            } else {
-                const { data, error } = await supabase.auth.verifyOtp({
-                    phone,
-                    token: otp,
-                    type: 'sms',
-                });
-                if (error) throw error;
-                toast.success('Account verified!');
-                router.push('/');
-            }
-        } catch (err) {
-            setError(err.message);
-            toast.error(err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     if (!mounted) return <div className={styles.page} />;
 
     return (
@@ -139,127 +99,53 @@ export default function SignupPage() {
 
                 <div className={styles.divider}>or register with</div>
 
-                {/* Auth Mode Toggle */}
-                <div className={styles.authToggle}>
-                    <button
-                        className={`${styles.toggleBtn} ${authMode === 'email' ? styles.active : ''}`}
-                        onClick={() => { setAuthMode('email'); setError(null); }}
-                    >
-                        Email
-                    </button>
-                    <button
-                        className={`${styles.toggleBtn} ${authMode === 'phone' ? styles.active : ''}`}
-                        onClick={() => { setAuthMode('phone'); setError(null); }}
-                    >
-                        Phone
-                    </button>
-                </div>
-
                 {/* Forms */}
-                {authMode === 'email' ? (
-                    <form className={styles.form} onSubmit={handleEmailSignup}>
-                        <div className={styles.field}>
-                            <label className="input-label" htmlFor="name">Full Name</label>
-                            <input
-                                id="name"
-                                type="text"
-                                className="input-field"
-                                placeholder="Your name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className={styles.field}>
-                            <label className="input-label" htmlFor="email">Email Address</label>
-                            <input
-                                id="email"
-                                type="email"
-                                className="input-field"
-                                placeholder="Enter your email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className={styles.field}>
-                            <label className="input-label" htmlFor="password">Password</label>
-                            <input
-                                id="password"
-                                type="password"
-                                className="input-field"
-                                placeholder="Create a strong password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
+                <form className={styles.form} onSubmit={handleEmailSignup}>
+                    <div className={styles.field}>
+                        <label className="input-label" htmlFor="name">Full Name</label>
+                        <input
+                            id="name"
+                            type="text"
+                            className="input-field"
+                            placeholder="Your name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className={styles.field}>
+                        <label className="input-label" htmlFor="email">Email Address</label>
+                        <input
+                            id="email"
+                            type="email"
+                            className="input-field"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className={styles.field}>
+                        <label className="input-label" htmlFor="password">Password</label>
+                        <input
+                            id="password"
+                            type="password"
+                            className="input-field"
+                            placeholder="Create a strong password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
 
-                        <button
-                            type="submit"
-                            className="btn btn-gold btn-lg"
-                            disabled={loading || !email || !password || !name}
-                        >
-                            {loading ? 'Creating...' : 'Create Account'}
-                        </button>
-                    </form>
-                ) : (
-                    <form className={styles.form} onSubmit={handlePhoneSignup}>
-                        <div className={styles.field}>
-                            <label className="input-label" htmlFor="name-phone">Full Name</label>
-                            <input
-                                id="name-phone"
-                                type="text"
-                                className="input-field"
-                                placeholder="Your name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                disabled={otpSent}
-                                required
-                            />
-                        </div>
-                        <div className={styles.field}>
-                            <label className="input-label" htmlFor="phone">Phone Number</label>
-                            <input
-                                id="phone"
-                                type="tel"
-                                className="input-field"
-                                placeholder="e.g. +1234567890"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                                disabled={otpSent}
-                                required
-                            />
-                        </div>
-
-                        {otpSent && (
-                            <motion.div
-                                className={styles.field}
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: 'auto' }}
-                            >
-                                <label className="input-label" htmlFor="otp">Enter OTP</label>
-                                <input
-                                    id="otp"
-                                    type="text"
-                                    className="input-field"
-                                    placeholder="6-digit code"
-                                    value={otp}
-                                    onChange={(e) => setOtp(e.target.value)}
-                                    required
-                                />
-                            </motion.div>
-                        )}
-
-                        <button
-                            type="submit"
-                            className="btn btn-gold btn-lg"
-                            disabled={loading || !phone || !name || (otpSent && !otp)}
-                        >
-                            {loading ? 'Processing...' : otpSent ? 'Verify & Create Account' : 'Send OTP'}
-                        </button>
-                    </form>
-                )}
+                    <button
+                        type="submit"
+                        className="btn btn-gold btn-lg"
+                        disabled={loading || !email || !password || !name}
+                    >
+                        {loading ? 'Creating...' : 'Create Account'}
+                    </button>
+                </form>
 
                 <div className={styles.footer}>
                     Already have an account?
