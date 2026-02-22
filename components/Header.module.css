@@ -33,6 +33,7 @@
 .leftSection {
     display: flex;
     align-items: center;
+    gap: 1rem;
 }
 
 .logo {
@@ -184,6 +185,10 @@
 
 /* ========== MOBILE ========== */
 @media (max-width: 768px) {
+    .hideOnMobile {
+        display: none !important;
+    }
+
     .menuBtn {
         display: flex;
     }

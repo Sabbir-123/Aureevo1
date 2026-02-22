@@ -42,8 +42,16 @@ export default function Header() {
                 }`}
         >
             <div className={`container ${styles.headerInner}`}>
-                {/* Left: Navigation */}
+                {/* Left: Hamburger & Navigation */}
                 <div className={styles.leftSection}>
+                    <button
+                        className={styles.menuBtn}
+                        onClick={() => setMobileMenuOpen(true)}
+                        aria-label="Open menu"
+                    >
+                        <Menu size={22} strokeWidth={1.5} />
+                    </button>
+
                     <nav className={`${styles.nav} ${mobileMenuOpen ? styles.navOpen : ''}`}>
                         <button
                             className={styles.closeBtn}
@@ -72,7 +80,7 @@ export default function Header() {
 
                 {/* Right: Icons */}
                 <div className={styles.actions}>
-                    <Link href={user ? '/profile' : '/login'} className={styles.iconBtn} aria-label="Account">
+                    <Link href={user ? '/profile' : '/login'} className={`${styles.iconBtn} ${styles.hideOnMobile}`} aria-label="Account">
                         <User size={20} strokeWidth={1.5} />
                     </Link>
 
@@ -83,21 +91,13 @@ export default function Header() {
                         )}
                     </Link>
 
-                    {/* Theme Toggle - kept discreetly */}
+                    {/* Theme Toggle - Rightmost on mobile */}
                     <button
                         className={styles.themeBtn}
                         onClick={toggleTheme}
                         aria-label="Toggle theme"
                     >
                         {theme === 'dark' ? <Sun size={20} strokeWidth={1.5} /> : <Moon size={20} strokeWidth={1.5} />}
-                    </button>
-
-                    <button
-                        className={styles.menuBtn}
-                        onClick={() => setMobileMenuOpen(true)}
-                        aria-label="Open menu"
-                    >
-                        <Menu size={22} strokeWidth={1.5} />
                     </button>
                 </div>
             </div>
