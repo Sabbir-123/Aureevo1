@@ -166,21 +166,17 @@ export default function CartPage() {
 
                             <div className={styles.summaryRow}>
                                 <span>Shipping</span>
-                                <span className={styles.shippingFree}>
-                                    {totalPrice >= 5000 ? 'Free' : '৳ 120.00'}
+                                <span className={styles.shippingFree} style={{ fontSize: '0.85rem' }}>
+                                    {totalPrice >= 5000 ? 'Free' : 'Calculated at checkout'}
                                 </span>
                             </div>
 
                             <div className={styles.summaryDivider} />
 
                             <div className={`${styles.summaryRow} ${styles.summaryTotal}`}>
-                                <span>Total</span>
+                                <span>Total (excl. shipping)</span>
                                 <span>
-                                    ৳{' '}
-                                    {(totalPrice >= 5000
-                                        ? totalPrice
-                                        : totalPrice + 120
-                                    ).toFixed(2)}
+                                    ৳ {totalPrice.toFixed(2)}
                                 </span>
                             </div>
 

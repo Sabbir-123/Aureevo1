@@ -21,6 +21,7 @@ export default function CheckoutPage() {
         phone: '',
         address: '',
     });
+    const [shippingLocation, setShippingLocation] = useState('inside_dhaka'); // inside_dhaka | outside_dhaka
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] = useState(false);
     const [orderResult, setOrderResult] = useState(null);
@@ -29,7 +30,7 @@ export default function CheckoutPage() {
         (sum, item) => sum + item.product.price * item.quantity,
         0
     );
-    const shipping = totalPrice >= 5000 ? 0 : 120;
+    const shipping = totalPrice >= 5000 ? 0 : (shippingLocation === 'inside_dhaka' ? 70 : 150);
     const grandTotal = totalPrice + shipping;
 
     useEffect(() => {
@@ -75,7 +76,7 @@ export default function CheckoutPage() {
             name: formData.fullName,
             email: formData.email,
             phone: formData.phone,
-            address: formData.address,
+            address: `[${shippingLocation === 'inside_dhaka' ? 'Inside Dhaka' : 'Outside Dhaka'}] ${formData.address}`,
             items: items.map((item) => ({
                 productId: item.product.id,
                 name: item.product.name,
@@ -275,6 +276,32 @@ export default function CheckoutPage() {
                             {errors.address && (
                                 <span className={styles.error}>{errors.address}</span>
                             )}
+                        </div>
+
+                        <div className={styles.field}>
+                            <label className="input-label">Shipping Location</label>
+                            <div className={styles.shippingOptions}>
+                                <label className={styles.radioLabel}>
+                                    <input
+                                        type="radio"
+                                        name="shippingLocation"
+                                        value="inside_dhaka"
+                                        checked={shippingLocation === 'inside_dhaka'}
+                                        onChange={(e) => setShippingLocation(e.target.value)}
+                                    />
+                                    <span>Inside Dhaka (৳ 70)</span>
+                                </label>
+                                <label className={styles.radioLabel}>
+                                    <input
+                                        type="radio"
+                                        name="shippingLocation"
+                                        value="outside_dhaka"
+                                        checked={shippingLocation === 'outside_dhaka'}
+                                        onChange={(e) => setShippingLocation(e.target.value)}
+                                    />
+                                    <span>Outside Dhaka (৳ 150)</span>
+                                </label>
+                            </div>
                         </div>
 
                         <button

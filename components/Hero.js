@@ -17,7 +17,6 @@ const SLIDES = [
         description: 'Elevated basics. Crafted from the finest Egyptian cotton for an unmatched feel and fit.',
         primaryBtn: 'SHOP TEES',
         primaryBtnStyle: 'white',
-        secondaryBtn: 'WATCH FILM',
         image: '/hero_tshirt_model_1771349160711.png',
         glowColor: 'rgba(100, 100, 100, 0.2)',
         type: 'tshirt'
@@ -30,7 +29,6 @@ const SLIDES = [
         description: 'Redefining the classic polo. Signature cuts tailored for the modern gentleman.',
         primaryBtn: 'SHOP POLOS',
         primaryBtnStyle: 'gold',
-        secondaryBtn: 'VIEW EDITORIAL',
         image: '/hero_polo.png',
         glowColor: 'rgba(201, 169, 110, 0.25)',
         type: 'polo'
@@ -62,6 +60,10 @@ export default function Hero() {
         }, 6000); // 6 seconds auto-play
         return () => clearInterval(timer);
     }, [nextSlide]);
+
+    const scrollToShop = () => {
+        document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
+    };
 
     const slide = SLIDES[current];
 
@@ -124,12 +126,11 @@ export default function Hero() {
 
                             {/* CTA Buttons */}
                             <motion.div variants={fadeInUp} className={styles.ctaGroup}>
-                                <button className={`${styles.btn} ${slide.primaryBtnStyle === 'white' ? styles.btnPrimaryWhite : styles.btnPrimaryGold}`}>
+                                <button
+                                    className={`${styles.btn} ${slide.primaryBtnStyle === 'white' ? styles.btnPrimaryWhite : styles.btnPrimaryGold}`}
+                                    onClick={scrollToShop}
+                                >
                                     {slide.primaryBtn}
-                                </button>
-                                <button className={`${styles.btn} ${styles.btnSecondary}`}>
-                                    <Play size={14} fill="currentColor" />
-                                    {slide.secondaryBtn}
                                 </button>
                             </motion.div>
                         </motion.div>
