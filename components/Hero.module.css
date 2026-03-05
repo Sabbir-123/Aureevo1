@@ -1,318 +1,415 @@
-/* HERO SECTION STYLES */
+/* ====================================================
+   AUREEVO — Premium Streetwear Carousel Hero
+   ==================================================== */
 
-.hero {
+.heroSection {
     position: relative;
-    min-height: 100vh;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /* 80-90% viewport height as requested, excluding navbar */
+    min-height: clamp(600px, 90vh, 900px);
+    padding-top: 6rem;
+    /* Push content down below global navbar */
     background: var(--bg-body);
+    /* Supports Light/Dark mode */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
+    font-family: var(--font-body);
     color: var(--color-white);
-    transition: background 0.3s ease, color 0.3s ease;
+    transition: background 0.4s ease, color 0.4s ease;
 }
 
-.heroBg {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 20% 50%, var(--color-black-soft) 0%, var(--color-black) 100%);
-    opacity: 0.8;
-    z-index: 0;
-}
-
-.container {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
+.carouselContainer {
     width: 100%;
-    max-width: var(--max-width);
+    max-width: 1600px;
+    height: 100%;
     margin: 0 auto;
-    min-height: 100vh;
-    padding: var(--header-height) var(--container-padding) 0;
-    position: relative;
-    z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 4rem;
+    align-items: center;
+    gap: 4rem;
 }
 
-/* LEFT SIDE - CONTENT */
+/* ====================================================
+   LEFT CONTENT: MESSAGING & CTA
+   ==================================================== */
 .contentWrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-right: 4rem;
     position: relative;
+    z-index: 10;
+    height: 100%;
 }
 
 .contentInner {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
     width: 100%;
+    max-width: 600px;
 }
 
 .topLabel {
     display: flex;
     align-items: center;
     gap: 1rem;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--color-grey-400);
-    font-weight: 500;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    color: var(--color-grey-500);
+    margin-bottom: 2rem;
 }
 
 .labelLine {
-    width: 30px;
-    height: 1px;
+    width: 40px;
+    height: 2px;
     background-color: var(--color-gold);
+    /* Used to be lime green, matching global gold */
 }
 
-/* FLOATING ANIMATION */
-@keyframes float {
-    0% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(-20px);
-    }
-
-    100% {
-        transform: translateY(0px);
-    }
+.headline {
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--color-white);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
 }
 
-.floating {
-    animation: float 6s ease-in-out infinite;
+.headlineHighlight {
+    font-weight: 400;
+    color: var(--color-grey-400);
 }
 
-/* GLOW EFFECT BEHIND IMAGE */
-.glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 120%;
-    height: 120%;
-    background: radial-gradient(circle, var(--glow-color, rgba(201, 169, 110, 0.2)) 0%, transparent 70%);
-    filter: blur(40px);
-    z-index: -1;
-    pointer-events: none;
-    transition: background 1s ease;
+.description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-grey-300);
+    margin-bottom: 2.5rem;
+    max-width: 90%;
 }
 
-/* IMAGE STYLES */
-.imageContainer {
-    width: 100%;
-    height: 85vh;
-    /* Fixed height for the container, adjust based on your header if needed */
-    max-height: 800px;
-    position: relative;
+/* CTA Buttons */
+.ctaGroup {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+}
+
+.btnPrimary,
+.btnSecondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btnPrimary {
+    background: var(--color-black-soft);
+    color: var(--color-white);
+    border: 2px solid var(--color-black-soft);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btnPrimary:hover {
+    background: var(--color-gold);
+    /* Lime green alternative */
+    color: var(--color-black);
+    border-color: var(--color-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px var(--color-gold-muted);
+}
+
+.btnSecondary {
+    background: transparent;
+    color: var(--color-white);
+    border: 2px solid var(--color-grey-700);
+}
+
+.btnSecondary:hover {
+    border-color: var(--color-white);
+    background: var(--color-black-soft);
+}
+
+/* Trust Indicators */
+.trustBadges {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.trustBadge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-grey-400);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.trustIconWrapper {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--color-black-light);
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.trustIconStar {
+    color: var(--color-gold);
+}
+
+.trustIcon {
+    color: var(--color-white);
+}
+
+/* Carousel Controls */
+.controls {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-bottom: 2rem;
+    position: absolute;
+    bottom: 0;
+}
+
+.arrows {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.arrowBtn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--color-grey-700);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--color-white);
+    transition: all 0.3s ease;
+}
+
+.arrowBtn:hover {
+    background: var(--color-white);
+    color: var(--color-black);
+    border-color: var(--color-white);
+}
+
+.dots {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-grey-700);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.activeDot {
+    background: var(--color-white);
+    width: 24px;
+    border-radius: 999px;
+}
+
+
+/* ====================================================
+   RIGHT CONTENT: IMAGE & CARDS
+   ==================================================== */
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imageInner {
+    position: relative;
+    width: 100%;
+    height: 90%;
+}
+
+.imageContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .heroImage {
     object-fit: contain;
-    /* ensures the whole image is visible within the container */
-    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
+    object-position: center;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.1));
 }
 
-.imageOverlay {
-    display: none;
-    /* Removed overlay for clean product look */
-}
-
-/* TYPOGRAPHY UPDATES */
-.headline {
-    font-family: var(--font-heading);
-    font-size: clamp(3.5rem, 6vw, 6.5rem);
-    /* Larger scale */
-    line-height: 1;
-    font-weight: 400;
-    color: var(--color-white);
-    letter-spacing: -0.02em;
-}
-
-.accent {
-    background: linear-gradient(90deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-style: italic;
-    padding-right: 0.2em;
-}
-
-/* BUTTON VARIANTS */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 1rem 2.5rem;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    font-weight: 600;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.btnPrimaryGold {
-    background: var(--color-gold);
-    color: var(--color-black);
-    border: none;
-    box-shadow: 0 4px 20px rgba(201, 169, 110, 0.3);
-}
-
-.btnPrimaryGold:hover {
-    background: var(--color-gold-light);
-    transform: scale(1.05);
-}
-
-.btnPrimaryWhite {
-    background: var(--color-white);
-    color: var(--color-black);
-    border: none;
-    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
-}
-
-.btnPrimaryWhite:hover {
-    background: var(--color-grey-100);
-    transform: scale(1.05);
-}
-
-/* SCROLL INDICATOR */
-.scrollIndicator {
+/* Floating Product Card */
+.floatingCard {
     position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: 10%;
+    left: -10%;
+    background: var(--color-black-soft);
+    backdrop-filter: blur(12px);
+    padding: 1.25rem 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
+    gap: 0.4rem;
+    z-index: 20;
+    min-width: 220px;
+    border: 1px solid var(--color-grey-800);
+}
+
+/* Light mode specific adjustment for floating card */
+:global([data-theme='light']) .floatingCard {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.floatingTag {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    color: var(--color-black);
+    background: var(--color-gold);
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    align-self: flex-start;
+    margin-bottom: 0.25rem;
+}
+
+.floatingTitle {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-white);
+    margin: 0;
+}
+
+.floatingRating {
+    display: flex;
     align-items: center;
     gap: 0.5rem;
-    z-index: 20;
 }
 
-.scrollText {
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    color: var(--color-grey-500);
-    text-transform: uppercase;
+.stars {
+    display: flex;
+    color: var(--color-gold);
+    gap: 0.1rem;
 }
 
-.scrollLine {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--color-gold), transparent);
+.ratingScore {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-grey-400);
 }
 
-/* RESPONSIVE */
-@media (max-width: 1024px) {
-    .headline {
-        font-size: 3.5rem;
-    }
 
-    .container {
-        padding-top: var(--header-height);
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr;
+/* ====================================================
+   RESPONSIVE DESIGN
+   ==================================================== */
+@media (max-width: 1200px) {
+    .carouselContainer {
+        padding: 0 2rem;
         gap: 2rem;
     }
 
-    .contentWrapper {
-        padding-right: 0;
-        align-items: flex-start;
-        /* Changed from center to allow left align */
-        justify-content: flex-end;
-        padding-bottom: 2rem;
+    .headline {
+        font-size: clamp(2.2rem, 3.5vw, 3rem);
     }
 
-    .imageWrapper {
-        height: 100%;
-    }
-
-    .imageInner {
-        height: 100%;
-        max-height: 50vh;
+    .floatingCard {
+        left: 0;
+        bottom: 5%;
     }
 }
 
-@media (max-width: 768px) {
-    .hero {
-        min-height: 85vh;
-        /* Reduced from 100svh to close gap */
-        align-items: flex-start;
-        padding-bottom: 4rem;
-        /* Give space for indicator */
+@media (max-width: 900px) {
+    .heroSection {
+        height: auto;
+        padding: 4rem 0;
     }
 
-    .container {
-        flex-direction: column;
-        justify-content: center;
-        padding-top: 100px;
-        min-height: unset;
-        /* Remove full height constraint */
+    .carouselContainer {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 3rem;
     }
 
     .contentWrapper {
-        width: 100%;
-        padding: 0;
-        z-index: 2;
-        /* Ensure text is above image on mobile */
-    }
-
-    .headline {
-        font-size: 3rem;
-    }
-
-    .description {
-        font-size: 0.95rem;
-        max-width: 100%;
-        padding-right: 1rem;
+        order: 2;
+        padding-bottom: 2rem;
     }
 
     .controls {
-        margin-top: 1.5rem;
-        /* Tighter margin */
-        max-width: 100%;
         position: relative;
-        z-index: 10;
+        bottom: auto;
+        margin-top: 3rem;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 600px;
     }
 
     .imageWrapper {
-        order: 2;
-        /* Image below text logically, but we might want it behind */
-        position: absolute;
-        inset: 0;
-        z-index: 0;
-        opacity: 0.6;
-        /* Dim image on mobile so text pops */
-        mask-image: linear-gradient(to bottom, transparent 0%, black 40%);
-        /* Fade image in from top */
-        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 40%);
+        order: 1;
+        height: 50vh;
+        min-height: 400px;
     }
 
-    .glow {
-        opacity: 0.5;
+    .floatingCard {
+        left: 50%;
+        transform: translateX(-50%) !important;
+        bottom: -5%;
+    }
+}
+
+@media (max-width: 600px) {
+    .carouselContainer {
+        padding: 0 1.5rem;
     }
 
-    .heroImage {
-        object-fit: contain;
-        /* Maintain ratio, don't stretch */
-    }
-
-    .scrollIndicator {
-        bottom: 10px;
-        /* Tighter scroll placement */
+    .headline {
+        font-size: 2.2rem;
     }
 
     .ctaGroup {
-        flex-direction: row;
-        /* Keep buttons side by-side if possible, or stack if too narrow */
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btnPrimary,
+    .btnSecondary {
+        width: 100%;
+    }
+
+    .trustBadges {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
     }
 }

@@ -1,0 +1,228 @@
+.container {
+    background: var(--color-black-light);
+    border: 1px solid var(--color-grey-800);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-white);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.title svg {
+    color: var(--color-gold);
+}
+
+.triggerBtn {
+    background: var(--color-white);
+    color: var(--color-black);
+    border: none;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.triggerBtn:hover {
+    background: var(--color-grey-200);
+}
+
+/* Modal Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal {
+    background: var(--bg-body);
+    width: 90%;
+    max-width: 450px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    padding: var(--space-xl);
+    position: relative;
+    border: 1px solid var(--color-grey-800);
+}
+
+.closeBtn {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    background: transparent;
+    border: none;
+    color: var(--color-grey-500);
+    padding: var(--space-xs);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.closeBtn:hover {
+    color: var(--color-white);
+    background: var(--color-black-light);
+}
+
+.modalTitle {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--color-white);
+    margin-bottom: var(--space-sm);
+    text-align: center;
+}
+
+.modalSubtitle {
+    color: var(--color-grey-400);
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+.formGroup {
+    margin-bottom: var(--space-lg);
+}
+
+.label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-white);
+    margin-bottom: var(--space-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.select {
+    width: 100%;
+    padding: var(--space-md);
+    background: var(--color-black-light);
+    border: 1px solid var(--color-grey-800);
+    color: var(--color-white);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+}
+
+.select:focus {
+    border-color: var(--color-gold);
+    outline: none;
+}
+
+/* Wait, background arrow color might break in light mode! Better use a local trick or adapt it.
+   Since this is a luxury brand, maybe we just use CSS trick using select or simple appearance. */
+
+.submitBtn {
+    width: 100%;
+    background: var(--color-white);
+    color: var(--color-black);
+    border: none;
+    padding: var(--space-md);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: var(--space-md);
+}
+
+.submitBtn:hover {
+    background: var(--color-grey-200);
+}
+
+.submitBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Result Screen */
+.resultContainer {
+    text-align: center;
+    padding: var(--space-md) 0;
+}
+
+.starIcon {
+    color: var(--color-gold);
+    margin: 0 auto var(--space-md);
+}
+
+.resultTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-white);
+    margin-bottom: var(--space-md);
+}
+
+.resultSize {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--color-white);
+    margin-bottom: var(--space-md);
+}
+
+.resultDesc {
+    font-size: 0.9rem;
+    color: var(--color-grey-400);
+    margin-bottom: var(--space-lg);
+    line-height: 1.6;
+}
+
+.confidenceBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    background: var(--color-black-light);
+    border: 1px solid var(--color-grey-800);
+    color: var(--color-grey-300);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    margin-bottom: var(--space-xl);
+}
+
+.confidenceBadge svg {
+    color: var(--color-success);
+}
+
+.applyBtn {
+    width: 100%;
+    background: var(--color-white);
+    color: var(--color-black);
+    border: none;
+    padding: var(--space-md);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.applyBtn:hover {
+    background: var(--color-grey-200);
+}

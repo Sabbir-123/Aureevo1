@@ -2,8 +2,9 @@
     display: inline-flex;
     align-items: center;
     border: 1px solid var(--color-grey-800);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     overflow: hidden;
+    background: var(--color-black);
 }
 
 .btn {
@@ -13,13 +14,14 @@
     width: 36px;
     height: 36px;
     background: transparent;
-    color: var(--color-grey-300);
+    color: var(--color-white);
     transition: all var(--transition-fast);
+    cursor: pointer;
+    border: none;
 }
 
 .btn:hover:not(:disabled) {
-    background: var(--color-grey-900);
-    color: var(--color-white);
+    background: var(--color-grey-800);
 }
 
 .btn:disabled {
