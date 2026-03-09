@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { getAdminOrder, updateOrderStatus } from '@/lib/admin-api';
-import { ArrowLeft, Phone, MapPin, User, Package } from 'lucide-react';
+import { ArrowLeft, Phone, MapPin, User, Package, Download } from 'lucide-react';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 export default function OrderDetailPage() {
     const params = useParams();
@@ -49,6 +51,109 @@ export default function OrderDetailPage() {
         );
     };
 
+    // Generate Formal PDF Invoice
+    const handleDownloadPDF = async () => {
+        const doc = new jsPDF('p', 'pt', 'a4');
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const margin = 40;
+        let yPos = margin;
+
+        // Header
+        doc.setFontSize(24);
+        doc.setFont('helvetica', 'bold');
+        doc.text('AUREEVO', margin, yPos);
+
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(100);
+        doc.text('Premium Fashion Apparel', margin, yPos + 15);
+        doc.text('Dhaka, Bangladesh', margin, yPos + 30);
+
+        // Settings
+        doc.setTextColor(0);
+
+        // Invoice Title
+        yPos += 70;
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bold');
+        doc.text('INVOICE', pageWidth - margin - 80, margin + 20);
+
+        // Order Details
+        doc.setFontSize(12);
+        doc.text(`Order ID: ${order.order_id}`, pageWidth - margin - 150, margin + 40);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`Date: ${new Date(order.created_at).toLocaleDateString()}`, pageWidth - margin - 150, margin + 55);
+        doc.text(`Status: ${order.status.toUpperCase()}`, pageWidth - margin - 150, margin + 70);
+
+        // Bill To
+        yPos += 20;
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('BILL TO:', margin, yPos);
+
+        yPos += 20;
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'normal');
+        doc.text(order.customer_name, margin, yPos);
+        yPos += 15;
+        doc.text(`Phone: ${order.customer_phone}`, margin, yPos);
+        yPos += 15;
+
+        // Handle address wrapping
+        const splitAddress = doc.splitTextToSize(order.customer_address, 250);
+        doc.text(splitAddress, margin, yPos);
+        yPos += (splitAddress.length * 15) + 30;
+
+        // Table Header
+        doc.setFillColor(240, 240, 240);
+        doc.rect(margin, yPos, pageWidth - (margin * 2), 25, 'F');
+
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Item Description', margin + 10, yPos + 17);
+        doc.text('Qty', margin + 270, yPos + 17);
+        doc.text('Unit Price', margin + 330, yPos + 17);
+        doc.text('Total', margin + 430, yPos + 17);
+
+        yPos += 40;
+
+        // Table Rows
+        doc.setFont('helvetica', 'normal');
+        order.order_items.forEach((item, index) => {
+            const description = `${item.product_name} (Size: ${item.size}, Color: ${item.color})`;
+            const splitDesc = doc.splitTextToSize(description, 240);
+
+            doc.text(splitDesc, margin + 10, yPos);
+            doc.text(item.quantity.toString(), margin + 275, yPos);
+            doc.text(`BDT ${Number(item.price).toFixed(2)}`, margin + 330, yPos);
+            doc.text(`BDT ${Number(item.price * item.quantity).toFixed(2)}`, margin + 430, yPos);
+
+            yPos += (splitDesc.length * 15) + 15;
+
+            // Add a subtle line between items
+            doc.setDrawColor(230, 230, 230);
+            doc.line(margin, yPos - 10, pageWidth - margin, yPos - 10);
+        });
+
+        // Totals
+        yPos += 20;
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Total Amount:', margin + 330, yPos);
+        doc.setTextColor(201, 169, 110); // Aureevo Gold
+        doc.text(`BDT ${Number(order.total_price).toFixed(2)}`, margin + 420, yPos);
+
+        // Footer message
+        yPos += 60;
+        doc.setTextColor(150);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'italic');
+        doc.text('Thank you for shopping with Aureevo. For any inquiries, please contact our support.', pageWidth / 2, yPos, { align: 'center' });
+
+        doc.save(`Aureevo_Invoice_${order.order_id}.pdf`);
+    };
+
     if (loading) return <div className="loadingSpinner">Loading order...</div>;
     if (!order) return <div className="emptyState"><h3>Order not found</h3></div>;
 
@@ -65,6 +170,13 @@ export default function OrderDetailPage() {
                     </p>
                 </div>
                 <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                    <button
+                        onClick={handleDownloadPDF}
+                        className="btnSecondary"
+                        style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem' }}
+                    >
+                        <Download size={14} /> Download PDF
+                    </button>
                     <span className={`badge ${order.status}`} style={{ fontSize: '0.85rem', padding: '6px 14px' }}>
                         {order.status}
                     </span>

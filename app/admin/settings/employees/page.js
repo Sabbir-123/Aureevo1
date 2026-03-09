@@ -15,6 +15,7 @@ export default function EmployeesPage() {
         name: '',
         email: '',
         password: '',
+        isFullAccess: false,
         permsProducts: false,
         permsOrders: false
     });
@@ -53,6 +54,7 @@ export default function EmployeesPage() {
                     name: formData.name,
                     email: formData.email,
                     password: formData.password,
+                    role: formData.isFullAccess ? 'root' : 'employee',
                     permissions
                 })
             });
@@ -64,7 +66,7 @@ export default function EmployeesPage() {
             toast.success('Employee created successfully');
             setEmployees([data, ...employees]);
             setShowForm(false);
-            setFormData({ name: '', email: '', password: '', permsProducts: false, permsOrders: false });
+            setFormData({ name: '', email: '', password: '', isFullAccess: false, permsProducts: false, permsOrders: false });
 
         } catch (err) {
             toast.error(err.message);
@@ -134,26 +136,42 @@ export default function EmployeesPage() {
 
                         <div style={{ marginBottom: '2rem' }}>
                             <label className="input-label">Access Permissions</label>
-                            <div style={{ display: 'flex', gap: '2rem', marginTop: '1rem' }}>
-                                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
-                                    <input
-                                        type="checkbox"
-                                        checked={formData.permsProducts}
-                                        onChange={(e) => setFormData({ ...formData, permsProducts: e.target.checked })}
-                                        style={{ width: '18px', height: '18px', cursor: 'pointer', accentColor: 'var(--color-gold)' }}
-                                    />
-                                    Products Page
-                                </label>
-                                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
-                                    <input
-                                        type="checkbox"
-                                        checked={formData.permsOrders}
-                                        onChange={(e) => setFormData({ ...formData, permsOrders: e.target.checked })}
-                                        style={{ width: '18px', height: '18px', cursor: 'pointer', accentColor: 'var(--color-gold)' }}
-                                    />
-                                    Orders Page
-                                </label>
-                            </div>
+
+                            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', marginTop: '1rem', padding: '1rem', background: 'rgba(201,169,110,0.1)', border: '1px solid rgba(201,169,110,0.3)', borderRadius: '8px' }}>
+                                <input
+                                    type="checkbox"
+                                    checked={formData.isFullAccess}
+                                    onChange={(e) => setFormData({ ...formData, isFullAccess: e.target.checked })}
+                                    style={{ width: '18px', height: '18px', cursor: 'pointer', accentColor: 'var(--color-gold)' }}
+                                />
+                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                    <span style={{ color: 'var(--color-gold)', fontWeight: 'bold' }}>Grant Full Access (Root Admin)</span>
+                                    <span style={{ fontSize: '0.8rem', color: 'var(--color-grey-500)' }}>This grants unrestricted access to all admin areas including Settings and Analytics.</span>
+                                </div>
+                            </label>
+
+                            {!formData.isFullAccess && (
+                                <div style={{ display: 'flex', gap: '2rem', marginTop: '1.5rem', marginLeft: '0.5rem' }}>
+                                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                                        <input
+                                            type="checkbox"
+                                            checked={formData.permsProducts}
+                                            onChange={(e) => setFormData({ ...formData, permsProducts: e.target.checked })}
+                                            style={{ width: '18px', height: '18px', cursor: 'pointer', accentColor: 'var(--color-gold)' }}
+                                        />
+                                        Products Page
+                                    </label>
+                                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                                        <input
+                                            type="checkbox"
+                                            checked={formData.permsOrders}
+                                            onChange={(e) => setFormData({ ...formData, permsOrders: e.target.checked })}
+                                            style={{ width: '18px', height: '18px', cursor: 'pointer', accentColor: 'var(--color-gold)' }}
+                                        />
+                                        Orders Page
+                                    </label>
+                                </div>
+                            )}
                         </div>
 
                         <button

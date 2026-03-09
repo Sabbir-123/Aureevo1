@@ -1,0 +1,201 @@
+.container {
+    padding: 2rem;
+    color: var(--text-color);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 300;
+    font-family: 'Georgia', serif;
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.select,
+.input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.tableContainer {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1000px;
+}
+
+.table th,
+.table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.table th {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    user-select: none;
+}
+
+.table th:hover {
+    color: white;
+}
+
+.productCell {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.productName {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.category {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: capitalize;
+}
+
+.metric {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+}
+
+.good {
+    color: #4ade80;
+}
+
+.warning {
+    color: #facc15;
+}
+
+.bad {
+    color: #ef4444;
+}
+
+/* Funnel Visualization inline */
+.funnelBar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    position: relative;
+}
+
+.funnelFill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: #c9a96e;
+    border-radius: 3px;
+}
+
+/* Modal Styling */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    padding: 2.5rem;
+    position: relative;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.funnelGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.funnelStep {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem 1rem;
+    border-radius: 8px;
+    position: relative;
+}
+
+.funnelStep:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    z-index: 10;
+}
+
+.funnelLabel {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.funnelValue {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+}
+
+.dropoff {
+    font-size: 0.8rem;
+    color: #ef4444;
+    margin-top: 0.5rem;
+}

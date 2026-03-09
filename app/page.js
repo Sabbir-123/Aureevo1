@@ -5,28 +5,29 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowDown, Sparkles } from 'lucide-react';
 import ProductCard from '@/components/ProductCard';
 import Hero from '@/components/Hero';
-import { getProducts } from '@/lib/api';
+import { getProducts, getCategories } from '@/lib/api';
 import { trackPageView } from '@/lib/pixelEvents';
 import styles from './page.module.css';
-
-const CATEGORIES = [
-  { key: 'all', label: 'All' },
-  { key: 'hoodies', label: 'Hoodies' },
-  { key: 'tshirts', label: 'T-Shirts' },
-];
 
 export default function HomePage() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState('all');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     trackPageView();
     async function load() {
-      const data = await getProducts();
+      const [data, cats] = await Promise.all([
+        getProducts(),
+        getCategories()
+      ]);
       setProducts(data);
       setFilteredProducts(data);
+      setFeaturedProducts(data.filter(p => p.is_featured));
+      setCategories(cats);
       setLoading(false);
     }
     load();
@@ -49,8 +50,37 @@ export default function HomePage() {
       {/* ===== HERO SECTION ===== */}
       <Hero />
 
+      {/* ===== FEATURED SECTION ===== */}
+      {!loading && featuredProducts.length > 0 && (
+        <section className={styles.shop} style={{ paddingBottom: '2rem' }}>
+          <div className="container">
+            <motion.div
+              className={styles.sectionHeader}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className={styles.sectionTag}>Highlighted</span>
+              <h2 className={styles.sectionTitle}>Featured Products</h2>
+              <p className={styles.sectionDesc}>
+                Handpicked premium quality essentials that define the Aureevo style.
+              </p>
+            </motion.div>
+
+            <motion.div className={styles.grid} layout>
+              <AnimatePresence mode="popLayout">
+                {featuredProducts.map((product, i) => (
+                  <ProductCard key={product.id} product={product} index={i} />
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </div>
+        </section>
+      )}
+
       {/* ===== SHOP SECTION ===== */}
-      <section id="shop" className={styles.shop}>
+      <section id="shop" className={styles.shop} style={{ paddingTop: (!loading && featuredProducts.length > 0) ? '2rem' : undefined }}>
         <div className="container">
           <motion.div
             className={styles.sectionHeader}
@@ -60,22 +90,22 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
           >
             <span className={styles.sectionTag}>The Collection</span>
-            <h2 className={styles.sectionTitle}>Curated Essentials</h2>
+            <h2 className={styles.sectionTitle}>All Products</h2>
             <p className={styles.sectionDesc}>
-              Each piece is meticulously designed and crafted from the finest materials.
+              Explore our full range of masterfully crafted apparel.
             </p>
           </motion.div>
 
           {/* Category Filter */}
           <div className={styles.filters}>
-            {CATEGORIES.map((cat) => (
+            {categories.map((cat) => (
               <button
-                key={cat.key}
-                className={`${styles.filterBtn} ${activeCategory === cat.key ? styles.filterActive : ''
+                key={cat.slug}
+                className={`${styles.filterBtn} ${activeCategory === cat.slug ? styles.filterActive : ''
                   }`}
-                onClick={() => setActiveCategory(cat.key)}
+                onClick={() => setActiveCategory(cat.slug)}
               >
-                {cat.label}
+                {cat.name}
               </button>
             ))}
           </div>

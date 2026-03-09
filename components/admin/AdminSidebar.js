@@ -11,7 +11,10 @@ export default function AdminSidebar({ onLogout, user, isOpen, onClose }) {
         { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, req: null },
         { href: '/admin/analytics', label: 'Analytics', icon: BarChart3, req: 'root' },
         { href: '/admin/products', label: 'Products', icon: Package, req: 'products' },
+        { href: '/admin/categories', label: 'Categories', icon: Package, req: 'products' },
         { href: '/admin/orders', label: 'Orders', icon: ShoppingCart, req: 'orders' },
+        { href: '/admin/custom-orders', label: 'Custom Orders', icon: ShoppingCart, req: 'orders' },
+        { href: '/admin/finance', label: 'Finance', icon: BarChart3, req: 'root' },
         { href: '/admin/settings/employees', label: 'Employees', icon: UsersIcon, req: 'root' },
         { href: '/admin/settings', label: 'Settings', icon: Settings, req: 'root' },
     ];

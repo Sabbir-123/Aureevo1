@@ -63,8 +63,11 @@ export default function Header() {
                         <Link href="/" className={`${styles.navLink} ${pathname === '/' ? styles.active : ''}`}>
                             Home
                         </Link>
-                        <Link href="/#shop" className={styles.navLink}>
+                        <Link href="/#shop" className={`${styles.navLink} ${pathname === '/#shop' ? styles.active : ''}`}>
                             Shop
+                        </Link>
+                        <Link href="/custom-order" className={`${styles.navLink} ${pathname === '/custom-order' ? styles.active : ''}`}>
+                            Custom Order
                         </Link>
                         {/* Mobile Only Links */}
                         <Link href="/cart" className={`${styles.navLink} ${styles.navLinkMobileCart}`}>

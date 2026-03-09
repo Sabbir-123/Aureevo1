@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createProduct, uploadProductImage } from '@/lib/admin-api';
+import { createProduct, uploadProductImage, getAdminCategories } from '@/lib/admin-api';
 import { ArrowLeft, Upload, X, Plus } from 'lucide-react';
 import Link from 'next/link';
 
@@ -13,11 +13,17 @@ export default function AddProductPage() {
     const [saving, setSaving] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState('');
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        getAdminCategories().then(({ data }) => setCategories(data || []));
+    }, []);
 
     const [form, setForm] = useState({
         name: '',
         category: 'hoodies',
         price: '',
+        cost_price: '',
         description: '',
         sizes: ['S', 'M', 'L', 'XL'],
         colors: [],
@@ -25,6 +31,11 @@ export default function AddProductPage() {
         images: [],
         is_visible: true,
         is_featured: false,
+        seo_title: '',
+        seo_description: '',
+        seo_keywords: '',
+        target_country: 'Bangladesh',
+        target_region: ''
     });
 
     // Color management
@@ -102,6 +113,7 @@ export default function AddProductPage() {
         const productData = {
             ...form,
             price: parseFloat(form.price),
+            cost_price: parseFloat(form.cost_price) || 0,
         };
 
         const { error: saveError } = await createProduct(productData);
@@ -150,12 +162,13 @@ export default function AddProductPage() {
                                 value={form.category}
                                 onChange={(e) => setForm({ ...form, category: e.target.value })}
                             >
-                                <option value="hoodies">Hoodie</option>
-                                <option value="tshirts">T-Shirt</option>
+                                {categories.filter(c => c.slug !== 'all').map(cat => (
+                                    <option key={cat.id} value={cat.slug}>{cat.name}</option>
+                                ))}
                             </select>
                         </div>
                         <div className="formGroup">
-                            <label>Price (৳) *</label>
+                            <label>Selling Price (৳) *</label>
                             <input
                                 className="formInput"
                                 type="number"
@@ -164,6 +177,17 @@ export default function AddProductPage() {
                                 value={form.price}
                                 onChange={(e) => setForm({ ...form, price: e.target.value })}
                                 required
+                            />
+                        </div>
+                        <div className="formGroup">
+                            <label>Cost Price (৳)</label>
+                            <input
+                                className="formInput"
+                                type="number"
+                                step="0.01"
+                                placeholder="0.00"
+                                value={form.cost_price}
+                                onChange={(e) => setForm({ ...form, cost_price: e.target.value })}
                             />
                         </div>
                     </div>
@@ -321,6 +345,65 @@ export default function AddProductPage() {
                         <button type="button" className="btnSecondary" onClick={addColor} style={{ height: 40 }}>
                             <Plus size={14} /> Add
                         </button>
+                    </div>
+                </div>
+
+                {/* SEO, GEO & AEO Configuration */}
+                <div className="adminSection">
+                    <h3>SEO & GEO Settings</h3>
+                    <p style={{ color: 'var(--admin-text-muted)', fontSize: '0.85rem', marginBottom: '1rem' }}>
+                        Optimize this product for search engines (SEO), local discovery (GEO), and answer engines (AEO).
+                    </p>
+
+                    <div className="formGroup">
+                        <label>SEO Title (Optional)</label>
+                        <input
+                            className="formInput"
+                            placeholder="e.g. Premium Oversized Black Hoodie | Aureevo BD"
+                            value={form.seo_title}
+                            onChange={(e) => setForm({ ...form, seo_title: e.target.value })}
+                        />
+                    </div>
+
+                    <div className="formGroup">
+                        <label>SEO Description (Answer Engine Friendly)</label>
+                        <textarea
+                            className="formInput"
+                            placeholder="Describe what the product is, its material, and who it's for in clear, direct language for AI search..."
+                            value={form.seo_description}
+                            onChange={(e) => setForm({ ...form, seo_description: e.target.value })}
+                            rows={3}
+                        />
+                    </div>
+
+                    <div className="formGroup">
+                        <label>SEO Keywords (Comma-separated)</label>
+                        <input
+                            className="formInput"
+                            placeholder="e.g. luxury streetwear, black hoodie men, winter fashion dhaka"
+                            value={form.seo_keywords}
+                            onChange={(e) => setForm({ ...form, seo_keywords: e.target.value })}
+                        />
+                    </div>
+
+                    <div className="formRow">
+                        <div className="formGroup" style={{ flex: 1 }}>
+                            <label>Target Country</label>
+                            <input
+                                className="formInput"
+                                value={form.target_country}
+                                onChange={(e) => setForm({ ...form, target_country: e.target.value })}
+                            />
+                        </div>
+                        <div className="formGroup" style={{ flex: 1 }}>
+                            <label>Target Region/City (Optional)</label>
+                            <input
+                                className="formInput"
+                                placeholder="e.g. Dhaka, Chittagong"
+                                value={form.target_region}
+                                onChange={(e) => setForm({ ...form, target_region: e.target.value })}
+                            />
+                        </div>
                     </div>
                 </div>
 

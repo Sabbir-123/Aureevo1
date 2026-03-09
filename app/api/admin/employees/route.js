@@ -54,7 +54,7 @@ export async function POST(request) {
     if (!rootAdmin) return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
 
     try {
-        const { name, email, password, permissions } = await request.json();
+        const { name, email, password, permissions, role } = await request.json();
 
         if (!email || !password || !name) {
             return NextResponse.json({ error: 'Name, email, and password required' }, { status: 400 });
@@ -63,15 +63,15 @@ export async function POST(request) {
         const bcrypt = (await import('bcryptjs')).default;
         const hash = await bcrypt.hash(password, 12);
 
-        // Explicitly force role to 'employee'. Root admins cannot spawn other root admins via this easy UI.
+        const newRole = role === 'root' ? 'root' : 'employee';
         const { data, error } = await supabase
             .from('admin_users')
             .insert({
                 name,
                 email,
                 password_hash: hash,
-                role: 'employee',
-                permissions: permissions || []
+                role: newRole,
+                permissions: newRole === 'root' ? [] : (permissions || [])
             })
             .select('id, email, name, role, permissions, created_at')
             .single();

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { getAdminProduct, updateProduct, uploadProductImage } from '@/lib/admin-api';
+import { getAdminProduct, updateProduct, uploadProductImage, getAdminCategories } from '@/lib/admin-api';
 import { ArrowLeft, Upload, X, Plus } from 'lucide-react';
 import Link from 'next/link';
 
@@ -17,11 +17,17 @@ export default function EditProductPage() {
     const [saving, setSaving] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState('');
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        getAdminCategories().then(({ data }) => setCategories(data || []));
+    }, []);
 
     const [form, setForm] = useState({
         name: '',
         category: 'hoodies',
         price: '',
+        cost_price: '',
         description: '',
         sizes: [],
         colors: [],
@@ -29,6 +35,11 @@ export default function EditProductPage() {
         images: [],
         is_visible: true,
         is_featured: false,
+        seo_title: '',
+        seo_description: '',
+        seo_keywords: '',
+        target_country: 'Bangladesh',
+        target_region: ''
     });
 
     const [newColorName, setNewColorName] = useState('');
@@ -46,6 +57,7 @@ export default function EditProductPage() {
                 name: data.name || '',
                 category: data.category || 'hoodies',
                 price: data.price?.toString() || '',
+                cost_price: data.cost_price?.toString() || '',
                 description: data.description || '',
                 sizes: data.sizes || [],
                 colors: data.colors || [],
@@ -53,6 +65,11 @@ export default function EditProductPage() {
                 images: data.images || [],
                 is_visible: data.is_visible ?? true,
                 is_featured: data.is_featured ?? false,
+                seo_title: data.seo_title || '',
+                seo_description: data.seo_description || '',
+                seo_keywords: data.seo_keywords || '',
+                target_country: data.target_country || 'Bangladesh',
+                target_region: data.target_region || ''
             });
             setLoading(false);
         };
@@ -119,6 +136,7 @@ export default function EditProductPage() {
         const { error: saveError } = await updateProduct(productId, {
             ...form,
             price: parseFloat(form.price),
+            cost_price: parseFloat(form.cost_price) || 0,
         });
 
         if (saveError) {
@@ -157,13 +175,18 @@ export default function EditProductPage() {
                         <div className="formGroup">
                             <label>Category *</label>
                             <select className="formInput" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}>
-                                <option value="hoodies">Hoodie</option>
-                                <option value="tshirts">T-Shirt</option>
+                                {categories.filter(c => c.slug !== 'all').map(cat => (
+                                    <option key={cat.id} value={cat.slug}>{cat.name}</option>
+                                ))}
                             </select>
                         </div>
-                        <div className="formGroup">
-                            <label>Price (৳) *</label>
+                        <div className="formGroup" style={{ flex: 1 }}>
+                            <label>Selling Price (৳) *</label>
                             <input className="formInput" type="number" step="0.01" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} required />
+                        </div>
+                        <div className="formGroup" style={{ flex: 1 }}>
+                            <label>Cost Price (৳)</label>
+                            <input className="formInput" type="number" step="0.01" value={form.cost_price} onChange={(e) => setForm({ ...form, cost_price: e.target.value })} />
                         </div>
                     </div>
                     <div className="formGroup">
@@ -257,6 +280,32 @@ export default function EditProductPage() {
                             <input type="color" value={newColorHex} onChange={(e) => setNewColorHex(e.target.value)} style={{ width: 44, height: 40, border: '1px solid var(--admin-border)', borderRadius: 'var(--admin-radius)', background: 'var(--admin-bg)', cursor: 'pointer' }} />
                         </div>
                         <button type="button" className="btnSecondary" onClick={addColor} style={{ height: 40 }}><Plus size={14} /> Add</button>
+                    </div>
+                </div>
+
+                <div className="adminSection">
+                    <h3>SEO & GEO Intelligence</h3>
+                    <div className="formGroup">
+                        <label>Meta Title</label>
+                        <input className="formInput" placeholder="AI-optimized title..." value={form.seo_title} onChange={(e) => setForm({ ...form, seo_title: e.target.value })} />
+                    </div>
+                    <div className="formGroup">
+                        <label>Meta Description</label>
+                        <textarea className="formInput" placeholder="AI-friendly product narrative..." value={form.seo_description} onChange={(e) => setForm({ ...form, seo_description: e.target.value })} />
+                    </div>
+                    <div className="formGroup">
+                        <label>Target Keywords (comma separated)</label>
+                        <input className="formInput" placeholder="hypebeast, luxury streetwear, dhaka" value={form.seo_keywords} onChange={(e) => setForm({ ...form, seo_keywords: e.target.value })} />
+                    </div>
+                    <div className="formRow">
+                        <div className="formGroup">
+                            <label>Target Country</label>
+                            <input className="formInput" value={form.target_country} onChange={(e) => setForm({ ...form, target_country: e.target.value })} />
+                        </div>
+                        <div className="formGroup">
+                            <label>Target Region (Optional)</label>
+                            <input className="formInput" placeholder="e.g., Dhaka, New York" value={form.target_region} onChange={(e) => setForm({ ...form, target_region: e.target.value })} />
+                        </div>
                     </div>
                 </div>
 

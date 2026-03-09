@@ -7,37 +7,39 @@ import styles from "./AISizeRecommender.module.css";
 
 // Simple height/weight matrix to size
 const sizeLogic = (heightStr, weightStr, fitPref) => {
-    // Basic mapping logic
-    // This is a simplified demo logic
+    // Asian Sizing Logic: Baseline weight is more dominant
+    // Mapping typically runs 1-2 sizes smaller than EU/US
     let tempSize = "M";
 
-    // Height rules (approximate)
-    if (heightStr === "Above 6'0\"") tempSize = "XL";
-    else if (heightStr === "5'10\" – 6'0\"" && weightStr !== "Under 55 kg") tempSize = "L";
+    // 1. Initial Weight Baseline (Asian Standard)
+    if (weightStr === "Under 55 kg") tempSize = "M";
+    else if (weightStr === "55 – 65 kg") tempSize = "L";
+    else if (weightStr === "65 – 75 kg") tempSize = "XL";
+    else if (weightStr === "75 – 85 kg") tempSize = "XXL";
+    else if (weightStr === "85+ kg") tempSize = "XXL"; // Target max available in chart
 
-    // Weight rules (approximate overrides)
-    if (weightStr === "85+ kg") tempSize = "XXL";
-    else if (weightStr === "75 – 85 kg" && tempSize !== "XXL") tempSize = "XL";
-    else if (weightStr === "Under 55 kg") tempSize = "S";
-
-    // Handle specific prompt rule
-    if (weightStr === "55 – 65 kg" && heightStr === "Under 5'4\"") tempSize = "S";
-    if (weightStr === "65 – 75 kg" && heightStr === "5'4\" – 5'7\"") tempSize = "M";
-    if (weightStr === "75 – 85 kg" && heightStr === "5'7\" – 5'10\"") tempSize = "L";
-
-    // Fit preference tweaks
-    if (fitPref === "Oversized Fit" && tempSize !== "XXL") {
-        const sizes = ["S", "M", "L", "XL", "XXL"];
+    // 2. Height Calibration (Length vs Volume)
+    // If user is tall for their weight, push up for length
+    if (heightStr === "Above 6'0\"" && tempSize !== "XXL") {
+        const sizes = ["M", "L", "XL", "XXL"];
         const currIndex = sizes.indexOf(tempSize);
         if (currIndex < sizes.length - 1) tempSize = sizes[currIndex + 1];
     }
-    if (fitPref === "Slim Fit" && tempSize !== "S") {
-        const sizes = ["S", "M", "L", "XL", "XXL"];
-        const currIndex = sizes.indexOf(tempSize);
-        if (currIndex > 0) tempSize = sizes[currIndex - 1];
-    }
+    // If user is shorter/stockier, weight baseline is usually sufficient, 
+    // but if very short, we don't downsize as Asian sizes are already shorter.
 
-    return tempSize;
+    // 3. Fit Preference Adjustments
+    const sizes = ["M", "L", "XL", "XXL"];
+    let currIndex = sizes.indexOf(tempSize);
+
+    if (fitPref === "Oversized Fit") {
+        if (currIndex < sizes.length - 1) currIndex++;
+    } else if (fitPref === "Slim Fit") {
+        if (currIndex > 0) currIndex--;
+    }
+    // "Regular Fit" keeps the target index
+
+    return sizes[currIndex];
 };
 
 export default function AISizeRecommender({ onApplyRecommendation }) {

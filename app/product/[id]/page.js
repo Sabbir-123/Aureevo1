@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { ShoppingBag, ArrowLeft, Check, Package, Truck, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getProduct, getProductImageUrl, getProducts } from '@/lib/api';
 import { trackViewContent, trackAddToCart } from '@/lib/pixelEvents';
+import { trackEvent } from '@/lib/analytics';
 import useCartStore from '@/store/cartStore';
 import toast from 'react-hot-toast';
 import ColorSwatch from '@/components/ColorSwatch';
@@ -14,7 +15,6 @@ import SizePicker from '@/components/SizePicker';
 import QuantitySelector from '@/components/QuantitySelector';
 import ProductCard from '@/components/ProductCard';
 import AISizeRecommender from '@/components/AISizeRecommender';
-import FitVisualizer from '@/components/FitVisualizer';
 import styles from './page.module.css';
 
 export default function ProductPage() {
@@ -47,6 +47,7 @@ export default function ProductPage() {
                 setSelectedColor(data.colors?.[0] || null);
                 setSelectedSize(data.sizes?.[0] || null);
                 trackViewContent(data);
+                trackEvent('product_view', { productId: data.id });
 
                 try {
                     const allProducts = await getProducts();
@@ -66,6 +67,7 @@ export default function ProductPage() {
         if (product.colors && product.colors.length > 0 && !selectedColor) return;
         addItem(product, selectedSize, selectedColor, quantity);
         trackAddToCart(product, quantity);
+        trackEvent('add_to_cart', { productId: product.id, quantity });
         setAdded(true);
         toast.success(`Added ${quantity} ${product.name} to cart`);
         setTimeout(() => setAdded(false), 2000);
@@ -112,8 +114,29 @@ export default function ProductPage() {
     const oldPrice = parseFloat((product.price * 1.3).toFixed(2));
     const discountPercentage = Math.round(((oldPrice - product.price) / oldPrice) * 100);
 
+    const jsonLd = {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": product.seo_title || product.name,
+        "image": images,
+        "description": product.seo_description || product.description,
+        "sku": product.id,
+        "offers": {
+            "@type": "Offer",
+            "url": typeof window !== 'undefined' ? window.location.href : '',
+            "priceCurrency": "BDT",
+            "price": product.price,
+            "availability": stockCount > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+            "itemCondition": "https://schema.org/NewCondition"
+        }
+    };
+
     return (
         <div className={styles.page}>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <div className="container">
                 <motion.button
                     className={styles.backBtn}
@@ -267,7 +290,7 @@ export default function ProductPage() {
                             </div>
                         </div>
 
-                        <FitVisualizer defaultRecommendedSize={recommendedSize || "L"} />
+
 
                         <p className={styles.description}>
                             {product.description || "Premium men's apparel made with high-quality combed compact cotton. Designed for a smooth feel, breathable comfort, and long-lasting durability. The mid-weight fabric offers a structured fit perfect for everyday wear."}
