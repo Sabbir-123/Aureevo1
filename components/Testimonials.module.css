@@ -1,0 +1,86 @@
+.section {
+    padding: var(--space-5xl) 0;
+    background: var(--color-grey-50);
+}
+
+.wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.iconWrapper {
+    margin-bottom: var(--space-2xl);
+    color: var(--color-grey-200);
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    min-height: 200px;
+    margin-bottom: var(--space-3xl);
+}
+
+.quote {
+    font-family: var(--font-heading);
+    font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+    line-height: 1.4;
+    color: var(--color-black);
+    margin-bottom: var(--space-xl);
+    font-weight: 300;
+}
+
+.authorGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.author {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-black);
+    letter-spacing: 0.05em;
+}
+
+.role {
+    font-size: 0.75rem;
+    color: var(--color-grey-500);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xl);
+}
+
+.controlBtn {
+    color: var(--color-grey-400);
+    transition: color 0.3s ease;
+    padding: 0.5rem;
+}
+
+.controlBtn:hover {
+    color: var(--color-black);
+}
+
+.indicators {
+    display: flex;
+    gap: 8px;
+}
+
+.indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-grey-200);
+    transition: all 0.3s ease;
+}
+
+.activeIndicator {
+    background: var(--color-black);
+    transform: scale(1.2);
+}

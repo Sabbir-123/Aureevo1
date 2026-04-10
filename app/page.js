@@ -2,11 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowDown, Sparkles } from 'lucide-react';
-import ProductCard from '@/components/ProductCard';
 import Hero from '@/components/Hero';
+import CategoryGrid from '@/components/CategoryGrid';
+import EditorialStory from '@/components/EditorialStory';
+import ValueProps from '@/components/ValueProps';
+import Testimonials from '@/components/Testimonials';
+import InstaGrid from '@/components/InstaGrid';
+import ProductCard from '@/components/ProductCard';
 import { getProducts, getCategories } from '@/lib/api';
 import { trackPageView } from '@/lib/pixelEvents';
+import Image from 'next/image';
 import styles from './page.module.css';
 
 export default function HomePage() {
@@ -26,7 +31,8 @@ export default function HomePage() {
       ]);
       setProducts(data);
       setFilteredProducts(data);
-      setFeaturedProducts(data.filter(p => p.is_featured));
+      // Filter for featured products or just take first 4 for display
+      setFeaturedProducts(data.filter(p => p.is_featured).slice(0, 4));
       setCategories(cats);
       setLoading(false);
     }
@@ -41,46 +47,39 @@ export default function HomePage() {
     }
   }, [activeCategory, products]);
 
-  const scrollToShop = () => {
-    document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <div className={styles.page}>
-      {/* ===== HERO SECTION ===== */}
+      {/* 1. HERO */}
       <Hero />
 
-      {/* ===== FEATURED SECTION ===== */}
-      {!loading && featuredProducts.length > 0 && (
-        <section className={styles.shop} style={{ paddingBottom: '2rem' }}>
-          <div className="container">
-            <motion.div
-              className={styles.sectionHeader}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <span className={styles.sectionTag}>Highlighted</span>
-              <h2 className={styles.sectionTitle}>Featured Products</h2>
-              <p className={styles.sectionDesc}>
-                Handpicked premium quality essentials that define the Aureevo style.
-              </p>
-            </motion.div>
+      {/* 2. CATEGORY GRID */}
+      <CategoryGrid />
 
-            <motion.div className={styles.grid} layout>
-              <AnimatePresence mode="popLayout">
-                {featuredProducts.map((product, i) => (
-                  <ProductCard key={product.id} product={product} index={i} />
-                ))}
-              </AnimatePresence>
-            </motion.div>
+      {/* 3. FEATURED DROPS */}
+      {!loading && featuredProducts.length > 0 && (
+        <section className={styles.featuredSection}>
+          <div className="container">
+            <div className={styles.sectionHeader}>
+              <span className={styles.sectionTag}>Trending Now</span>
+              <h2 className={styles.sectionTitle}>Featured Drops</h2>
+            </div>
+            <div className={styles.featuredGrid}>
+              {featuredProducts.map((product, i) => (
+                <ProductCard key={product.id} product={product} index={i} />
+              ))}
+            </div>
+            <div className={styles.viewAllWrapper}>
+              <a href="#shop" className={styles.viewAllBtn}>View All Drops</a>
+            </div>
           </div>
         </section>
       )}
 
-      {/* ===== SHOP SECTION ===== */}
-      <section id="shop" className={styles.shop} style={{ paddingTop: (!loading && featuredProducts.length > 0) ? '2rem' : undefined }}>
+      {/* 4. EDITORIAL STORY */}
+      <EditorialStory />
+
+      {/* 5. SHOP SECTION */}
+      <section id="shop" className={styles.shop}>
         <div className="container">
           <motion.div
             className={styles.sectionHeader}
@@ -91,18 +90,20 @@ export default function HomePage() {
           >
             <span className={styles.sectionTag}>The Collection</span>
             <h2 className={styles.sectionTitle}>All Products</h2>
-            <p className={styles.sectionDesc}>
-              Explore our full range of masterfully crafted apparel.
-            </p>
           </motion.div>
 
           {/* Category Filter */}
           <div className={styles.filters}>
+            <button
+              className={`${styles.filterBtn} ${activeCategory === 'all' ? styles.filterActive : ''}`}
+              onClick={() => setActiveCategory('all')}
+            >
+              All
+            </button>
             {categories.map((cat) => (
               <button
                 key={cat.slug}
-                className={`${styles.filterBtn} ${activeCategory === cat.slug ? styles.filterActive : ''
-                  }`}
+                className={`${styles.filterBtn} ${activeCategory === cat.slug ? styles.filterActive : ''}`}
                 onClick={() => setActiveCategory(cat.slug)}
               >
                 {cat.name}
@@ -111,28 +112,10 @@ export default function HomePage() {
           </div>
 
           {loading ? (
-            <motion.div
-              className={styles.loading}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <motion.div
-                className={styles.loaderBrand}
-                animate={{
-                  opacity: [0.4, 1, 0.4],
-                  scale: [0.98, 1, 0.98],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              >
-                AUREEVO
-              </motion.div>
-              <p className={styles.loaderText}>Curating the collection...</p>
-            </motion.div>
+            <div className={styles.loading}>
+               <div className={styles.loaderBrand}>AUREEVO</div>
+               <p className={styles.loaderText}>Curating...</p>
+            </div>
           ) : (
             <motion.div className={styles.grid} layout>
               <AnimatePresence mode="popLayout">
@@ -145,39 +128,39 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== BRAND FEEL SECTION ===== */}
-      <section className={styles.brandFeel}>
-        <div className={styles.brandFeelOverlay} />
-        <motion.div
-          className={styles.brandFeelContent}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <span className={styles.brandFeelTag}>The AUREEVO Promise</span>
-          <h2 className={styles.brandFeelTitle}>
-            Crafted for <span className={styles.heroAccent}>Distinction</span>
-          </h2>
-          <p className={styles.brandFeelText}>
-            Every thread tells a story of uncompromising quality. From Japanese cotton to French terry,
-            we source only the finest materials to create pieces that transcend seasons and trends.
-          </p>
-          <div className={styles.brandStats}>
-            <div className={styles.stat}>
-              <span className={styles.statNumber}>100%</span>
-              <span className={styles.statLabel}>Premium Cotton</span>
-            </div>
-            <div className={styles.stat}>
-              <span className={styles.statNumber}>48h</span>
-              <span className={styles.statLabel}>Express Delivery</span>
-            </div>
-            <div className={styles.stat}>
-              <span className={styles.statNumber}>∞</span>
-              <span className={styles.statLabel}>Timeless Style</span>
-            </div>
+      {/* 6. VALUE PROPS */}
+      <ValueProps />
+
+      {/* 7. TESTIMONIALS */}
+      <Testimonials />
+
+      {/* 8. INSTAGRAM GRID */}
+      <InstaGrid />
+
+      {/* 9. FINAL CTA */}
+      <section className={styles.finalCta}>
+          <div className={styles.ctaBg}>
+              <Image 
+                src="/cta_final.png" 
+                alt="Join the wave" 
+                fill 
+                className={styles.ctaImg}
+              />
+              <div className={styles.ctaOverlay} />
           </div>
-        </motion.div>
+          <motion.div 
+            className={styles.ctaContent}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+              <h2 className={styles.ctaTitle}>Join the New Wave</h2>
+              <p className={styles.ctaDesc}>Elevate your wardrobe with intentional design. Experience AUREEVO.</p>
+              <div className={styles.ctaButtons}>
+                  <a href="#shop" className={styles.ctaBtnPrimary}>Shop Collection</a>
+                  <a href="https://instagram.com/aureevobd" className={styles.ctaBtnSecondary}>Follow Us</a>
+              </div>
+          </motion.div>
       </section>
     </div>
   );

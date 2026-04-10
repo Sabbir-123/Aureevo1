@@ -1,5 +1,7 @@
+'use client';
+
 import Link from 'next/link';
-import { Instagram, Facebook, Mail } from 'lucide-react';
+import { Instagram, Facebook, Mail, ArrowRight } from 'lucide-react';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -11,53 +13,63 @@ export default function Footer() {
                         AUREEVO
                     </Link>
                     <p className={styles.tagline}>
-                        Premium men&apos;s fashion. Elevated essentials for the modern man.
+                        Premium men&apos;s fashion. Elevated essentials for the modern lifestyle. 
+                        Engineered in Bangladesh, inspired by the world.
                     </p>
-                    <a href="mailto:contact@aureevo.com" className={styles.link} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '1rem' }}>
-                        <Mail size={16} /> contact@aureevo.com
-                    </a>
+                    <div className={styles.newsletter}>
+                        <h4 className={styles.sectionTitle}>Join the Newsletter</h4>
+                        <div className={styles.inputGroup}>
+                            <input type="email" placeholder="Email Address" className={styles.input} />
+                            <button className={styles.inputBtn} aria-label="Subscribe">
+                                <ArrowRight size={18} />
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                <div className={styles.links}>
-                    <h4 className={styles.linksTitle}>Quick Links</h4>
-                    <Link href="/" className={styles.link}>Home</Link>
-                    <Link href="/#shop" className={styles.link}>Shop</Link>
-                    <Link href="/cart" className={styles.link}>Cart</Link>
-                </div>
+                <div className={styles.linksGrid}>
+                    <div className={styles.linkGroup}>
+                        <h4 className={styles.sectionTitle}>Shop</h4>
+                        <Link href="/#shop" className={styles.link}>New Arrivals</Link>
+                        <Link href="/#shop" className={styles.link}>Best Sellers</Link>
+                        <Link href="/#shop" className={styles.link}>Collections</Link>
+                        <Link href="/#shop" className={styles.link}>All Items</Link>
+                    </div>
 
-                <div className={styles.links}>
-                    <h4 className={styles.linksTitle}>Help</h4>
-                    <ul className={styles.linksList}>
-                        <li><Link href="/contact" className={styles.link}>Contact Us</Link></li>
-                        <li><Link href="/shipping" className={styles.link}>Shipping Information</Link></li>
-                        <li><Link href="/returns" className={styles.link}>Returns & Exchanges</Link></li>
-                        <li><Link href="/faq" className={styles.link}>FAQ</Link></li>
-                    </ul>
-                </div>
+                    <div className={styles.linkGroup}>
+                        <h4 className={styles.sectionTitle}>Company</h4>
+                        <Link href="/" className={styles.link}>Our Story</Link>
+                        <Link href="/" className={styles.link}>Lookbook</Link>
+                        <Link href="/" className={styles.link}>Ethical Practice</Link>
+                        <Link href="/contact" className={styles.link}>Contact</Link>
+                    </div>
 
-                <div className={styles.social}>
-                    <h4 className={styles.linksTitle}>Follow Us</h4>
-                    <div className={styles.socialIcons}>
-                        <a href="https://www.facebook.com/aureevo" aria-label="Facebook" className={styles.socialIcon} target="_blank" rel="noopener noreferrer">
-                            <Facebook size={18} strokeWidth={1.5} />
-                        </a>
-                        <a href="https://www.instagram.com/aureevobd" aria-label="Instagram" className={styles.socialIcon} target="_blank" rel="noopener noreferrer">
-                            <Instagram size={18} strokeWidth={1.5} />
-                        </a>
-                        <a href="https://tiktok.com/@aureevo" aria-label="TikTok" className={styles.socialIcon} target="_blank" rel="noopener noreferrer">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-                            </svg>
-                        </a>
+                    <div className={styles.linkGroup}>
+                        <h4 className={styles.sectionTitle}>Support</h4>
+                        <Link href="/shipping" className={styles.link}>Shipping</Link>
+                        <Link href="/returns" className={styles.link}>Returns</Link>
+                        <Link href="/faq" className={styles.link}>Help Center</Link>
+                        <Link href="/sizing" className={styles.link}>Size Guide</Link>
                     </div>
                 </div>
             </div>
 
             <div className={styles.bottom}>
-                <div className="container">
+                <div className={`container ${styles.bottomInner}`}>
                     <p className={styles.copyright}>
                         &copy; {new Date().getFullYear()} AUREEVO. All rights reserved.
                     </p>
+                    <div className={styles.socials}>
+                        <a href="https://instagram.com/aureevobd" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
+                            <Instagram size={18} strokeWidth={1.5} />
+                        </a>
+                        <a href="https://facebook.com/aureevo" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
+                            <Facebook size={18} strokeWidth={1.5} />
+                        </a>
+                        <a href="mailto:contact@aureevo.com" className={styles.socialLink}>
+                            <Mail size={18} strokeWidth={1.5} />
+                        </a>
+                    </div>
                 </div>
             </div>
         </footer>
