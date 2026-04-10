@@ -1,424 +1,285 @@
 /* ====================================================
-   AUREEVO — Editorial Hero (Zara / COS / Fear of God)
+   AUREEVO — TrendZone Minimal Hero
    ==================================================== */
 
-.heroSection {
+.hero {
     position: relative;
     width: 100%;
-    min-height: 100svh;
-    background: var(--hero-bg);
-    overflow: hidden;
+    min-height: 100vh;
+    background: var(--bg-body);
+    padding-top: 100px; /* Space for fixed header */
+    padding-bottom: 60px;
     display: flex;
-    align-items: stretch;
-}
-
-/* ── Left Content Pane ── */
-.contentPane {
-    position: relative;
-    z-index: 10;
-    width: 48%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: calc(var(--header-height) + 4rem) 6rem 6rem 6rem;
-}
-
-/* ── Right Image Pane ── */
-.imagePane {
-    position: relative;
-    width: 52%;
+    align-items: center;
     overflow: hidden;
 }
 
-.imagePane img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    transition: transform 8s ease;
+.container {
+    padding: 0 var(--container-padding);
 }
 
-.heroSection:hover .imagePane img {
-    transform: scale(1.04);
-}
-
-/* Subtle left gradient on image for blend */
-.imageFade {
+/* ── BADGE (Rotating Play Video) ── */
+.badgeWrapper {
     position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 80px;
-    background: linear-gradient(to right, var(--hero-bg), transparent);
-    z-index: 2;
-    pointer-events: none;
+    top: 15%;
+    left: 10%;
+    z-index: 10;
 }
 
-/* ── Top Collection Tag ── */
-.collectionTag {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.65rem;
-    font-weight: 500;
-    letter-spacing: 0.22em;
+.rotatingBadge {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    animation: rotate 12s linear infinite;
+}
+
+.badgeText {
+    font-size: 11px;
     text-transform: uppercase;
-    color: var(--color-grey-500);
-    margin-bottom: 2.5rem;
+    font-weight: 500;
+    fill: #000;
 }
 
-.tagLine {
-    width: 32px;
-    height: 1px;
-    background: var(--color-grey-400);
-    flex-shrink: 0;
-}
-
-/* ── Headline ── */
-.headline {
-    font-family: var(--font-heading);
-    font-size: clamp(3.5rem, 6vw, 7rem);
-    font-weight: 400;
-    color: var(--color-black);
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    margin-bottom: 2rem;
-}
-
-/* Italic accent word */
-.headlineItalic {
-    font-style: italic;
-    font-weight: 300;
-    color: var(--color-grey-700);
-}
-
-/* ── Subtext ── */
-.subtext {
-    font-size: 0.88rem;
-    font-weight: 300;
-    color: var(--color-grey-500);
-    letter-spacing: 0.06em;
-    margin-bottom: 3rem;
-    line-height: 1.5;
-}
-
-/* ── CTA Group ── */
-.ctaGroup {
+.playIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ── CONTENT (Headline) ── */
+.content {
+    text-align: center;
     margin-bottom: 4rem;
 }
 
-.btnPrimary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem 2.5rem;
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    background: var(--color-black);
-    color: #ffffff;
-    border: 1px solid var(--color-black);
-    cursor: pointer;
-    transition: all 0.35s ease;
-    position: relative;
-    overflow: hidden;
+.headline {
+    font-family: var(--font-body);
+    font-size: clamp(2rem, 5vw, 4.2rem);
+    font-weight: 400;
+    line-height: 1;
+    color: #000000;
+    letter-spacing: -0.02em;
 }
 
-.btnPrimary::before {
+.bold {
+    font-weight: 800;
+}
+
+/* ── GRID (Image Cards) ── */
+.gridContainer {
+    position: relative;
+    width: 100%;
+    margin-bottom: 6rem;
+}
+
+.loadingDot {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 24px;
+    background: #ff7d4520;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loadingDot::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #ff7d45;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.card {
+    position: relative;
+    border-radius: 40px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cardImageInner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.image {
+    object-fit: cover;
+    object-position: center 20%;
+    mix-blend-mode: multiply; /* Helps blend model with card color */
+    filter: contrast(1.1);
+}
+
+.sm { width: 170px; height: 240px; }
+.lg { width: 220px; height: 360px; }
+.xl { width: 280px; height: 420px; }
+
+.centerCard {
+    z-index: 5;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+}
+
+.ctaButton {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000000;
+    color: #ffffff;
+    padding: 12px 28px;
+    border-radius: 99px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: none;
+    white-space: nowrap;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.ctaButton:hover {
+    transform: translateX(-50%) translateY(-3px);
+    background: #222;
+}
+
+/* ── FOOTER (Testimonial & Feature) ── */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.testimonial {
+    display: flex;
+    gap: 15px;
+    max-width: 320px;
+}
+
+.quoteIcon {
+    font-size: 3rem;
+    color: #e0e0e0;
+    line-height: 1;
+    font-family: serif;
+}
+
+.testimonialText p {
+    font-size: 0.9rem;
+    color: #444;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+}
+
+.signature {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: #000;
+    position: relative;
+}
+
+.signature::after {
     content: '';
     position: absolute;
-    top: 0;
+    bottom: 2px;
     left: 0;
-    width: 0;
-    height: 100%;
-    background: var(--color-grey-800);
-    transition: width 0.35s ease;
-    z-index: 0;
-}
-
-.btnPrimary:hover::before { width: 100%; }
-.btnPrimary span { position: relative; z-index: 1; }
-
-.btnSecondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem 2.5rem;
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    background: transparent;
-    color: var(--color-black);
-    border: 1px solid var(--color-grey-300);
-    cursor: pointer;
-    transition: all 0.35s ease;
-}
-
-.btnSecondary:hover {
-    border-color: var(--color-black);
-    background: var(--color-black);
-    color: #ffffff;
-}
-
-/* ── Trust / Social Proof ── */
-.trustRow {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-}
-
-.trustBadge {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.stars {
-    display: flex;
-    gap: 2px;
-    color: var(--color-gold);
-}
-
-.trustText {
-    display: flex;
-    flex-direction: column;
-}
-
-.trustRating {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--color-black);
-    letter-spacing: 0.02em;
-}
-
-.trustCount {
-    font-size: 0.68rem;
-    font-weight: 300;
-    color: var(--color-grey-500);
-    letter-spacing: 0.05em;
-}
-
-/* Divider between trust items */
-.trustDivider {
-    width: 1px;
-    height: 28px;
-    background: var(--color-grey-200);
-}
-
-/* ── Floating Product Card ── */
-.floatingCard {
-    position: absolute;
-    bottom: 6%;
-    right: -5%;
-    width: 180px;
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: 4px;
-    padding: 1rem;
-    box-shadow: var(--shadow-lg);
-    z-index: 20;
-    animation: float 5s ease-in-out infinite;
-}
-
-.floatingCardImg {
     width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-    border-radius: 2px;
-    margin-bottom: 0.75rem;
-    background: var(--color-grey-100);
+    height: 6px;
+    background: rgba(255, 202, 40, 0.3);
+    z-index: -1;
 }
 
-.floatingCardTag {
-    font-size: 0.58rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-gold);
-    margin-bottom: 0.2rem;
+.featureBlock {
+    text-align: right;
 }
 
-.floatingCardTitle {
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--color-black);
-    margin-bottom: 0.4rem;
-    line-height: 1.3;
-}
-
-.floatingCardPrice {
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--color-grey-700);
-}
-
-/* ── Carousel Controls ── */
-.controls {
+.featureHeader {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    margin-top: 3rem;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-bottom: 0.5rem;
 }
 
-.dots {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-}
-
-.dot {
-    width: 20px;
-    height: 1px;
-    background: var(--color-grey-300);
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 0;
-    border-radius: 0;
-}
-
-.activeDot {
-    background: var(--color-black);
-    width: 32px;
-}
-
-.arrows { display: flex; gap: 8px; }
-
-.arrowBtn {
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--color-grey-200);
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--color-black);
-    transition: all 0.25s ease;
-    border-radius: 0;
-}
-
-.arrowBtn:hover {
-    background: var(--color-black);
-    color: #ffffff;
-    border-color: var(--color-black);
-}
-
-/* ── Slide counter ── */
-.slideCounter {
-    font-size: 0.68rem;
+.featureNum {
+    font-size: 2rem;
     font-weight: 300;
-    letter-spacing: 0.08em;
-    color: var(--color-grey-400);
-    margin-left: auto;
+    color: #000;
 }
 
-/* ── Dark mode overrides ── */
-[data-theme='dark'] .heroSection {
-    background: var(--hero-bg);
+.featureTag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #888;
+    letter-spacing: 0.1em;
 }
 
-[data-theme='dark'] .headline {
-    color: #f0f0ee;
+.featureArrow {
+    color: #000;
 }
 
-[data-theme='dark'] .headlineItalic {
-    color: #8a8a8a;
+.featureTitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #000;
 }
-
-[data-theme='dark'] .subtext {
-    color: #6e6e6e;
-}
-
-[data-theme='dark'] .btnPrimary {
-    background: #f0f0ee;
-    color: #0a0a0a;
-    border-color: #f0f0ee;
-}
-
-[data-theme='dark'] .btnPrimary::before {
-    background: #d0d0ce;
-}
-
-[data-theme='dark'] .btnSecondary {
-    color: #f0f0ee;
-    border-color: #3d3d3d;
-}
-
-[data-theme='dark'] .btnSecondary:hover {
-    background: #f0f0ee;
-    color: #0a0a0a;
-    border-color: #f0f0ee;
-}
-
-[data-theme='dark'] .collectionTag { color: #555555; }
-[data-theme='dark'] .tagLine { background: #555555; }
-[data-theme='dark'] .trustRating { color: #e0e0de; }
-[data-theme='dark'] .arrowBtn { border-color: #3d3d3d; color: #e0e0de; }
-[data-theme='dark'] .arrowBtn:hover { background: #e0e0de; color: #0a0a0a; border-color: #e0e0de; }
-[data-theme='dark'] .dot { background: #3d3d3d; }
-[data-theme='dark'] .activeDot { background: #e0e0de; }
-
-[data-theme='dark'] .imageFade {
-    background: linear-gradient(to right, var(--hero-bg), transparent);
-}
-
-[data-theme='dark'] .floatingCard {
-    background: rgba(20, 20, 18, 0.9);
-    border-color: rgba(255, 255, 255, 0.07);
-}
-
-[data-theme='dark'] .floatingCardTitle { color: #e0e0de; }
-[data-theme='dark'] .floatingCardPrice { color: #8a8a8a; }
 
 /* ========== RESPONSIVE ========== */
+@media (max-width: 1280px) {
+    .grid { gap: 10px; }
+    .xl { width: 240px; height: 380px; }
+    .lg { width: 190px; height: 320px; }
+    .sm { width: 140px; height: 210px; }
+}
+
 @media (max-width: 1024px) {
-    .contentPane {
-        padding: calc(var(--header-height) + 3rem) 4rem 4rem 4rem;
-    }
-    .headline { font-size: clamp(3rem, 5vw, 5rem); }
+    .badgeWrapper { display: none; }
+    .grid { flex-wrap: wrap; }
+    .card { margin: 0 !important; }
+    .footer { flex-direction: column; align-items: center; gap: 3rem; text-align: center; }
+    .testimonial { justify-content: center; }
+    .featureBlock { text-align: center; }
+    .featureHeader { justify-content: center; }
 }
 
 @media (max-width: 768px) {
-    .heroSection {
-        flex-direction: column;
-        min-height: 100svh;
-    }
-
-    .imagePane {
-        width: 100%;
-        height: 55vh;
-        order: 1;
-    }
-
-    .imageFade {
-        width: 100%;
-        height: 60px;
-        background: linear-gradient(to bottom, transparent, var(--hero-bg));
-        top: auto;
-        bottom: 0;
-        left: 0;
-    }
-
-    .contentPane {
-        width: 100%;
-        order: 2;
-        padding: 2.5rem 1.5rem 3rem;
-    }
-
-    .headline { font-size: clamp(3rem, 10vw, 5rem); }
-
-    .ctaGroup { flex-direction: column; align-items: stretch; }
-    .btnPrimary, .btnSecondary { text-align: center; }
-
-    .floatingCard { display: none; }
-
-    .trustRow { flex-wrap: wrap; gap: 1rem; }
+    .headline { font-size: 2.5rem; }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    .card { width: 100% !important; height: 260px !important; border-radius: 24px; }
+    .centerCard { grid-column: span 2; height: 340px !important; }
 }
