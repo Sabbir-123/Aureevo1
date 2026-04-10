@@ -16,7 +16,7 @@ const SLIDES = [
         description: 'Engineered for the modern man. Seamless constructs with adaptive fabrics for superior comfort and irreplaceable style.',
         primaryBtn: "Shop Men's Tees",
         secondaryBtn: 'Explore Collection',
-        image: '/mens_collection.png',
+        image: '/hero_mens_tee.png',
         productName: 'Aureevo Zero-G Tee',
     },
     {
@@ -27,7 +27,7 @@ const SLIDES = [
         description: 'Weather-resistant armor. Precision stitching meets stealth silhouettes built for the bold urban explorer.',
         primaryBtn: "Shop Men's Hoodies",
         secondaryBtn: 'View New Drops',
-        image: '/luxury_streetwear_model.png',
+        image: '/hero_mens_hoodie.png',
         productName: 'Aureevo Stealth Shell',
     },
     {
@@ -38,7 +38,7 @@ const SLIDES = [
         description: 'Laser-cut ventilation and absolute mobility. The ultimate everyday performance polo built to move as fast as you do.',
         primaryBtn: "Shop Men's Polos",
         secondaryBtn: 'Browse Lab',
-        image: '/hero_tshirt_model_1771349160711.png',
+        image: '/hero_mens_polo.png',
         productName: 'Aureevo V-Polo',
     }
 ];
@@ -206,6 +206,7 @@ export default function Hero() {
                                     src={slide.image}
                                     alt={slide.headline}
                                     fill
+                                    quality={100}
                                     priority={slide.id === 1}
                                     sizes="(max-width: 900px) 100vw, 50vw"
                                     className={styles.heroImage}
