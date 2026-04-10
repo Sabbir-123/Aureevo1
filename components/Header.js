@@ -3,12 +3,14 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ShoppingBag, Menu, X, Search, User } from 'lucide-react';
+import { ShoppingBag, Menu, X, Search, User, Sun, Moon } from 'lucide-react';
 import useCartStore from '@/store/cartStore';
 import useAuthStore from '@/store/authStore';
+import { useTheme } from '@/context/ThemeContext';
 import styles from './Header.module.css';
 
 export default function Header() {
+    const { theme, toggleTheme } = useTheme();
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const pathname = usePathname();
@@ -75,6 +77,15 @@ export default function Header() {
 
                 {/* RIGHT: ACTIONS */}
                 <div className={styles.actions}>
+                    {/* Theme Toggle */}
+                    <button 
+                        className={styles.themeBtn} 
+                        onClick={toggleTheme}
+                        aria-label="Toggle theme"
+                    >
+                        {theme === 'dark' ? <Sun size={19} strokeWidth={1.5} /> : <Moon size={19} strokeWidth={1.5} />}
+                    </button>
+
                     <button className={styles.iconBtn} aria-label="Search">
                         <Search size={19} strokeWidth={1.5} />
                     </button>

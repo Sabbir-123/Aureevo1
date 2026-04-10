@@ -46,6 +46,10 @@
     max-width: 300px;
 }
 
+.inputGroup, .inputPlaceholder {
+    height: 40px;
+}
+
 .inputGroup {
     display: flex;
     border-bottom: 1px solid var(--color-grey-800);

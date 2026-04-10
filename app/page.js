@@ -100,7 +100,7 @@ export default function HomePage() {
             >
               All
             </button>
-            {categories.map((cat) => (
+            {categories.filter(cat => cat.slug !== 'all' && cat.name.toLowerCase() !== 'all').map((cat) => (
               <button
                 key={cat.slug}
                 className={`${styles.filterBtn} ${activeCategory === cat.slug ? styles.filterActive : ''}`}

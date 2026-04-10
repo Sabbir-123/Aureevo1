@@ -1,10 +1,19 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Instagram, Facebook, Mail, ArrowRight } from 'lucide-react';
 import styles from './Footer.module.css';
 
 export default function Footer() {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const currentYear = mounted ? new Date().getFullYear() : "2026";
+
     return (
         <footer className={styles.footer}>
             <div className={`container ${styles.footerInner}`}>
@@ -18,12 +27,20 @@ export default function Footer() {
                     </p>
                     <div className={styles.newsletter}>
                         <h4 className={styles.sectionTitle}>Join the Newsletter</h4>
-                        <div className={styles.inputGroup}>
-                            <input type="email" placeholder="Email Address" className={styles.input} />
-                            <button className={styles.inputBtn} aria-label="Subscribe">
-                                <ArrowRight size={18} />
-                            </button>
-                        </div>
+                        {mounted ? (
+                            <div className={styles.inputGroup}>
+                                <input 
+                                    type="email" 
+                                    placeholder="Email Address" 
+                                    className={styles.input} 
+                                />
+                                <button className={styles.inputBtn} aria-label="Subscribe">
+                                    <ArrowRight size={18} />
+                                </button>
+                            </div>
+                        ) : (
+                            <div className={styles.inputPlaceholder} />
+                        )}
                     </div>
                 </div>
 
@@ -57,7 +74,7 @@ export default function Footer() {
             <div className={styles.bottom}>
                 <div className={`container ${styles.bottomInner}`}>
                     <p className={styles.copyright}>
-                        &copy; {new Date().getFullYear()} AUREEVO. All rights reserved.
+                        &copy; {currentYear} AUREEVO. All rights reserved.
                     </p>
                     <div className={styles.socials}>
                         <a href="https://instagram.com/aureevobd" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>

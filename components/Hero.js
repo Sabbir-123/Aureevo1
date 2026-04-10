@@ -3,14 +3,15 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Play } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from './Hero.module.css';
 
 const HERO_IMAGES = [
-    { id: 1, src: '/public/cat_hoodies.png', color: '#ff7d45', size: 'sm', offset: '20px' }, // Orange
-    { id: 2, src: '/public/editorial_campaign.png', color: '#45a049', size: 'lg', offset: '0px' }, // Green
-    { id: 3, src: '/public/hero_model_orange_1775842718205.png', color: '#ffca28', size: 'xl', isCenter: true }, // Yellow (using the generated one)
-    { id: 4, src: '/public/cat_shirts.png', color: '#31b8e6', size: 'lg', offset: '0px' }, // Blue
-    { id: 5, src: '/public/cat_tees.png', color: '#008080', size: 'sm', offset: '20px' }, // Teal
+    { id: 1, src: '/cat_hoodies.png', color: '#ff7d45', size: 'sm', offset: '20px' }, // Orange
+    { id: 2, src: '/editorial_campaign.png', color: '#45a049', size: 'lg', offset: '0px' }, // Green
+    { id: 3, src: '/hero_model_orange.png', color: '#ffca28', size: 'xl', isCenter: true }, // Yellow
+    { id: 4, src: '/cat_shirts.png', color: '#31b8e6', size: 'lg', offset: '0px' }, // Blue
+    { id: 5, src: '/cat_tees.png', color: '#008080', size: 'sm', offset: '20px' }, // Teal
 ];
 
 export default function Hero() {
@@ -82,9 +83,9 @@ export default function Hero() {
                                 </div>
                                 
                                 {img.isCenter && (
-                                    <button className={styles.ctaButton}>
+                                    <Link href="/#shop" className={styles.ctaButton}>
                                         Explore Collections ↗
-                                    </button>
+                                    </Link>
                                 )}
                             </motion.div>
                         ))}

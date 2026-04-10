@@ -84,18 +84,31 @@
 
   /* Layout */
   --max-width: 1440px;
-  --header-height: 68px;
+  --header-height: 80px;
   --container-padding: 2rem;
 
-  /* Body */
+  /* Theme: Light (Default) */
   --bg-body: #f8f8f8;
   --hero-bg: #f8f8f8;
   --text-primary: #0a0a0a;
-  --text-muted: #8a8a8a;
+  --text-muted: #666666;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --card-bg: #ffffff;
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-glow: transparent;
+}
 
-  /* Header */
-  --bg-header-scrolled: rgba(255, 255, 255, 0.96);
-  --border-header-scrolled: rgba(0, 0, 0, 0.06);
+[data-theme='dark'] {
+  --bg-body: #0a0a0a;
+  --hero-bg: #0a0a0a;
+  --text-primary: #f8f8f8;
+  --text-muted: #aaaaaa;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --card-bg: #141414;
+  --glass-bg: rgba(0, 0, 0, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-glow: 0 0 15px rgba(255, 255, 255, 0.1);
 }
 
 /* Dark mode stays minimal and editorial */

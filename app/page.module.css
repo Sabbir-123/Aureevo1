@@ -107,7 +107,7 @@
 .loading {
   display: flex;
   flex-direction: column;
-  items-center: center;
+  align-items: center;
   justify-content: center;
   gap: var(--space-lg);
   padding: var(--space-5xl) 0;
