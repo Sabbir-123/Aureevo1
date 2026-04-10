@@ -18,20 +18,20 @@
         box-shadow 0.5s ease;
 }
 
-/* ── LIGHT MODE TRANSPARENT STATE: force dark text so it shows on white bg ── */
-:global([data-theme='light']) .header.transparent .navLink {
-    color: #222;
+/* Nav background stays dark in both modes — text must always be white/gold */
+:global([data-theme='light']) .header .navLink {
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 
-:global([data-theme='light']) .header.transparent .logo {
-    color: #111;
+:global([data-theme='light']) .header .logo {
+    color: #ffffff !important;
 }
 
-:global([data-theme='light']) .header.transparent .iconBtn,
-:global([data-theme='light']) .header.transparent .cartBtn,
-:global([data-theme='light']) .header.transparent .themeBtn,
-:global([data-theme='light']) .header.transparent .menuBtn {
-    color: #222;
+:global([data-theme='light']) .header .iconBtn,
+:global([data-theme='light']) .header .cartBtn,
+:global([data-theme='light']) .header .themeBtn,
+:global([data-theme='light']) .header .menuBtn {
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 
 /* Transparent state (on hero at top) */
@@ -41,14 +41,7 @@
     box-shadow: none;
 }
 
-/* ── LIGHT MODE: frosted white when scrolled ── */
-:global([data-theme='light']) .scrolled {
-    background: rgba(255, 255, 255, 0.88);
-    backdrop-filter: blur(28px) saturate(180%);
-    -webkit-backdrop-filter: blur(28px) saturate(180%);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
-}
+/* Scrolled state – deep frosted obsidian glass (same in both modes) */
 
 /* Scrolled state – deep frosted obsidian glass */
 .scrolled {
