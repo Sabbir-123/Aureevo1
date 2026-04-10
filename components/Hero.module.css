@@ -1,466 +1,424 @@
 /* ====================================================
-   AUREEVO — Cinematic Video Hero
+   AUREEVO — Editorial Hero (Zara / COS / Fear of God)
    ==================================================== */
 
 .heroSection {
     position: relative;
     width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    min-height: 100svh;
+    background: var(--hero-bg);
     overflow: hidden;
-    font-family: var(--font-body);
-    color: var(--color-white);
+    display: flex;
+    align-items: stretch;
 }
 
-/* ── Video Background ── */
-.videoBg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
+/* ── Left Content Pane ── */
+.contentPane {
+    position: relative;
+    z-index: 10;
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: calc(var(--header-height) + 4rem) 6rem 6rem 6rem;
 }
 
-.videoBg video {
+/* ── Right Image Pane ── */
+.imagePane {
+    position: relative;
+    width: 52%;
+    overflow: hidden;
+}
+
+.imagePane img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center top;
+    transition: transform 8s ease;
 }
 
-/* Cinematic gradient overlay – obsidian fade from edges */
-.videoOverlay {
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(to right, rgba(7, 7, 9, 0.92) 0%, rgba(7, 7, 9, 0.4) 50%, rgba(7, 7, 9, 0.85) 100%),
-        linear-gradient(to bottom, rgba(7, 7, 9, 0.3) 0%, transparent 40%, rgba(7, 7, 9, 0.95) 100%);
-    z-index: 1;
+.heroSection:hover .imagePane img {
+    transform: scale(1.04);
 }
 
-/* Golden neon particle shimmer overlaid across video */
-.videoShimmer {
+/* Subtle left gradient on image for blend */
+.imageFade {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 80px;
+    background: linear-gradient(to right, var(--hero-bg), transparent);
     z-index: 2;
-    background: radial-gradient(ellipse at 70% 50%, rgba(255, 209, 102, 0.04) 0%, transparent 60%),
-                radial-gradient(ellipse at 20% 80%, rgba(201, 169, 110, 0.06) 0%, transparent 50%);
     pointer-events: none;
 }
 
-/* ── Scene Grid Layout ── */
-.sceneGrid {
-    position: relative;
-    z-index: 10;
-    width: 100%;
-    max-width: 1600px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 100vh;
-    padding: 0 4rem;
-    align-items: center;
-    gap: 4rem;
-}
-
-/* ── LEFT: Storytelling Content ── */
-.contentWrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    padding: 2rem 0;
-}
-
-.contentInner {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 580px;
-}
-
-.topLabel {
+/* ── Top Collection Tag ── */
+.collectionTag {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    font-size: 0.7rem;
-    text-transform: uppercase;
+    gap: 0.75rem;
+    font-size: 0.65rem;
+    font-weight: 500;
     letter-spacing: 0.22em;
-    font-weight: 700;
-    color: var(--color-gold-neon);
-    margin-bottom: 2rem;
-    opacity: 0.9;
+    text-transform: uppercase;
+    color: var(--color-grey-500);
+    margin-bottom: 2.5rem;
 }
 
-.labelLine {
-    width: 36px;
+.tagLine {
+    width: 32px;
     height: 1px;
-    background: linear-gradient(to right, var(--color-gold-neon), transparent);
+    background: var(--color-grey-400);
+    flex-shrink: 0;
 }
 
+/* ── Headline ── */
 .headline {
     font-family: var(--font-heading);
-    font-size: clamp(3rem, 5vw, 5.5rem);
-    font-weight: 300;
-    line-height: 1.0;
-    color: var(--color-white);
+    font-size: clamp(3.5rem, 6vw, 7rem);
+    font-weight: 400;
+    color: var(--color-black);
+    line-height: 0.95;
     letter-spacing: -0.02em;
-    margin-bottom: 1.25rem;
+    margin-bottom: 2rem;
 }
 
-/* Neon gold glow on the highlight word */
-.headlineHighlight {
-    font-weight: 600;
-    color: var(--color-gold-neon);
-    text-shadow: 0 0 30px var(--color-gold-glow), 0 0 60px rgba(255, 209, 102, 0.15);
-    display: block;
-    margin-top: 0.1em;
+/* Italic accent word */
+.headlineItalic {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--color-grey-700);
 }
 
-.description {
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: var(--color-grey-300);
-    margin-bottom: 2.5rem;
-    max-width: 480px;
+/* ── Subtext ── */
+.subtext {
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--color-grey-500);
+    letter-spacing: 0.06em;
+    margin-bottom: 3rem;
+    line-height: 1.5;
 }
 
-/* ── CTA Buttons ── */
+/* ── CTA Group ── */
 .ctaGroup {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 3.5rem;
-    flex-wrap: wrap;
+    margin-bottom: 4rem;
 }
 
 .btnPrimary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem 2.25rem;
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
+    padding: 1rem 2.5rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    border-radius: 4px;
+    background: var(--color-black);
+    color: #ffffff;
+    border: 1px solid var(--color-black);
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    background: linear-gradient(135deg, var(--color-gold-neon), var(--color-gold));
-    color: #07070a;
-    border: none;
-    box-shadow: var(--shadow-gold), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.35s ease;
     position: relative;
     overflow: hidden;
 }
 
-.btnPrimary::after {
+.btnPrimary::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: var(--color-grey-800);
+    transition: width 0.35s ease;
+    z-index: 0;
 }
 
-.btnPrimary:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-gold-heavy), 0 0 40px rgba(255, 209, 102, 0.3);
-}
-
-.btnPrimary:hover::after { opacity: 1; }
+.btnPrimary:hover::before { width: 100%; }
+.btnPrimary span { position: relative; z-index: 1; }
 
 .btnSecondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem 2.25rem;
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
+    padding: 1rem 2.5rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    border-radius: 4px;
+    background: transparent;
+    color: var(--color-black);
+    border: 1px solid var(--color-grey-300);
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    background: rgba(13, 13, 18, 0.5);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    color: var(--color-white);
-    border: 1px solid rgba(255, 209, 102, 0.18);
+    transition: all 0.35s ease;
 }
 
 .btnSecondary:hover {
-    border-color: var(--color-gold-neon);
-    color: var(--color-gold-neon);
-    background: rgba(255, 209, 102, 0.06);
-    box-shadow: 0 0 20px rgba(255, 209, 102, 0.1);
-    transform: translateY(-2px);
+    border-color: var(--color-black);
+    background: var(--color-black);
+    color: #ffffff;
 }
 
-/* ── Trust Badges ── */
-.trustBadges {
+/* ── Trust / Social Proof ── */
+.trustRow {
     display: flex;
-    gap: 1.5rem;
     align-items: center;
-    flex-wrap: wrap;
+    gap: 2rem;
 }
 
 .trustBadge {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--color-grey-400);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    gap: 0.75rem;
 }
 
-.trustIconWrapper {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: rgba(255, 209, 102, 0.08);
-    border: 1px solid rgba(255, 209, 102, 0.15);
+.stars {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 2px;
+    color: var(--color-gold);
 }
 
-.trustIconStar { color: var(--color-gold-neon); }
-.trustIcon { color: var(--color-grey-300); }
+.trustText {
+    display: flex;
+    flex-direction: column;
+}
+
+.trustRating {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-black);
+    letter-spacing: 0.02em;
+}
+
+.trustCount {
+    font-size: 0.68rem;
+    font-weight: 300;
+    color: var(--color-grey-500);
+    letter-spacing: 0.05em;
+}
+
+/* Divider between trust items */
+.trustDivider {
+    width: 1px;
+    height: 28px;
+    background: var(--color-grey-200);
+}
+
+/* ── Floating Product Card ── */
+.floatingCard {
+    position: absolute;
+    bottom: 6%;
+    right: -5%;
+    width: 180px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 4px;
+    padding: 1rem;
+    box-shadow: var(--shadow-lg);
+    z-index: 20;
+    animation: float 5s ease-in-out infinite;
+}
+
+.floatingCardImg {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 2px;
+    margin-bottom: 0.75rem;
+    background: var(--color-grey-100);
+}
+
+.floatingCardTag {
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 0.2rem;
+}
+
+.floatingCardTitle {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-black);
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+}
+
+.floatingCardPrice {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-grey-700);
+}
 
 /* ── Carousel Controls ── */
 .controls {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
     margin-top: 3rem;
 }
 
-.arrows { display: flex; gap: 0.5rem; }
-
-.arrowBtn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 209, 102, 0.2);
-    background: rgba(13, 13, 18, 0.5);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+.dots {
     display: flex;
+    gap: 6px;
     align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--color-grey-300);
-    transition: all 0.3s ease;
 }
-
-.arrowBtn:hover {
-    background: var(--color-gold-neon);
-    color: #07070a;
-    border-color: var(--color-gold-neon);
-    box-shadow: 0 0 20px var(--color-gold-glow);
-}
-
-.dots { display: flex; gap: 0.5rem; align-items: center; }
 
 .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.25);
+    width: 20px;
+    height: 1px;
+    background: var(--color-grey-300);
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
+    padding: 0;
+    border-radius: 0;
 }
 
 .activeDot {
-    background: var(--color-gold-neon);
-    width: 22px;
-    border-radius: 999px;
-    box-shadow: 0 0 12px var(--color-gold-glow);
+    background: var(--color-black);
+    width: 32px;
 }
 
-/* ── RIGHT: Model Image ── */
-.imageWrapper {
-    position: relative;
-    width: 100%;
-    height: 80vh;
+.arrows { display: flex; gap: 8px; }
+
+.arrowBtn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--color-grey-200);
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    color: var(--color-black);
+    transition: all 0.25s ease;
+    border-radius: 0;
 }
 
-.imageInner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-.imageContainer {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-.heroImage {
-    object-fit: contain;
-    object-position: center;
-    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5));
-}
-
-/* Floating Product Card — Glassmorphism */
-.floatingCard {
-    position: absolute;
-    bottom: 12%;
-    left: -8%;
-    background: rgba(13, 13, 18, 0.65);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    padding: 1.25rem 1.5rem;
-    border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 209, 102, 0.12);
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    z-index: 20;
-    min-width: 220px;
-    border: 1px solid rgba(255, 209, 102, 0.1);
-    animation: float 4s ease-in-out infinite;
-}
-
-.floatingTag {
-    font-size: 0.6rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 700;
-    color: #07070a;
-    background: linear-gradient(135deg, var(--color-gold-neon), var(--color-gold));
-    padding: 0.25rem 0.7rem;
-    border-radius: 999px;
-    align-self: flex-start;
-    margin-bottom: 0.25rem;
-}
-
-.floatingTitle {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--color-white);
-    margin: 0;
-}
-
-.floatingRating {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.stars {
-    display: flex;
-    color: var(--color-gold-neon);
-    gap: 0.1rem;
-}
-
-.ratingScore {
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--color-grey-400);
-}
-
-/* Light theme adjustments */
-:global([data-theme='light']) .floatingCard {
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-:global([data-theme='light']) .floatingTitle {
-    color: #0a0a0a;
-}
-
-/* ── RESPONSIVE ── */
-@media (max-width: 1200px) {
-    .sceneGrid { padding: 0 2rem; gap: 2rem; }
-    .headline { font-size: clamp(2.5rem, 3.8vw, 4rem); }
-    .floatingCard { left: 0; bottom: 5%; }
-}
-
-@media (max-width: 900px) {
-    .heroSection { min-height: 100dvh; }
-
-    .sceneGrid {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        padding: 2rem 1.5rem 4rem;
-        gap: 0;
-        min-height: 100dvh;
-    }
-
-    .contentWrapper {
-        order: 2;
-        padding-top: 2rem;
-    }
-
-    .imageWrapper {
-        order: 1;
-        height: 45vh;
-        min-height: 300px;
-    }
-
-    .floatingCard {
-        left: 50%;
-        transform: translateX(-50%) !important;
-        animation: none;
-        bottom: -5%;
-    }
-
-    .controls {
-        justify-content: space-between;
-        width: 100%;
-    }
-}
-
-/* ====================================================
-   LIGHT MODE OVERRIDES
-   Hero always has a dark video/image backdrop, so text stays WHITE
-   ==================================================== */
-
-/* Keep the dark overlay active in light mode too */
-:global([data-theme='light']) .videoOverlay {
-    background:
-        linear-gradient(to right, rgba(7, 7, 9, 0.90) 0%, rgba(7, 7, 9, 0.35) 50%, rgba(7, 7, 9, 0.80) 100%),
-        linear-gradient(to bottom, rgba(7, 7, 9, 0.25) 0%, transparent 40%, rgba(7, 7, 9, 0.95) 100%);
-}
-
-/* All hero text stays white — dark backdrop handles contrast */
-:global([data-theme='light']) .topLabel {
-    color: var(--color-gold-neon);
-}
-
-:global([data-theme='light']) .headline {
+.arrowBtn:hover {
+    background: var(--color-black);
     color: #ffffff;
+    border-color: var(--color-black);
 }
 
-:global([data-theme='light']) .headlineHighlight {
-    color: var(--color-gold-neon);
-    text-shadow: 0 0 30px var(--color-gold-glow);
+/* ── Slide counter ── */
+.slideCounter {
+    font-size: 0.68rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--color-grey-400);
+    margin-left: auto;
 }
 
-:global([data-theme='light']) .description {
-    color: rgba(255, 255, 255, 0.8);
+/* ── Dark mode overrides ── */
+[data-theme='dark'] .heroSection {
+    background: var(--hero-bg);
 }
 
-:global([data-theme='light']) .trustBadge {
-    color: rgba(255, 255, 255, 0.7);
+[data-theme='dark'] .headline {
+    color: #f0f0ee;
 }
 
-:global([data-theme='light']) .ratingScore {
-    color: rgba(255, 255, 255, 0.6);
+[data-theme='dark'] .headlineItalic {
+    color: #8a8a8a;
 }
 
-@media (max-width: 600px) {
-    .sceneGrid { padding: 2rem 1rem 5rem; }
-    .headline { font-size: 2.5rem; }
+[data-theme='dark'] .subtext {
+    color: #6e6e6e;
+}
+
+[data-theme='dark'] .btnPrimary {
+    background: #f0f0ee;
+    color: #0a0a0a;
+    border-color: #f0f0ee;
+}
+
+[data-theme='dark'] .btnPrimary::before {
+    background: #d0d0ce;
+}
+
+[data-theme='dark'] .btnSecondary {
+    color: #f0f0ee;
+    border-color: #3d3d3d;
+}
+
+[data-theme='dark'] .btnSecondary:hover {
+    background: #f0f0ee;
+    color: #0a0a0a;
+    border-color: #f0f0ee;
+}
+
+[data-theme='dark'] .collectionTag { color: #555555; }
+[data-theme='dark'] .tagLine { background: #555555; }
+[data-theme='dark'] .trustRating { color: #e0e0de; }
+[data-theme='dark'] .arrowBtn { border-color: #3d3d3d; color: #e0e0de; }
+[data-theme='dark'] .arrowBtn:hover { background: #e0e0de; color: #0a0a0a; border-color: #e0e0de; }
+[data-theme='dark'] .dot { background: #3d3d3d; }
+[data-theme='dark'] .activeDot { background: #e0e0de; }
+
+[data-theme='dark'] .imageFade {
+    background: linear-gradient(to right, var(--hero-bg), transparent);
+}
+
+[data-theme='dark'] .floatingCard {
+    background: rgba(20, 20, 18, 0.9);
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme='dark'] .floatingCardTitle { color: #e0e0de; }
+[data-theme='dark'] .floatingCardPrice { color: #8a8a8a; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+    .contentPane {
+        padding: calc(var(--header-height) + 3rem) 4rem 4rem 4rem;
+    }
+    .headline { font-size: clamp(3rem, 5vw, 5rem); }
+}
+
+@media (max-width: 768px) {
+    .heroSection {
+        flex-direction: column;
+        min-height: 100svh;
+    }
+
+    .imagePane {
+        width: 100%;
+        height: 55vh;
+        order: 1;
+    }
+
+    .imageFade {
+        width: 100%;
+        height: 60px;
+        background: linear-gradient(to bottom, transparent, var(--hero-bg));
+        top: auto;
+        bottom: 0;
+        left: 0;
+    }
+
+    .contentPane {
+        width: 100%;
+        order: 2;
+        padding: 2.5rem 1.5rem 3rem;
+    }
+
+    .headline { font-size: clamp(3rem, 10vw, 5rem); }
+
     .ctaGroup { flex-direction: column; align-items: stretch; }
-    .btnPrimary, .btnSecondary { width: 100%; text-align: center; }
-    .trustBadges { gap: 1rem; }
+    .btnPrimary, .btnSecondary { text-align: center; }
+
+    .floatingCard { display: none; }
+
+    .trustRow { flex-wrap: wrap; gap: 1rem; }
 }
