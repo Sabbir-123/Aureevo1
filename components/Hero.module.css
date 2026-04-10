@@ -1,147 +1,202 @@
 /* ====================================================
-   AUREEVO — Premium Streetwear Carousel Hero
+   AUREEVO — Cinematic Video Hero
    ==================================================== */
 
 .heroSection {
     position: relative;
     width: 100%;
-    /* 80-90% viewport height as requested, excluding navbar */
-    min-height: clamp(600px, 90vh, 900px);
-    padding-top: 6rem;
-    /* Push content down below global navbar */
-    background: var(--bg-body);
-    /* Supports Light/Dark mode */
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     font-family: var(--font-body);
     color: var(--color-white);
-    transition: background 0.4s ease, color 0.4s ease;
 }
 
-.carouselContainer {
+/* ── Video Background ── */
+.videoBg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.videoBg video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+}
+
+/* Cinematic gradient overlay – obsidian fade from edges */
+.videoOverlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(to right, rgba(7, 7, 9, 0.92) 0%, rgba(7, 7, 9, 0.4) 50%, rgba(7, 7, 9, 0.85) 100%),
+        linear-gradient(to bottom, rgba(7, 7, 9, 0.3) 0%, transparent 40%, rgba(7, 7, 9, 0.95) 100%);
+    z-index: 1;
+}
+
+/* Golden neon particle shimmer overlaid across video */
+.videoShimmer {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: radial-gradient(ellipse at 70% 50%, rgba(255, 209, 102, 0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(201, 169, 110, 0.06) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* ── Scene Grid Layout ── */
+.sceneGrid {
+    position: relative;
+    z-index: 10;
     width: 100%;
     max-width: 1600px;
-    height: 100%;
-    margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
     padding: 0 4rem;
     align-items: center;
     gap: 4rem;
 }
 
-/* ====================================================
-   LEFT CONTENT: MESSAGING & CTA
-   ==================================================== */
+/* ── LEFT: Storytelling Content ── */
 .contentWrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
-    z-index: 10;
-    height: 100%;
+    padding: 2rem 0;
 }
 
 .contentInner {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 600px;
+    max-width: 580px;
 }
 
 .topLabel {
     display: flex;
     align-items: center;
     gap: 1rem;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.22em;
     font-weight: 700;
-    color: var(--color-grey-500);
+    color: var(--color-gold-neon);
     margin-bottom: 2rem;
+    opacity: 0.9;
 }
 
 .labelLine {
-    width: 40px;
-    height: 2px;
-    background-color: var(--color-gold);
-    /* Used to be lime green, matching global gold */
+    width: 36px;
+    height: 1px;
+    background: linear-gradient(to right, var(--color-gold-neon), transparent);
 }
 
 .headline {
-    font-size: clamp(2.5rem, 4vw, 4rem);
-    font-weight: 800;
-    line-height: 1.1;
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.0;
     color: var(--color-white);
     letter-spacing: -0.02em;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
 }
 
+/* Neon gold glow on the highlight word */
 .headlineHighlight {
-    font-weight: 400;
-    color: var(--color-grey-400);
+    font-weight: 600;
+    color: var(--color-gold-neon);
+    text-shadow: 0 0 30px var(--color-gold-glow), 0 0 60px rgba(255, 209, 102, 0.15);
+    display: block;
+    margin-top: 0.1em;
 }
 
 .description {
-    font-size: 1.1rem;
-    line-height: 1.6;
+    font-size: 1.05rem;
+    line-height: 1.7;
     color: var(--color-grey-300);
     margin-bottom: 2.5rem;
-    max-width: 90%;
+    max-width: 480px;
 }
 
-/* CTA Buttons */
+/* ── CTA Buttons ── */
 .ctaGroup {
     display: flex;
     align-items: center;
     gap: 1rem;
     margin-bottom: 3.5rem;
+    flex-wrap: wrap;
 }
 
-.btnPrimary,
+.btnPrimary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2.25rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    background: linear-gradient(135deg, var(--color-gold-neon), var(--color-gold));
+    color: #07070a;
+    border: none;
+    box-shadow: var(--shadow-gold), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.btnPrimary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.btnPrimary:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-gold-heavy), 0 0 40px rgba(255, 209, 102, 0.3);
+}
+
+.btnPrimary:hover::after { opacity: 1; }
+
 .btnSecondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem 2rem;
-    font-size: 0.9rem;
+    padding: 1rem 2.25rem;
+    font-size: 0.82rem;
     font-weight: 600;
-    letter-spacing: 0.05em;
-    border-radius: 999px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 4px;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.btnPrimary {
-    background: var(--color-black-soft);
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    background: rgba(13, 13, 18, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     color: var(--color-white);
-    border: 2px solid var(--color-black-soft);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.btnPrimary:hover {
-    background: var(--color-gold);
-    /* Lime green alternative */
-    color: var(--color-black);
-    border-color: var(--color-gold);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px var(--color-gold-muted);
-}
-
-.btnSecondary {
-    background: transparent;
-    color: var(--color-white);
-    border: 2px solid var(--color-grey-700);
+    border: 1px solid rgba(255, 209, 102, 0.18);
 }
 
 .btnSecondary:hover {
-    border-color: var(--color-white);
-    background: var(--color-black-soft);
+    border-color: var(--color-gold-neon);
+    color: var(--color-gold-neon);
+    background: rgba(255, 209, 102, 0.06);
+    box-shadow: 0 0 20px rgba(255, 209, 102, 0.1);
+    transform: translateY(-2px);
 }
 
-/* Trust Indicators */
+/* ── Trust Badges ── */
 .trustBadges {
     display: flex;
     gap: 1.5rem;
@@ -152,98 +207,85 @@
 .trustBadge {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
+    gap: 0.6rem;
+    font-size: 0.72rem;
     font-weight: 600;
     color: var(--color-grey-400);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
 }
 
 .trustIconWrapper {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    background: var(--color-black-light);
+    background: rgba(255, 209, 102, 0.08);
+    border: 1px solid rgba(255, 209, 102, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.trustIconStar {
-    color: var(--color-gold);
-}
+.trustIconStar { color: var(--color-gold-neon); }
+.trustIcon { color: var(--color-grey-300); }
 
-.trustIcon {
-    color: var(--color-white);
-}
-
-/* Carousel Controls */
+/* ── Carousel Controls ── */
 .controls {
-    margin-top: auto;
     display: flex;
     align-items: center;
     gap: 2rem;
-    padding-bottom: 2rem;
-    position: absolute;
-    bottom: 0;
+    margin-top: 3rem;
 }
 
-.arrows {
-    display: flex;
-    gap: 0.5rem;
-}
+.arrows { display: flex; gap: 0.5rem; }
 
 .arrowBtn {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    border: 1px solid var(--color-grey-700);
-    background: transparent;
+    border: 1px solid rgba(255, 209, 102, 0.2);
+    background: rgba(13, 13, 18, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: var(--color-white);
+    color: var(--color-grey-300);
     transition: all 0.3s ease;
 }
 
 .arrowBtn:hover {
-    background: var(--color-white);
-    color: var(--color-black);
-    border-color: var(--color-white);
+    background: var(--color-gold-neon);
+    color: #07070a;
+    border-color: var(--color-gold-neon);
+    box-shadow: 0 0 20px var(--color-gold-glow);
 }
 
-.dots {
-    display: flex;
-    gap: 0.5rem;
-}
+.dots { display: flex; gap: 0.5rem; align-items: center; }
 
 .dot {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: var(--color-grey-700);
+    background: rgba(255, 255, 255, 0.25);
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .activeDot {
-    background: var(--color-white);
-    width: 24px;
+    background: var(--color-gold-neon);
+    width: 22px;
     border-radius: 999px;
+    box-shadow: 0 0 12px var(--color-gold-glow);
 }
 
-
-/* ====================================================
-   RIGHT CONTENT: IMAGE & CARDS
-   ==================================================== */
+/* ── RIGHT: Model Image ── */
 .imageWrapper {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -252,7 +294,7 @@
 .imageInner {
     position: relative;
     width: 100%;
-    height: 90%;
+    height: 100%;
 }
 
 .imageContainer {
@@ -264,41 +306,37 @@
 .heroImage {
     object-fit: contain;
     object-position: center;
-    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.1));
+    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5));
 }
 
-/* Floating Product Card */
+/* Floating Product Card — Glassmorphism */
 .floatingCard {
     position: absolute;
-    bottom: 10%;
-    left: -10%;
-    background: var(--color-black-soft);
-    backdrop-filter: blur(12px);
+    bottom: 12%;
+    left: -8%;
+    background: rgba(13, 13, 18, 0.65);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     padding: 1.25rem 1.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 209, 102, 0.12);
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
     z-index: 20;
     min-width: 220px;
-    border: 1px solid var(--color-grey-800);
-}
-
-/* Light mode specific adjustment for floating card */
-:global([data-theme='light']) .floatingCard {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 209, 102, 0.1);
+    animation: float 4s ease-in-out infinite;
 }
 
 .floatingTag {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
     font-weight: 700;
-    color: var(--color-black);
-    background: var(--color-gold);
-    padding: 0.2rem 0.6rem;
+    color: #07070a;
+    background: linear-gradient(135deg, var(--color-gold-neon), var(--color-gold));
+    padding: 0.25rem 0.7rem;
     border-radius: 999px;
     align-self: flex-start;
     margin-bottom: 0.25rem;
@@ -306,7 +344,7 @@
 
 .floatingTitle {
     font-size: 0.95rem;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--color-white);
     margin: 0;
 }
@@ -319,97 +357,72 @@
 
 .stars {
     display: flex;
-    color: var(--color-gold);
+    color: var(--color-gold-neon);
     gap: 0.1rem;
 }
 
 .ratingScore {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
     color: var(--color-grey-400);
 }
 
+/* Light theme adjustments */
+:global([data-theme='light']) .floatingCard {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
 
-/* ====================================================
-   RESPONSIVE DESIGN
-   ==================================================== */
+:global([data-theme='light']) .floatingTitle {
+    color: #0a0a0a;
+}
+
+/* ── RESPONSIVE ── */
 @media (max-width: 1200px) {
-    .carouselContainer {
-        padding: 0 2rem;
-        gap: 2rem;
-    }
-
-    .headline {
-        font-size: clamp(2.2rem, 3.5vw, 3rem);
-    }
-
-    .floatingCard {
-        left: 0;
-        bottom: 5%;
-    }
+    .sceneGrid { padding: 0 2rem; gap: 2rem; }
+    .headline { font-size: clamp(2.5rem, 3.8vw, 4rem); }
+    .floatingCard { left: 0; bottom: 5%; }
 }
 
 @media (max-width: 900px) {
-    .heroSection {
-        height: auto;
-        padding: 4rem 0;
-    }
+    .heroSection { min-height: 100dvh; }
 
-    .carouselContainer {
+    .sceneGrid {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
-        gap: 3rem;
+        padding: 2rem 1.5rem 4rem;
+        gap: 0;
+        min-height: 100dvh;
     }
 
     .contentWrapper {
         order: 2;
-        padding-bottom: 2rem;
-    }
-
-    .controls {
-        position: relative;
-        bottom: auto;
-        margin-top: 3rem;
-        justify-content: space-between;
-        width: 100%;
-        max-width: 600px;
+        padding-top: 2rem;
     }
 
     .imageWrapper {
         order: 1;
-        height: 50vh;
-        min-height: 400px;
+        height: 45vh;
+        min-height: 300px;
     }
 
     .floatingCard {
         left: 50%;
         transform: translateX(-50%) !important;
+        animation: none;
         bottom: -5%;
+    }
+
+    .controls {
+        justify-content: space-between;
+        width: 100%;
     }
 }
 
 @media (max-width: 600px) {
-    .carouselContainer {
-        padding: 0 1.5rem;
-    }
-
-    .headline {
-        font-size: 2.2rem;
-    }
-
-    .ctaGroup {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .btnPrimary,
-    .btnSecondary {
-        width: 100%;
-    }
-
-    .trustBadges {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-    }
+    .sceneGrid { padding: 2rem 1rem 5rem; }
+    .headline { font-size: 2.5rem; }
+    .ctaGroup { flex-direction: column; align-items: stretch; }
+    .btnPrimary, .btnSecondary { width: 100%; text-align: center; }
+    .trustBadges { gap: 1rem; }
 }
