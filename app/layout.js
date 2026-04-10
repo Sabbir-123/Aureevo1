@@ -1,7 +1,7 @@
 import './globals.css';
 import ClientLayout from '@/components/ClientLayout';
 import { ThemeProvider } from '@/context/ThemeContext';
-import { GoogleAnalytics } from '@next/third-parties/google';
+import Script from 'next/script';
 import FacebookPixel from '@/components/FacebookPixel';
 
 export const metadata = {
@@ -18,8 +18,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-5HXYRJPVEM" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-5HXYRJPVEM');
+          `}
+        </Script>
+      </head>
       <body suppressHydrationWarning>
-        <GoogleAnalytics gaId="G-5HXYRJPVEM" />
         <FacebookPixel />
         <ThemeProvider>
           <ClientLayout>{children}</ClientLayout>
