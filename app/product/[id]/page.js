@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ShoppingBag, ArrowLeft, Check, Package, Truck, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ShoppingBag, ArrowLeft, Check, Package, Truck, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { getProduct, getProductImageUrl, getProducts } from '@/lib/api';
 import { trackViewContent, trackAddToCart } from '@/lib/pixelEvents';
 import { trackEvent } from '@/lib/analytics';
@@ -270,6 +270,19 @@ export default function ProductPage() {
                                 </span>
                             )}
                         </button>
+
+                        {/* Live Product View Button — only shown if admin added a video URL */}
+                        {product.video_url && (
+                            <a
+                                href={product.video_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.liveViewBtn}
+                            >
+                                <Play size={16} fill="currentColor" />
+                                <span>Watch Live Product View</span>
+                            </a>
+                        )}
 
                         <div className={styles.trust}>
                             <div className={styles.trustItem}>

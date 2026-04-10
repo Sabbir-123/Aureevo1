@@ -11,6 +11,9 @@ ALTER TABLE public.finance_records ADD COLUMN IF NOT EXISTS quantity INT DEFAULT
 ALTER TABLE public.finance_records ADD COLUMN IF NOT EXISTS profit NUMERIC(10, 2) DEFAULT 0;
 ALTER TABLE public.finance_records ADD COLUMN IF NOT EXISTS order_id TEXT;
 
+-- 3. Add video_url to products for Live Product View feature
+ALTER TABLE public.products ADD COLUMN IF NOT EXISTS video_url TEXT;
+
 -- 3. Safely enable RLS for full security if not already done
 ALTER TABLE public.custom_orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.finance_records ENABLE ROW LEVEL SECURITY;

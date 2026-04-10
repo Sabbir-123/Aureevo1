@@ -298,6 +298,37 @@
     cursor: not-allowed;
 }
 
+/* ===== LIVE VIEW BUTTON ===== */
+.liveViewBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    margin-bottom: var(--space-xl);
+    padding: 0.85rem var(--space-md);
+    background: rgba(255, 209, 102, 0.07);
+    border: 1px solid rgba(255, 209, 102, 0.3);
+    border-radius: var(--radius-md);
+    color: var(--color-gold-neon);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    animation: pulse-gold 2.5s ease-in-out infinite;
+}
+
+.liveViewBtn:hover {
+    background: rgba(255, 209, 102, 0.14);
+    border-color: var(--color-gold-neon);
+    box-shadow: 0 0 20px rgba(255, 209, 102, 0.2);
+    transform: translateY(-1px);
+    animation: none;
+}
+
 /* ===== TRUST ===== */
 .trust {
     display: grid;

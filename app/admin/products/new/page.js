@@ -35,7 +35,8 @@ export default function AddProductPage() {
         seo_description: '',
         seo_keywords: '',
         target_country: 'Bangladesh',
-        target_region: ''
+        target_region: '',
+        video_url: ''
     });
 
     // Color management
@@ -258,6 +259,24 @@ export default function AddProductPage() {
                             ))}
                         </div>
                     )}
+                </div>
+
+                {/* Live Video URL */}
+                <div className="adminSection">
+                    <h3>📹 Live Product View (Optional)</h3>
+                    <p style={{ color: 'var(--admin-text-muted)', fontSize: '0.85rem', marginBottom: '1rem' }}>
+                        Paste a YouTube, Facebook, or any video URL. If provided, a "Watch Live" button will appear on the product page for customers.
+                    </p>
+                    <div className="formGroup">
+                        <label>Video / Live Review URL</label>
+                        <input
+                            className="formInput"
+                            type="url"
+                            placeholder="https://youtube.com/watch?v=... or https://fb.watch/..."
+                            value={form.video_url}
+                            onChange={(e) => setForm({ ...form, video_url: e.target.value })}
+                        />
+                    </div>
                 </div>
 
                 {/* Sizes & Stock */}
