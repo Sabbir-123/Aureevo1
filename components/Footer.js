@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Instagram, Facebook } from 'lucide-react';
+import { Instagram, Facebook, Mail } from 'lucide-react';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -13,6 +13,9 @@ export default function Footer() {
                     <p className={styles.tagline}>
                         Premium men&apos;s fashion. Elevated essentials for the modern man.
                     </p>
+                    <a href="mailto:contact@aureevo.com" className={styles.link} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '1rem' }}>
+                        <Mail size={16} /> contact@aureevo.com
+                    </a>
                 </div>
 
                 <div className={styles.links}>

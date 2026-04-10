@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { getFinanceRecords, addFinanceRecord, deleteFinanceRecord } from '@/lib/admin-api';
-import { Plus, Trash2, X, DollarSign } from 'lucide-react';
+import { Plus, Trash2, X, Filter } from 'lucide-react';
 import toast from 'react-hot-toast';
 import styles from './page.module.css';
 
@@ -10,6 +10,9 @@ export default function FinanceLedgerPage() {
     const [records, setRecords] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [filterMonth, setFilterMonth] = useState('');
+    const [filterYear, setFilterYear] = useState('');
 
     // Summary states
     const [totalIncome, setTotalIncome] = useState(0);
@@ -27,7 +30,7 @@ export default function FinanceLedgerPage() {
 
     const loadRecords = async () => {
         setLoading(true);
-        const { data, error } = await getFinanceRecords();
+        const { data, error } = await getFinanceRecords(null, filterMonth, filterYear);
         if (error) {
             toast.error('Failed to load finance records');
         } else {
@@ -39,7 +42,7 @@ export default function FinanceLedgerPage() {
 
     useEffect(() => {
         loadRecords();
-    }, []);
+    }, [filterMonth, filterYear]);
 
     const calculateTotals = (data) => {
         let income = 0;
@@ -97,6 +100,22 @@ export default function FinanceLedgerPage() {
                 </button>
             </div>
 
+            <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', alignItems: 'center' }}>
+                <Filter size={20} style={{ color: 'var(--text-muted)' }} />
+                <select className={styles.select} style={{ width: '150px' }} value={filterMonth} onChange={(e) => setFilterMonth(e.target.value)}>
+                    <option value="">All Months</option>
+                    {[...Array(12)].map((_, i) => (
+                        <option key={i} value={i + 1}>{new Date(0, i).toLocaleString('en-US', { month: 'long' })}</option>
+                    ))}
+                </select>
+                <select className={styles.select} style={{ width: '150px' }} value={filterYear} onChange={(e) => setFilterYear(e.target.value)}>
+                    <option value="">All Years</option>
+                    {[2024, 2025, 2026, 2027, 2028].map(y => (
+                        <option key={y} value={y}>{y}</option>
+                    ))}
+                </select>
+            </div>
+
             <div className={styles.summaryCards}>
                 <div className={styles.card}>
                     <div className={styles.cardTitle}>Total Income</div>
@@ -129,10 +148,11 @@ export default function FinanceLedgerPage() {
                             <tr>
                                 <th>Date</th>
                                 <th>Type</th>
-                                <th>Category</th>
-                                <th>Description</th>
+                                <th>Category / Desc</th>
+                                <th>Qty</th>
                                 <th>Revenue/Amt</th>
-                                <th>Profit (Sales)</th>
+                                <th>Cost</th>
+                                <th>Profit (Net)</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -148,13 +168,22 @@ export default function FinanceLedgerPage() {
                                         <td>
                                             <span className={`${styles.typeBadge} ${styles[r.type]}`}>{r.type}</span>
                                         </td>
-                                        <td>{r.category || '-'}</td>
-                                        <td>{r.description} {r.order_id && <span style={{ fontSize: '0.8rem', color: 'var(--color-gold)', display: 'block' }}>Ref: {r.order_id}</span>}</td>
+                                        <td>
+                                            <div style={{ fontWeight: 600 }}>{r.category || '-'}</div>
+                                            <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{r.description}</div>
+                                            {r.order_id && <div style={{ fontSize: '0.75rem', color: 'var(--color-gold)' }}>Ref: {r.order_id}</div>}
+                                        </td>
+                                        <td style={{ color: 'var(--text-muted)' }}>
+                                            {r.quantity || 1}
+                                        </td>
                                         <td style={{ fontWeight: 600, color: r.type === 'income' ? '#4ade80' : '#ef4444' }}>
                                             {r.type === 'income' ? '+' : '-'}৳ {Number(r.amount).toLocaleString()}
                                         </td>
-                                        <td style={{ fontWeight: 500, color: 'var(--color-gold)' }}>
-                                            {r.profit && r.profit > 0 ? `+৳ ${Number(r.profit).toLocaleString()}` : '-'}
+                                        <td style={{ color: '#ef4444' }}>
+                                            {r.type === 'income' && r.profit !== undefined ? `৳ ${(Number(r.amount) - Number(r.profit)).toLocaleString()}` : (r.type === 'expense' ? `৳ ${Number(r.amount).toLocaleString()}` : '-')}
+                                        </td>
+                                        <td style={{ fontWeight: 500, color: (r.profit || 0) >= 0 ? 'var(--color-gold)' : '#ef4444' }}>
+                                            {r.type === 'income' && r.profit !== undefined ? `+৳ ${Number(r.profit).toLocaleString()}` : (r.type === 'expense' ? `-৳ ${Number(r.amount).toLocaleString()}` : '-')}
                                         </td>
                                         <td>
                                             <button className={styles.deleteBtn} onClick={() => handleDelete(r.id)}>

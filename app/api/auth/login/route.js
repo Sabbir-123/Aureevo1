@@ -24,7 +24,7 @@ export async function POST(request) {
                 name: admin.name,
                 role: admin.role,
                 permissions: admin.permissions,
-                exp: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
+                exp: Date.now() + 30 * 60 * 1000, // 30 minutes
             })
         ).toString('base64');
 
@@ -42,7 +42,7 @@ export async function POST(request) {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
-            maxAge: 7 * 24 * 60 * 60, // 7 days
+            maxAge: 30 * 60, // 30 minutes
             path: '/',
         });
 

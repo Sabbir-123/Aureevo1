@@ -87,6 +87,7 @@ export default function CheckoutPage() {
                 price: item.product.price,
             })),
             totalPrice: grandTotal,
+            deliveryCharge: shipping,
         };
 
         try {

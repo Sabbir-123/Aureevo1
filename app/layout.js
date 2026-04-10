@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
-        <GoogleAnalytics gaId="G-G8F059K36N" />
+        <GoogleAnalytics gaId="G-5HXYRJPVEM" />
         <FacebookPixel />
         <ThemeProvider>
           <ClientLayout>{children}</ClientLayout>

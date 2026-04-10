@@ -42,7 +42,7 @@ export default function ContactPage() {
                                 <Mail size={24} />
                             </div>
                             <span className={styles.contactLabel}>Client Services</span>
-                            <a href="mailto:aureevo.3@gmail.com" className={styles.contactValue}>aureevo.3@gmail.com</a>
+                            <a href="mailto:contact@aureevo.com" className={styles.contactValue}>contact@aureevo.com</a>
                         </div>
 
                         {/* Social */}

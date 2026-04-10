@@ -14,44 +14,31 @@ export default function AdminLayout({ children }) {
     const [user, setUser] = useState(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    // Skip auth check for login page
-    const isLoginPage = pathname === '/admin/login';
-
     useEffect(() => {
-        if (isLoginPage) {
-            setChecking(false);
-            return;
-        }
-
         const checkAuth = async () => {
             try {
                 const res = await fetch('/api/auth/check');
                 if (!res.ok) {
-                    router.replace('/admin/login');
+                    router.replace('/ad/login');
                     return;
                 }
                 const data = await res.json();
                 setAuthenticated(true);
                 setUser(data.admin);
             } catch {
-                router.replace('/admin/login');
+                router.replace('/ad/login');
             } finally {
                 setChecking(false);
             }
         };
 
         checkAuth();
-    }, [pathname, isLoginPage, router]);
+    }, [pathname, router]);
 
     const handleLogout = async () => {
         await fetch('/api/auth/logout', { method: 'POST' });
-        router.replace('/admin/login');
+        router.replace('/ad/login');
     };
-
-    // Login page renders without layout chrome
-    if (isLoginPage) {
-        return <>{children}</>;
-    }
 
     if (checking) {
         return (
