@@ -80,10 +80,24 @@
   --header-height: 72px;
   --container-padding: 1.5rem;
 
-  /* Body Background - Deep Obsidian */
-  --bg-body: var(--color-black);
-  --hero-gradient-1: #070709;
-  --hero-gradient-2: #0d0d18;
+  /* Body Background - Premium Dark Gradient */
+  --bg-body: linear-gradient(
+    160deg,
+    #07070a 0%,
+    #0d0d14 20%,
+    #100e18 35%,
+    #0a0d0f 50%,
+    #0d0c10 65%,
+    #111008 80%,
+    #0a0a0a 100%
+  );
+
+  /* Subtle gold radial glow overlaid on body */
+  --bg-body-overlay: radial-gradient(
+    ellipse 80% 40% at 50% 0%,
+    rgba(201, 169, 110, 0.06) 0%,
+    transparent 60%
+  );
 
   /* Header */
   --bg-header-scrolled: rgba(7, 7, 9, 0.85);
@@ -145,8 +159,27 @@ body {
   line-height: 1.6;
   color: var(--color-white);
   background: var(--bg-body);
+  background-attachment: fixed;
   overflow-x: hidden;
   min-height: 100vh;
+  position: relative;
+}
+
+/* Premium gold glow radial overlay — pseudo on html so it stacks above gradient */
+html::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 50% at 50% -10%, rgba(201, 169, 110, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 30% at 80% 100%, rgba(201, 169, 110, 0.04) 0%, transparent 50%);
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 a {
