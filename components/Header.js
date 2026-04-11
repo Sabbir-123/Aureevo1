@@ -89,10 +89,6 @@ export default function Header() {
                         {theme === 'dark' ? <Sun size={19} strokeWidth={1.5} /> : <Moon size={19} strokeWidth={1.5} />}
                     </button>
 
-                    <button className={styles.iconBtn} aria-label="Search">
-                        <Search size={19} strokeWidth={1.5} />
-                    </button>
-
                     <Link href="/cart" className={styles.cartBtn} aria-label="Shopping cart">
                         <ShoppingBag size={19} strokeWidth={1.5} />
                         {isHydrated && totalItems > 0 && (
