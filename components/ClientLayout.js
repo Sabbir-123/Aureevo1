@@ -8,6 +8,7 @@ import AddToCartModal from '@/components/AddToCartModal';
 import { Toaster } from 'react-hot-toast';
 import useAuthStore from '@/store/authStore';
 import useSiteAnalytics from '@/hooks/useSiteAnalytics';
+import WhatsAppFloating from '@/components/WhatsAppFloating';
 
 import { useRouter } from 'next/navigation';
 
@@ -89,6 +90,7 @@ export default function ClientLayout({ children }) {
             <Header />
             <main style={{ minHeight: '100vh' }}>{children}</main>
             <Footer />
+            <WhatsAppFloating />
             <AddToCartModal />
             <Toaster
                 position="top-right"
