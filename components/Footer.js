@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Instagram, Facebook, Mail, ArrowRight } from 'lucide-react';
+import { Instagram, Facebook, Mail, ArrowRight, Phone, Music } from 'lucide-react';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -83,8 +83,14 @@ export default function Footer() {
                         <a href="https://facebook.com/aureevo" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
                             <Facebook size={18} strokeWidth={1.5} />
                         </a>
-                        <a href="mailto:contact@aureevo.com" className={styles.socialLink}>
+                        <a href="mailto:contact@aureevo.com" className={styles.socialLink} aria-label="Email">
                             <Mail size={18} strokeWidth={1.5} />
+                        </a>
+                        <a href="https://wa.me/8801633028000" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="WhatsApp">
+                            <Phone size={18} strokeWidth={1.5} />
+                        </a>
+                        <a href="https://www.tiktok.com/@aureevo" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="TikTok">
+                            <Music size={18} strokeWidth={1.5} />
                         </a>
                     </div>
                 </div>
