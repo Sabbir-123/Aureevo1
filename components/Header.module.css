@@ -66,6 +66,10 @@
     color: var(--text-primary);
 }
 
+.mobileOnly {
+    display: none;
+}
+
 /* ── ACTIONS (Right) ── */
 .actions {
     display: flex;
@@ -125,6 +129,10 @@
     color: var(--bg-body);
 }
 
+.userIcon {
+    display: none;
+}
+
 .menuBtn {
     display: none;
     color: var(--text-primary);
@@ -144,12 +152,34 @@
         display: none; /* Hide center desktop nav */
     }
     
+    .mobileOnly {
+        display: block;
+    }
+    
     .menuBtn {
         display: flex;
     }
     
     .signInBtn {
+        padding: 0.5rem;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .signInBtn:hover {
+        background: transparent;
+        transform: translateY(-1px);
+    }
+
+    .signInText {
         display: none;
+    }
+
+    .userIcon {
+        display: block;
+        color: var(--text-primary);
     }
 
     .navOpen {
@@ -159,7 +189,7 @@
         right: 0;
         width: 100%;
         height: 100vh;
-        background: #ffffff;
+        background: var(--bg-body);
         flex-direction: column;
         justify-content: center;
         align-items: center;

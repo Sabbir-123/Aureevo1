@@ -73,6 +73,9 @@ export default function Header() {
                     <Link href="/" className={styles.navLink}>
                         About Us
                     </Link>
+                    <Link href={user ? '/profile' : '/login'} className={`${styles.navLink} ${styles.mobileOnly}`}>
+                        {user ? 'My Account' : 'Sign In'}
+                    </Link>
                 </nav>
 
                 {/* RIGHT: ACTIONS */}
@@ -98,7 +101,8 @@ export default function Header() {
                     </Link>
 
                     <Link href={user ? '/profile' : '/login'} className={styles.signInBtn}>
-                        {user ? 'Account' : 'Sign In'}
+                        <User className={styles.userIcon} size={19} strokeWidth={1.5} />
+                        <span className={styles.signInText}>{user ? 'Account' : 'Sign In'}</span>
                     </Link>
 
                     <button
