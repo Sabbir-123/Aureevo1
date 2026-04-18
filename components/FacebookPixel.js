@@ -45,7 +45,8 @@ export default function FacebookPixel() {
         );
 
         window.fbq('init', pixelId);
-        window.fbq('track', 'PageView');
+        // Dispatch unified event (Browser + CAPI)
+        import('@/lib/pixelEvents').then(({ trackPageView }) => trackPageView());
     }, [pixelId]);
 
     if (!pixelId) return null;
