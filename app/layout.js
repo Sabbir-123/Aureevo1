@@ -19,6 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="facebook-domain-verification" content="bsgesetlp0uvh0vxc092xpqz7wglo8" />
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-5HXYRJPVEM" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`

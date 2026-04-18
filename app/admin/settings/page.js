@@ -7,6 +7,8 @@ import { Settings, Save, CheckCircle } from 'lucide-react';
 export default function AdminSettingsPage() {
     const [form, setForm] = useState({
         facebook_pixel_id: '',
+        facebook_pixel_token: '',
+        facebook_test_event_code: '',
         whatsapp_number: '',
         store_name: 'AUREEVO',
         currency: 'BDT',
@@ -25,6 +27,8 @@ export default function AdminSettingsPage() {
             if (data) {
                 setForm({
                     facebook_pixel_id: data.facebook_pixel_id || '',
+                    facebook_pixel_token: data.facebook_pixel_token || '',
+                    facebook_test_event_code: data.facebook_test_event_code || '',
                     whatsapp_number: data.whatsapp_number || '',
                     store_name: data.store_name || 'AUREEVO',
                     currency: data.currency || 'BDT',
@@ -93,6 +97,27 @@ export default function AdminSettingsPage() {
                             value={form.facebook_pixel_id}
                             onChange={(e) => setForm({ ...form, facebook_pixel_id: e.target.value })}
                         />
+                    </div>
+                    <div className="formRow">
+                        <div className="formGroup">
+                            <label>Conversions API Access Token</label>
+                            <input
+                                className="formInput"
+                                placeholder="e.g. EAAcc5Qy..."
+                                type="password"
+                                value={form.facebook_pixel_token}
+                                onChange={(e) => setForm({ ...form, facebook_pixel_token: e.target.value })}
+                            />
+                        </div>
+                        <div className="formGroup">
+                            <label>Test Event Code</label>
+                            <input
+                                className="formInput"
+                                placeholder="e.g. TEST12345"
+                                value={form.facebook_test_event_code}
+                                onChange={(e) => setForm({ ...form, facebook_test_event_code: e.target.value })}
+                            />
+                        </div>
                     </div>
                 </div>
 
