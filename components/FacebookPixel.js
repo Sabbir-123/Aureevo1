@@ -9,8 +9,8 @@ export default function FacebookPixel() {
     useEffect(() => {
         async function loadPixel() {
             const settings = await getSettings();
-            if (settings.facebookPixelId) {
-                setPixelId(settings.facebookPixelId);
+            if (settings.facebook_pixel_id) {
+                setPixelId(settings.facebook_pixel_id);
             }
         }
         loadPixel();
