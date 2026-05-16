@@ -3,12 +3,12 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
 const ThemeContext = createContext({
-    theme: 'dark',
+    theme: 'light',
     toggleTheme: () => { },
 });
 
 export function ThemeProvider({ children }) {
-    const [theme, setTheme] = useState('dark');
+    const [theme, setTheme] = useState('light');
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -16,7 +16,7 @@ export function ThemeProvider({ children }) {
         if (stored) {
             setTheme(stored);
         } else {
-            setTheme('dark'); // Default to dark always
+            setTheme('light'); // Default to light
         }
         setMounted(true);
     }, []);

@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { getAdminProduct, updateProduct, uploadProductImage, getAdminCategories } from '@/lib/admin-api';
-import { ArrowLeft, Upload, X, Plus } from 'lucide-react';
+import { ArrowLeft, Upload, X, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 
 const SIZE_OPTIONS = ['S', 'M', 'L', 'XL', 'XXL'];
 
@@ -40,7 +41,16 @@ export default function EditProductPage() {
         seo_keywords: '',
         target_country: 'Bangladesh',
         target_region: '',
-        video_url: ''
+        video_url: '',
+        specifications: [],
+        care_instructions: [],
+        size_and_fit: {
+            fit_type: '',
+            model_height: '',
+            wearing_size: '',
+            fabric_stretch: '',
+            fabric_weight: ''
+        }
     });
 
     const [newColorName, setNewColorName] = useState('');
@@ -71,7 +81,16 @@ export default function EditProductPage() {
                 seo_keywords: data.seo_keywords || '',
                 target_country: data.target_country || 'Bangladesh',
                 target_region: data.target_region || '',
-                video_url: data.video_url || ''
+                video_url: data.video_url || '',
+                specifications: data.specifications || [],
+                care_instructions: data.care_instructions || [],
+                size_and_fit: data.size_and_fit || {
+                    fit_type: '',
+                    model_height: '',
+                    wearing_size: '',
+                    fabric_stretch: '',
+                    fabric_weight: ''
+                }
             });
             setLoading(false);
         };
@@ -107,6 +126,28 @@ export default function EditProductPage() {
         });
     };
 
+    const addArrayItem = (field) => {
+        setForm((prev) => ({
+            ...prev,
+            [field]: [...prev[field], '']
+        }));
+    };
+
+    const updateArrayItem = (field, index, value) => {
+        setForm((prev) => {
+            const newArr = [...prev[field]];
+            newArr[index] = value;
+            return { ...prev, [field]: newArr };
+        });
+    };
+
+    const removeArrayItem = (field, index) => {
+        setForm((prev) => ({
+            ...prev,
+            [field]: prev[field].filter((_, i) => i !== index)
+        }));
+    };
+
     const handleImageUpload = async (e) => {
         const files = Array.from(e.target.files);
         if (!files.length) return;
@@ -139,6 +180,8 @@ export default function EditProductPage() {
             ...form,
             price: parseFloat(form.price),
             cost_price: parseFloat(form.cost_price) || 0,
+            specifications: form.specifications.filter(s => s.trim()),
+            care_instructions: form.care_instructions.filter(c => c.trim()),
         });
 
         if (saveError) {
@@ -192,8 +235,8 @@ export default function EditProductPage() {
                         </div>
                     </div>
                     <div className="formGroup">
-                        <label>Description</label>
-                        <textarea className="formInput" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
+                        <label>Product Overview (Rich Text)</label>
+                        <RichTextEditor value={form.description} onChange={(val) => setForm({ ...form, description: val })} />
                     </div>
                     <div className="formRow">
                         <div className="formGroup">
@@ -207,6 +250,57 @@ export default function EditProductPage() {
                                 <input type="checkbox" checked={form.is_featured} onChange={(e) => setForm({ ...form, is_featured: e.target.checked })} />
                                 Featured Product
                             </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="adminSection">
+                    <h3>Detailed Specifications</h3>
+                    <p style={{ color: 'var(--admin-text-muted)', fontSize: '0.85rem', marginBottom: '1rem' }}>Add key features like material, gsm, finish, etc.</p>
+                    {form.specifications.map((spec, i) => (
+                        <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+                            <input className="formInput" style={{ marginBottom: 0 }} value={spec} onChange={(e) => updateArrayItem('specifications', i, e.target.value)} />
+                            <button type="button" className="btnSecondary" style={{ padding: '0 12px' }} onClick={() => removeArrayItem('specifications', i)}><Trash2 size={16} /></button>
+                        </div>
+                    ))}
+                    <button type="button" className="btnSecondary" style={{ marginTop: 8 }} onClick={() => addArrayItem('specifications')}><Plus size={16} /> Add Specification</button>
+                </div>
+
+                <div className="adminSection">
+                    <h3>Care Instructions</h3>
+                    {form.care_instructions.map((instruction, i) => (
+                        <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+                            <input className="formInput" style={{ marginBottom: 0 }} value={instruction} onChange={(e) => updateArrayItem('care_instructions', i, e.target.value)} />
+                            <button type="button" className="btnSecondary" style={{ padding: '0 12px' }} onClick={() => removeArrayItem('care_instructions', i)}><Trash2 size={16} /></button>
+                        </div>
+                    ))}
+                    <button type="button" className="btnSecondary" style={{ marginTop: 8 }} onClick={() => addArrayItem('care_instructions')}><Plus size={16} /> Add Care Instruction</button>
+                </div>
+
+                <div className="adminSection">
+                    <h3>Size & Fit Details</h3>
+                    <div className="formRow">
+                        <div className="formGroup">
+                            <label>Fit Type</label>
+                            <input className="formInput" value={form.size_and_fit.fit_type} onChange={(e) => setForm({ ...form, size_and_fit: { ...form.size_and_fit, fit_type: e.target.value } })} />
+                        </div>
+                        <div className="formGroup">
+                            <label>Model Height</label>
+                            <input className="formInput" value={form.size_and_fit.model_height} onChange={(e) => setForm({ ...form, size_and_fit: { ...form.size_and_fit, model_height: e.target.value } })} />
+                        </div>
+                        <div className="formGroup">
+                            <label>Wearing Size</label>
+                            <input className="formInput" value={form.size_and_fit.wearing_size} onChange={(e) => setForm({ ...form, size_and_fit: { ...form.size_and_fit, wearing_size: e.target.value } })} />
+                        </div>
+                    </div>
+                    <div className="formRow">
+                        <div className="formGroup">
+                            <label>Fabric Stretch</label>
+                            <input className="formInput" value={form.size_and_fit.fabric_stretch} onChange={(e) => setForm({ ...form, size_and_fit: { ...form.size_and_fit, fabric_stretch: e.target.value } })} />
+                        </div>
+                        <div className="formGroup">
+                            <label>Fabric Weight (GSM)</label>
+                            <input className="formInput" value={form.size_and_fit.fabric_weight} onChange={(e) => setForm({ ...form, size_and_fit: { ...form.size_and_fit, fabric_weight: e.target.value } })} />
                         </div>
                     </div>
                 </div>

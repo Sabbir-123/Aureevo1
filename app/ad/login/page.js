@@ -10,6 +10,11 @@ export default function AdminLoginPage() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -38,8 +43,12 @@ export default function AdminLoginPage() {
         }
     };
 
+    if (!mounted) {
+        return null; // Avoid hydration mismatch on server
+    }
+
     return (
-        <div className="adminRoot" suppressHydrationWarning>
+        <div className="adminRoot">
             <div className="loginPage">
                 <div className="loginCard">
                     <h1>AUREEVO</h1>
@@ -47,7 +56,7 @@ export default function AdminLoginPage() {
 
                     {error && <div className="loginError">{error}</div>}
 
-                    <form onSubmit={handleLogin} suppressHydrationWarning>
+                    <form onSubmit={handleLogin}>
                         <div className="formGroup">
                             <label>Email Address</label>
                             <input

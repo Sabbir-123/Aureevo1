@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createProduct, uploadProductImage, getAdminCategories } from '@/lib/admin-api';
-import { ArrowLeft, Upload, X, Plus } from 'lucide-react';
+import { ArrowLeft, Upload, X, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 
 const SIZE_OPTIONS = ['S', 'M', 'L', 'XL', 'XXL'];
 
@@ -36,7 +37,16 @@ export default function AddProductPage() {
         seo_keywords: '',
         target_country: 'Bangladesh',
         target_region: '',
-        video_url: ''
+        video_url: '',
+        specifications: [],
+        care_instructions: [],
+        size_and_fit: {
+            fit_type: '',
+            model_height: '',
+            wearing_size: '',
+            fabric_stretch: '',
+            fabric_weight: ''
+        }
     });
 
     // Color management
@@ -71,6 +81,29 @@ export default function AddProductPage() {
             else if (!(size in stock)) stock[size] = 0;
             return { ...prev, sizes, stock };
         });
+    };
+
+    // Array fields management
+    const addArrayItem = (field) => {
+        setForm((prev) => ({
+            ...prev,
+            [field]: [...prev[field], '']
+        }));
+    };
+
+    const updateArrayItem = (field, index, value) => {
+        setForm((prev) => {
+            const newArr = [...prev[field]];
+            newArr[index] = value;
+            return { ...prev, [field]: newArr };
+        });
+    };
+
+    const removeArrayItem = (field, index) => {
+        setForm((prev) => ({
+            ...prev,
+            [field]: prev[field].filter((_, i) => i !== index)
+        }));
     };
 
     // Image upload
@@ -115,6 +148,8 @@ export default function AddProductPage() {
             ...form,
             price: parseFloat(form.price),
             cost_price: parseFloat(form.cost_price) || 0,
+            specifications: form.specifications.filter(s => s.trim()),
+            care_instructions: form.care_instructions.filter(c => c.trim()),
         };
 
         const { error: saveError } = await createProduct(productData);
@@ -194,12 +229,10 @@ export default function AddProductPage() {
                     </div>
 
                     <div className="formGroup">
-                        <label>Description</label>
-                        <textarea
-                            className="formInput"
-                            placeholder="Write a compelling product description..."
+                        <label>Product Overview (Rich Text)</label>
+                        <RichTextEditor
                             value={form.description}
-                            onChange={(e) => setForm({ ...form, description: e.target.value })}
+                            onChange={(val) => setForm({ ...form, description: val })}
                         />
                     </div>
 
@@ -223,6 +256,80 @@ export default function AddProductPage() {
                                 />
                                 Featured Product
                             </label>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Detailed Specifications */}
+                <div className="adminSection">
+                    <h3>Detailed Specifications</h3>
+                    <p style={{ color: 'var(--admin-text-muted)', fontSize: '0.85rem', marginBottom: '1rem' }}>Add key features like material, gsm, finish, etc.</p>
+                    {form.specifications.map((spec, i) => (
+                        <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+                            <input
+                                className="formInput"
+                                style={{ marginBottom: 0 }}
+                                placeholder="e.g. 100% Premium Cotton"
+                                value={spec}
+                                onChange={(e) => updateArrayItem('specifications', i, e.target.value)}
+                            />
+                            <button type="button" className="btnSecondary" style={{ padding: '0 12px' }} onClick={() => removeArrayItem('specifications', i)}>
+                                <Trash2 size={16} />
+                            </button>
+                        </div>
+                    ))}
+                    <button type="button" className="btnSecondary" style={{ marginTop: 8 }} onClick={() => addArrayItem('specifications')}>
+                        <Plus size={16} /> Add Specification
+                    </button>
+                </div>
+
+                {/* Care Instructions */}
+                <div className="adminSection">
+                    <h3>Care Instructions</h3>
+                    {form.care_instructions.map((instruction, i) => (
+                        <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+                            <input
+                                className="formInput"
+                                style={{ marginBottom: 0 }}
+                                placeholder="e.g. Machine wash cold"
+                                value={instruction}
+                                onChange={(e) => updateArrayItem('care_instructions', i, e.target.value)}
+                            />
+                            <button type="button" className="btnSecondary" style={{ padding: '0 12px' }} onClick={() => removeArrayItem('care_instructions', i)}>
+                                <Trash2 size={16} />
+                            </button>
+                        </div>
+                    ))}
+                    <button type="button" className="btnSecondary" style={{ marginTop: 8 }} onClick={() => addArrayItem('care_instructions')}>
+                        <Plus size={16} /> Add Care Instruction
+                    </button>
+                </div>
+
+                {/* Size & Fit Details */}
+                <div className="adminSection">
+                    <h3>Size & Fit Details</h3>
+                    <div className="formRow">
+                        <div className="formGroup">
+                            <label>Fit Type</label>
+                            <input className="formInput" placeholder="e.g. Oversized Drop Shoulder" value={form.size_and_fit.fit_type} onChange={(e) => setForm({ ...form, size_and_fit: { ...form.size_and_fit, fit_type: e.target.value } })} />
+                        </div>
+                        <div className="formGroup">
+                            <label>Model Height</label>
+                            <input className="formInput" placeholder="e.g. 6'1&quot; (185 cm)" value={form.size_and_fit.model_height} onChange={(e) => setForm({ ...form, size_and_fit: { ...form.size_and_fit, model_height: e.target.value } })} />
+                        </div>
+                        <div className="formGroup">
+                            <label>Wearing Size</label>
+                            <input className="formInput" placeholder="e.g. L" value={form.size_and_fit.wearing_size} onChange={(e) => setForm({ ...form, size_and_fit: { ...form.size_and_fit, wearing_size: e.target.value } })} />
+                        </div>
+                    </div>
+                    <div className="formRow">
+                        <div className="formGroup">
+                            <label>Fabric Stretch</label>
+                            <input className="formInput" placeholder="e.g. Low, Medium, High" value={form.size_and_fit.fabric_stretch} onChange={(e) => setForm({ ...form, size_and_fit: { ...form.size_and_fit, fabric_stretch: e.target.value } })} />
+                        </div>
+                        <div className="formGroup">
+                            <label>Fabric Weight (GSM)</label>
+                            <input className="formInput" placeholder="e.g. 220 GSM" value={form.size_and_fit.fabric_weight} onChange={(e) => setForm({ ...form, size_and_fit: { ...form.size_and_fit, fabric_weight: e.target.value } })} />
                         </div>
                     </div>
                 </div>

@@ -15,6 +15,7 @@ import SizePicker from '@/components/SizePicker';
 import QuantitySelector from '@/components/QuantitySelector';
 import ProductCard from '@/components/ProductCard';
 import AISizeRecommender from '@/components/AISizeRecommender';
+import ProductAccordion from '@/components/ProductAccordion';
 import styles from './page.module.css';
 
 export default function ProductPage() {
@@ -255,21 +256,23 @@ export default function ProductPage() {
                             </div>
                         </div>
 
-                        <button
-                            className={styles.addToCart}
-                            onClick={handleAddToCart}
-                            disabled={stockCount === 0 || added}
-                        >
-                            {added ? (
-                                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                                    <Check size={18} /> ADDED TO CART
-                                </span>
-                            ) : (
-                                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                                    <ShoppingBag size={18} /> ADD TO CART
-                                </span>
-                            )}
-                        </button>
+                        <div className={styles.addToCartWrapper}>
+                            <button
+                                className={styles.addToCart}
+                                onClick={handleAddToCart}
+                                disabled={stockCount === 0 || added}
+                            >
+                                {added ? (
+                                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                                        <Check size={18} /> ADDED TO CART
+                                    </span>
+                                ) : (
+                                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                                        <ShoppingBag size={18} /> ADD TO CART
+                                    </span>
+                                )}
+                            </button>
+                        </div>
 
                         {/* Live Product View Button — only shown if admin added a video URL */}
                         {product.video_url && (
@@ -284,45 +287,97 @@ export default function ProductPage() {
                             </a>
                         )}
 
-                        <div className={styles.trust}>
-                            <div className={styles.trustItem}>
-                                <Check size={16} />
-                                <span>Easy Returns & Exchange</span>
-                            </div>
-                            <div className={styles.trustItem}>
-                                <Check size={16} />
-                                <span>Tell us within 7 days</span>
-                            </div>
-                            <div className={styles.trustItem}>
-                                <Check size={16} />
-                                <span>Free return shipping</span>
-                            </div>
-                            <div className={styles.trustItem}>
-                                <Check size={16} />
-                                <span>Instant refund on receipt</span>
-                            </div>
-                        </div>
+                        <div className={styles.divider} style={{ marginTop: '2rem' }} />
 
+                        <div className={styles.accordionGroup}>
+                            <ProductAccordion title="Product Overview" defaultOpen={true}>
+                                <div 
+                                    className={styles.richDescription} 
+                                    dangerouslySetInnerHTML={{ 
+                                        __html: product.description || "<p>Premium men's apparel made with high-quality combed compact cotton. Designed for a smooth feel, breathable comfort, and long-lasting durability.</p>" 
+                                    }} 
+                                />
+                            </ProductAccordion>
 
+                            {product.specifications && product.specifications.length > 0 && (
+                                <ProductAccordion title="Detailed Specifications">
+                                    <ul className={styles.luxuryList}>
+                                        {product.specifications.map((spec, i) => (
+                                            <li key={i}>
+                                                <span className={styles.luxuryBullet}>✓</span>
+                                                {spec}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </ProductAccordion>
+                            )}
 
-                        <p className={styles.description}>
-                            {product.description || "Premium men's apparel made with high-quality combed compact cotton. Designed for a smooth feel, breathable comfort, and long-lasting durability. The mid-weight fabric offers a structured fit perfect for everyday wear."}
-                        </p>
+                            {product.care_instructions && product.care_instructions.length > 0 && (
+                                <ProductAccordion title="Care Instructions">
+                                    <ul className={styles.luxuryList}>
+                                        {product.care_instructions.map((care, i) => (
+                                            <li key={i}>
+                                                <span className={styles.luxuryBullet}>✓</span>
+                                                {care}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </ProductAccordion>
+                            )}
 
-                        <div className={styles.divider} />
+                            {product.size_and_fit && Object.values(product.size_and_fit).some(val => val) && (
+                                <ProductAccordion title="Size & Fit">
+                                    <div className={styles.sizeFitGrid}>
+                                        {product.size_and_fit.fit_type && (
+                                            <div className={styles.sizeFitItem}>
+                                                <span className={styles.sizeFitLabel}>Fit Type</span>
+                                                <span className={styles.sizeFitValue}>{product.size_and_fit.fit_type}</span>
+                                            </div>
+                                        )}
+                                        {product.size_and_fit.model_height && (
+                                            <div className={styles.sizeFitItem}>
+                                                <span className={styles.sizeFitLabel}>Model Height</span>
+                                                <span className={styles.sizeFitValue}>{product.size_and_fit.model_height}</span>
+                                            </div>
+                                        )}
+                                        {product.size_and_fit.wearing_size && (
+                                            <div className={styles.sizeFitItem}>
+                                                <span className={styles.sizeFitLabel}>Wearing Size</span>
+                                                <span className={styles.sizeFitValue}>{product.size_and_fit.wearing_size}</span>
+                                            </div>
+                                        )}
+                                        {product.size_and_fit.fabric_stretch && (
+                                            <div className={styles.sizeFitItem}>
+                                                <span className={styles.sizeFitLabel}>Fabric Stretch</span>
+                                                <span className={styles.sizeFitValue}>{product.size_and_fit.fabric_stretch}</span>
+                                            </div>
+                                        )}
+                                        {product.size_and_fit.fabric_weight && (
+                                            <div className={styles.sizeFitItem}>
+                                                <span className={styles.sizeFitLabel}>Fabric Weight</span>
+                                                <span className={styles.sizeFitValue}>{product.size_and_fit.fabric_weight}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </ProductAccordion>
+                            )}
 
-                        <div className={styles.specifications}>
-                            <h3 className={styles.specTitle}>Detailed Specification</h3>
-                            <ul className={styles.specList}>
-                                <li>Organic Ringspun Combed Compact Cotton</li>
-                                <li>100% Cotton</li>
-                                <li>Regular Fit</li>
-                                <li>Crew Neck</li>
-                                <li>Mid-weight (~175 GSM)</li>
-                                <li>Reactive Dye</li>
-                                <li>Enzyme & Silicon Washed</li>
-                                <li>Preshrunk to Minimize Shrinkage</li>
-                            </ul>
+                            <ProductAccordion title="Shipping & Returns">
+                                <div className={styles.trust}>
+                                    <div className={styles.trustItem}>
+                                        <Truck size={16} />
+                                        <span>Fast nationwide delivery</span>
+                                    </div>
+                                    <div className={styles.trustItem}>
+                                        <Package size={16} />
+                                        <span>Easy Returns & Exchange within 7 days</span>
+                                    </div>
+                                    <div className={styles.trustItem}>
+                                        <Check size={16} />
+                                        <span>Instant refund on receipt</span>
+                                    </div>
+                                </div>
+                            </ProductAccordion>
                         </div>
 
                         <div className={styles.divider} />

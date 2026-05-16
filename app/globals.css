@@ -88,12 +88,12 @@
   --container-padding: 2rem;
 
   /* Theme: Light (Default) */
-  --bg-body: #f8f8f8;
-  --hero-bg: #f8f8f8;
+  --bg-body: linear-gradient(135deg, #f0f9ff 0%, #f5f3ff 50%, #ffffff 100%);
+  --hero-bg: linear-gradient(135deg, #f0f9ff 0%, #f5f3ff 50%, #ffffff 100%);
   --text-primary: #0a0a0a;
   --text-muted: #666666;
   --border-color: rgba(0, 0, 0, 0.08);
-  --card-bg: #ffffff;
+  --card-bg: rgba(255, 255, 255, 0.8);
   --glass-bg: rgba(255, 255, 255, 0.75);
   --glass-border: rgba(0, 0, 0, 0.08);
   --glass-glow: transparent;
@@ -157,6 +157,7 @@ body {
   line-height: 1.6;
   color: var(--color-black);
   background: var(--bg-body);
+  background-attachment: fixed;
   overflow-x: hidden;
   min-height: 100vh;
 }
