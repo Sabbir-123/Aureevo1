@@ -20,6 +20,15 @@
     --admin-sidebar-width: 260px;
 }
 
+[data-theme='light'] .adminRoot {
+    --admin-bg: #f8f8f6;
+    --admin-surface: #ffffff;
+    --admin-surface-hover: #f0f0f0;
+    --admin-border: #e0e0e0;
+    --admin-text: #0a0a0a;
+    --admin-text-muted: #666666;
+}
+
 /* --- Reset for Admin --- */
 .adminRoot {
     background: var(--admin-bg);

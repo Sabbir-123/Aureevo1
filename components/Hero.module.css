@@ -37,7 +37,7 @@
     font-size: 11px;
     text-transform: uppercase;
     font-weight: 500;
-    fill: #000;
+    fill: var(--text-primary);
 }
 
 .playIcon {
@@ -47,7 +47,8 @@
     transform: translate(-50%, -50%);
     width: 30px;
     height: 30px;
-    background: #fff;
+    background: var(--text-primary);
+    color: var(--bg-body);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -165,8 +166,8 @@
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
-    background: #000000;
-    color: #ffffff;
+    background: var(--text-primary);
+    color: var(--bg-body);
     padding: 12px 28px;
     border-radius: 99px;
     font-size: 0.85rem;
@@ -179,7 +180,7 @@
 
 .ctaButton:hover {
     transform: translateX(-50%) translateY(-3px);
-    background: #222;
+    opacity: 0.9;
 }
 
 /* ── FOOTER (Testimonial & Feature) ── */
